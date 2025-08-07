@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider
           defaultTheme="system"
@@ -37,12 +37,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
           storageKey="theme"
-          {...{ children }}
         >
           <header>
             <NavBar />
           </header>
-          {children}
+
+          <main className="flex-grow">{children}</main>
+
           <Footer />
         </ThemeProvider>
       </body>

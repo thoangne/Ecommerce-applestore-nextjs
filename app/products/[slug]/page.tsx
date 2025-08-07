@@ -60,7 +60,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     <main className="container mx-auto p-4">
       <Breadcrumbs items={breadcrumbItems} />
 
-      <Card>
+      <Card className="">
         <CardContent className="p-6 grid lg:grid-cols-2 grid-cols-1 gap-4">
           <div>
             <div className=" relative aspect-[6/3] rounded-lg overflow-hidden mb-4">
@@ -87,7 +87,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <Separator className="my-4" />
             <div className="space-y-2">
               <h2 className="font-medium">Description</h2>
-              <p>{product.description}</p>
+              <p>{product.description} </p>
             </div>
             <Separator className="my-4" />
             <div className="space-y-2">
@@ -114,7 +114,10 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <Separator className="my-4" />
 
             <div>
-              <Button disabled={product.inventory === 0} className="w-full">
+              <Button
+                disabled={product.inventory === 0}
+                className="w-full hover:cursor-pointer"
+              >
                 <ShoppingCart className="mr-2 w-4 h-4" />
                 {product.inventory > 0 ? "Add to Cart" : "Out of Stock"}
               </Button>

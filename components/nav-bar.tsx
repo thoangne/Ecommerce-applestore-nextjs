@@ -4,12 +4,13 @@ import { ModeToggle } from "./mode-toogle";
 import { Button } from "./ui/button";
 import { Search, ShoppingCart } from "lucide-react";
 import MobileNav from "./mobileNav";
+import SearchInput from "./search-input";
 
 const Category = [
   { name: "All", href: "/products" },
-  { name: "Electronics", href: "/products/electronics" },
-  { name: "Books", href: "/products/books" },
-  { name: "Clothing", href: "/products/clothing" },
+  { name: "Electronics", href: "/search/electronics" },
+  { name: "Apple", href: "/search/apple" },
+  { name: "Furniture", href: "/search/furniture" },
 ];
 
 export default function NavBar() {
@@ -38,12 +39,15 @@ export default function NavBar() {
             <MobileNav />
           </div>
         </div>
+        <div className="w-full mx-4 md:mx-8 md:block lg:mx-16 hidden ">
+          <SearchInput />
+        </div>
         <div className="flex items-center gap-4">
-          <Button variant={"ghost"} size={"icon"}>
+          {/* <Button variant={"ghost"} size={"icon"}>
             <Link href="/search">
               <Search className="w-4 h-4" />
             </Link>
-          </Button>
+          </Button> */}
           <Button variant={"ghost"} size={"icon"}>
             <Link href="/cart">
               <ShoppingCart className="w-4 h-4" />

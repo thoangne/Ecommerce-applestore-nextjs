@@ -43,3 +43,9 @@ tạo trang product
 
 chỉnh sửa chi tiết phần padding hay margin để hiển thị hợp lí hơn
 phải nhớ responsive đầy đủ
+
+useSearchParams()	Truy cập các query string hiện tại, giống URLSearchParams.
+
+[23:48] 8/4/2025 Đã fix xong giao diện chi tiết
+
+[22:32] 8/5/2025 VCC phần sorting hay filter nó làm chi tiết vãi cả linh hồn, nói chung là chia tách từng component khá là rắc rối
