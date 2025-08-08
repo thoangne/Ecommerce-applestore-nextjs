@@ -17,16 +17,21 @@ import React from "react";
 const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Link href={`/products/${product.slug}`} className="no-underline">
-      <Card key={product?.id} className="border rounded-lg shadow-md  ">
+      <Card
+        key={product?.id}
+        className="border rounded-lg shadow-md transition duration-300 hover:shadow-lg hover:scale-[1.02]"
+      >
         <CardContent>
           <div className=" relative aspect-video rounded-lg overflow-hidden">
-            <Image
-              alt={product?.name}
-              src={product?.image || ""}
-              className=" object-cover "
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              fill
-            />
+            {product.image && (
+              <Image
+                alt={product.name}
+                src={product.image}
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                fill
+              />
+            )}{" "}
           </div>
         </CardContent>
         <CardHeader>
@@ -38,7 +43,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             {formatPrice(product?.price)}
           </span>
           <CardAction>
-            <Button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+            <Button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors hover:cursor-pointer duration-300">
               Add to Cart
             </Button>
           </CardAction>

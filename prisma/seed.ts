@@ -124,6 +124,51 @@ async function main() {
             image: 'https://i.pinimg.com/736x/0b/6b/df/0b6bdf667bc93e7f2fbdb52ba24bb212.jpg',
             price: 69900,
             inventory: 10
+        },
+        {
+            name: 'Mouse',
+            description: 'The latest mouse',
+            categoryId: accessories.id,
+            slug: 'mouse',
+            image: 'https://i.pinimg.com/736x/49/2f/5a/492f5a4a9a6a9f4a6c0b1b5e45f5b1dc.jpg',
+            price: 19900,
+            inventory: 10
+        },
+        {
+            name: 'Keyboard',
+            description: 'The latest keyboard',
+            categoryId: accessories.id,
+            slug: 'keyboard',
+            image: 'https://i.pinimg.com/736x/5c/5e/1e/5c5e1ecf9c0c7ed9f0c7b13f1e9e9f63.jpg',
+            price: 29900,
+            inventory: 10
+        },
+        {
+            name: 'Headphones',
+            description: 'The latest headphones',
+            categoryId: accessories.id,
+            slug: 'headphones',
+            image: 'https://i.pinimg.com/736x/ab/5a/35/ab5a35e99d0f5c7ad4c7e0f5f5fdcf4a.jpg',
+            price: 49900,
+            inventory: 10
+        },
+        {
+            name: 'Speaker',
+            description: 'The latest speaker',
+            categoryId: accessories.id,
+            slug: 'speaker',
+            image: 'https://i.pinimg.com/736x/da/6b/4d/da6b4dab6f4f4c2c7c3b0b80e4e5cbf9.jpg',
+            price: 39900,
+            inventory: 10
+        },
+        {
+            name: 'Power Bank',
+            description: 'The latest power bank',
+            categoryId: accessories.id,
+            slug: 'power-bank',
+            image: 'https://i.pinimg.com/736x/15/3e/a6/153ea6f6f9f0c7d2b45f2f5e4f4f8b63.jpg',
+            price: 29900,
+            inventory: 10
         }
     ];
 
