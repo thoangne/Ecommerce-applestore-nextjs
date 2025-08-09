@@ -1,3 +1,4 @@
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import Breadcrumbs from "@/components/breadscums";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -114,13 +115,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <Separator className="my-4" />
 
             <div>
-              <Button
-                disabled={product.inventory === 0}
-                className="w-full hover:cursor-pointer"
-              >
-                <ShoppingCart className="mr-2 w-4 h-4" />
-                {product.inventory > 0 ? "Add to Cart" : "Out of Stock"}
-              </Button>
+              <AddToCartButton product={product} />
             </div>
           </div>
         </CardContent>

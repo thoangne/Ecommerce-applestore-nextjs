@@ -14,15 +14,16 @@ datasource db {
 }
 
 model Product {
-  id          String    @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
   description String?
   price       Int
-  Category    Category? @relation(fields: [categoryId], references: [id])
+  Category    Category?  @relation(fields: [categoryId], references: [id])
   categoryId  String?
-  slug        String    @unique
+  slug        String     @unique
   image       String?
-  inventory   Int       @default(0)
+  inventory   Int        @default(0)
+  CartItem    CartItem[]
 }
 
 model Category {
@@ -30,4 +31,26 @@ model Category {
   name     String
   slug     String    @unique
   products Product[]
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  items     CartItem[]
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  quantity  Int      @default(1)
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  cart      Cart     @relation(fields: [cartId], references: [id])
+  cartId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId])
+  @@index([cartId])
+  @@index([productId])
 }
