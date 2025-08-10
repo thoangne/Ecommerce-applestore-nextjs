@@ -20,8 +20,6 @@ export default async function Home(props: { searchParams: SearchParams }) {
   const totalProducts = await prisma.product.count();
   const totalPages = Math.ceil(totalProducts / pageSize);
 
-  // Simulate loading delay
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={[{ label: "Home", href: "/" }]} />

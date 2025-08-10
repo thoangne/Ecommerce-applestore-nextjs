@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 import { cookies } from 'next/headers';
 import { revalidateTag, unstable_cache } from 'next/cache';
+import { exportTraceState } from 'next/dist/trace';
 
 
 
@@ -104,6 +105,9 @@ async function findCartFromCookie():Promise<CartWithProducts | null> {
                     items: {
                         include: {
                             product: true
+                        },
+                        orderBy: {
+                            createdAt: 'desc'
                         }
                     }
                 }
@@ -185,3 +189,50 @@ export async function addToCart(ProductId:string,quantity: number =1 ) {
     }
     revalidateTag(`cart-${cart.id}`);
 }
+
+export type CartItemWithProduct = Prisma.CartItemGetPayload<{
+    include: {
+        product: true
+    }
+}>
+
+
+export async function setProductQuantity(productId: string, quantity: number) {
+    
+    const cart = await findCartFromCookie();
+
+    if (!cart) throw new Error("Cart not found");
+
+    //Todo: MAKE SURE THE PRODUCT INVENTORY IS NOT EXCEEDED
+    
+    try {
+        if (quantity === 0) {
+            await prisma.cartItem.deleteMany({
+                where: {
+                    cartId: cart.id,
+                    productId
+                }
+            });
+
+        } else {
+            await prisma.cartItem.updateMany({
+                where: {
+                   cartId: cart.id,
+                   productId
+                },
+                data: {
+                    quantity
+                }
+            });
+        }
+        revalidateTag(`cart-${cart.id}`);
+
+        console.debug(`Updated cart ${cart.id} item ${productId} to quantity ${quantity}`);
+
+    } catch (error) {
+        console.log("Error setting product quantity", error);
+        throw new Error("Error setting product quantity");
+    } 
+
+
+}   

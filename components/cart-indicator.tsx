@@ -2,12 +2,10 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import { getCart } from "@/lib/action";
 import Link from "next/link";
-import { delay } from "@/lib/utils";
 
 export async function CartIndicator() {
   const cart = await getCart();
   const cartSize = cart?.size ?? 0;
-  await delay(2000);
   return (
     <Button variant={"ghost"} size={"icon"} asChild className="relative">
       <Link href="/cart">

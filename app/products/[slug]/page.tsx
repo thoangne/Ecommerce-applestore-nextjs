@@ -1,12 +1,10 @@
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import Breadcrumbs from "@/components/breadscums";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getProductBySlug } from "@/lib/action";
-import { delay, formatPrice } from "@/lib/utils";
-import { ShoppingCart } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -56,7 +54,6 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     },
     { label: product.name, href: `/products/${product.slug}`, active: true },
   ];
-  // await delay(3000); // Simulate loading delay
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={breadcrumbItems} />

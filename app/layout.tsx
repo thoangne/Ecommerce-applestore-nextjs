@@ -18,7 +18,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Ecommerce Store",
   description: "The best ecommerce store",
-  viewport: "width=device-width, initial-scale=1",
+};
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
