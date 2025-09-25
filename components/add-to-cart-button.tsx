@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
 import { addToCart } from "@/lib/action";
 import { useState } from "react";
+import { mutate } from "swr";
 
 export function AddToCartButton({ product }: { product: Product }) {
   const [isAdded, setIsAdded] = useState(false);
@@ -12,8 +13,10 @@ export function AddToCartButton({ product }: { product: Product }) {
     try {
       setIsAdded(true);
       await addToCart(product.id);
+
+      mutate("/api/cart");
     } catch {
-      console.log("Error adding to cart");
+      console.error("Error adding to cart");
     } finally {
       setIsAdded(false);
     }

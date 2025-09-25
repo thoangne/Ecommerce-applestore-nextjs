@@ -1,5 +1,5 @@
+import { ProductCardSkeleton } from "@/app/products/ProductCardSkeleton";
 import React from "react";
-import { ProductCardSkeleton } from "../../app/products/ProductCardSkeleton";
 
 const ProductSkeleton = () => {
   return (

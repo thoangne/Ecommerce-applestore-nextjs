@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getProductBySlug } from "@/lib/action";
+import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -38,10 +39,20 @@ export async function generateMetadata({
   };
 }
 
+export const revalidate = 15; // Revalidate every 60 seconds
+
+export async function generateStaticParams() {
+  const products = await prisma.product.findMany({
+    select: { slug: true },
+  });
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
+}
+
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
-  console.log("Product:", product);
   if (!product) {
     return notFound();
   }
@@ -54,6 +65,20 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     },
     { label: product.name, href: `/products/${product.slug}`, active: true },
   ];
+  const jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: product.name,
+    image: product.image,
+    description: product.description,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: product.price.toString(),
+      availability: product.inventory > 0 ? "InStock" : "OutOfStock",
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${product.slug}`,
+    },
+  };
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={breadcrumbItems} />
@@ -117,8 +142,12 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           </div>
         </CardContent>
       </Card>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        id="product-jsonld"
+      ></script>
     </main>
   );
 };
-
 export default page;

@@ -1,12 +1,11 @@
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { ModeToggle } from "./mode-toogle";
-import { Button } from "./ui/button";
-import { Search, ShoppingCart } from "lucide-react";
 import MobileNav from "./mobileNav";
 import SearchInput from "./search-input";
 import { CartIndicator } from "./cart-indicator";
 import { CartIndicatorSkeleton } from "./cart-indicator-skeleton";
+import AuthStatus from "./auth-status";
 
 const Category = [
   { name: "All", href: "/products" },
@@ -50,9 +49,8 @@ export default function NavBar() {
               <Search className="w-4 h-4" />
             </Link>
           </Button> */}
-          <Suspense fallback={<CartIndicatorSkeleton />}>
-            <CartIndicator />
-          </Suspense>
+          <AuthStatus />
+          <CartIndicator />
           <ModeToggle />
         </div>
       </div>

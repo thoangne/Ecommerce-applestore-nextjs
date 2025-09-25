@@ -1,4 +1,4 @@
-import { GetProductParams, getProducts } from "@/lib/action";
+import { getProductCached, GetProductParams } from "@/lib/action";
 import React from "react";
 import { ProductList } from "./product-list";
 
@@ -8,6 +8,6 @@ interface ProductListServerWrapperProps {
 export async function ProductListServerWrapper({
   params,
 }: ProductListServerWrapperProps) {
-  const products = await getProducts(params);
+  const products = await getProductCached(params);
   return <ProductList products={products} />;
 }

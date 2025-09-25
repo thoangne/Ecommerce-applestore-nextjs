@@ -1,4 +1,5 @@
-import { Product } from '@prisma/client';
+import { hashPassword } from '@/lib/auth';
+import { Product, User } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -7,7 +8,7 @@ const prisma = new PrismaClient();
 async function main() {
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
-
+    await prisma.user.deleteMany();
 
     const eletronics = await prisma.category.create({
         data: {
@@ -175,9 +176,24 @@ async function main() {
     await prisma.product.createMany({
         data: products
     })
-
-
-
+    const users:User[] = Array.from({length: 5}, (_, i) => ({
+        id: String(i + 1),
+        name: `User ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+        password: 'password',
+        role: i % 2 === 0 ? 'admin' : 'user',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }))
+    for (const user of users) {
+        const hashedPassword = await hashPassword(user.password);
+        await prisma.user.create({
+            data: {
+                ...user,
+                password: hashedPassword
+            }
+        })
+    }
 
 }
 
