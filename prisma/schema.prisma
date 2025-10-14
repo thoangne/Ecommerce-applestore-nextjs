@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,32 +7,77 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
-  id          String      @id @default(cuid())
-  name        String
-  description String?
-  price       Int
-  Category    Category?   @relation(fields: [categoryId], references: [id])
-  categoryId  String?
-  slug        String      @unique
-  image       String?
-  inventory   Int         @default(0)
-  CartItem    CartItem[]
-  orderItem   OrderItem[]
+//
+// ─── USER ───────────────────────────────────────────────────────────────
+//
+model User {
+  id               String             @id @default(cuid())
+  email            String             @unique
+  password         String
+  name             String?
+  phone            String?
+  address          String?
+  role             String             @default("user") // user | admin | staff
+  isActive         Boolean            @default(true) // có bị khóa tài khoản không
+  lastLogin        DateTime? // lần đăng nhập gần nhất
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  orders           Order[]
+  reviews          Review[]
+  promotions       PromotionUsage[]
+  activityLogs     ActivityLog[] // liên kết nhật ký hoạt động
+  InventoryHistory InventoryHistory[]
+  Feedback         Feedback[]
+  Notification     Notification[]
 }
 
+//
+// ─── CATEGORY ───────────────────────────────────────────────────────────────
+//
 model Category {
-  id       String    @id @default(cuid())
-  name     String
-  slug     String    @unique
-  products Product[]
+  id            String     @id @default(cuid())
+  name          String
+  slug          String     @unique
+  parentId      String?
+  parent        Category?  @relation("Subcategories", fields: [parentId], references: [id])
+  subcategories Category[] @relation("Subcategories")
+  products      Product[]
 }
 
+//
+// ─── PRODUCT ───────────────────────────────────────────────────────────────
+//
+model Product {
+  id               String             @id @default(cuid())
+  name             String
+  slug             String             @unique
+  description      String?
+  price            Int
+  color            String?
+  storage          String?
+  specs            Json?
+  releasedAt       DateTime?
+  images           String[]
+  inventory        Int                @default(0)
+  Category         Category?          @relation(fields: [categoryId], references: [slug])
+  categoryId       String?
+  CartItem         CartItem[]
+  orderItem        OrderItem[]
+  reviews          Review[]
+  promotions       Promotion[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  InventoryHistory InventoryHistory[]
+}
+
+//
+// ─── CART ───────────────────────────────────────────────────────────────
+//
 model Cart {
   id        String     @id @default(cuid())
   createdAt DateTime   @default(now())
-  items     CartItem[]
   updatedAt DateTime   @updatedAt
+  items     CartItem[]
 }
 
 model CartItem {
@@ -56,17 +95,28 @@ model CartItem {
   @@index([productId])
 }
 
+//
+// ─── ORDER (LỊCH SỬ MUA HÀNG) ───────────────────────────────────────────────
+//
 model Order {
   id                    String      @id @default(cuid())
   total                 Float
   items                 OrderItem[]
   stripeSessionId       String?
   stripePaymentIntentId String?
-  status                String      @default("PENGDING")
+  status                String      @default("PENDING")
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
   userId                String?
   user                  User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // 👇 Quan hệ sửa lại cho chuẩn
+  usedPromotionId String?
+  usedPromotion   Promotion?       @relation("OrderPromotion", fields: [usedPromotionId], references: [id])
+  Promotion       Promotion?       @relation(fields: [promotionId], references: [id])
+  promotionId     String?
+  PromotionUsage  PromotionUsage[]
+  Payment         Payment[]
 }
 
 model OrderItem {
@@ -84,13 +134,114 @@ model OrderItem {
   @@index([productId])
 }
 
-model User {
+//
+// ─── REVIEW (ĐÁNH GIÁ SẢN PHẨM) ───────────────────────────────────────────────
+//
+model Review {
   id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String?
-  role      String   @default("user")
+  content   String
+  rating    Int      @default(5)
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders    Order[]
+}
+
+//
+// ─── PROMOTION (KHUYẾN MÃI / MÃ GIẢM GIÁ) ───────────────────────────────────────────────
+//
+model Promotion {
+  id            String           @id @default(cuid())
+  code          String           @unique
+  description   String?
+  discountType  String // "PERCENT" | "FIXED"
+  discountValue Float
+  startDate     DateTime
+  endDate       DateTime
+  minOrder      Float?
+  usageLimit    Int?
+  isActive      Boolean          @default(true)
+  products      Product[]
+  usersUsed     PromotionUsage[]
+  ordersUsed    Order[]          @relation("OrderPromotion") // 👈 thêm dòng này
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  Order         Order[]
+}
+
+model PromotionUsage {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  promotion   Promotion @relation(fields: [promotionId], references: [id])
+  promotionId String
+  usedAt      DateTime  @default(now())
+  orderId     String?
+  order       Order?    @relation(fields: [orderId], references: [id])
+}
+
+model InventoryHistory {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  change    Int // +10 = nhập hàng, -2 = bán ra, -1 = hủy
+  reason    String? // "restock", "sale", "return", "adjustment"
+  createdBy User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  createdAt DateTime @default(now())
+}
+
+model Payment {
+  id            String    @id @default(cuid())
+  order         Order     @relation(fields: [orderId], references: [id])
+  orderId       String
+  amount        Float
+  method        String // "stripe" | "vnpay" | "momo" | "cash"
+  status        String    @default("PENDING") // PENDING, PAID, FAILED, REFUNDED
+  transactionId String?
+  paidAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  action    String // "CREATE_PRODUCT", "UPDATE_ORDER", "DELETE_PROMOTION", ...
+  targetId  String? // ID của đối tượng bị tác động (Product, Order, v.v.)
+  details   String? // mô tả thêm (JSON text)
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  message   String
+  type      String   @default("general") // "general" | "complaint" | "request"
+  status    String   @default("PENDING") // "PENDING" | "REVIEWED" | "RESOLVED"
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  title     String
+  message   String
+  type      String? // "order", "promotion", "system"
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model DashboardStat {
+  id           String   @id @default(cuid())
+  date         DateTime
+  totalOrders  Int
+  totalRevenue Float
+  newUsers     Int
+  createdAt    DateTime @default(now())
 }
