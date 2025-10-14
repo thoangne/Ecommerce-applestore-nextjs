@@ -1,5 +1,4 @@
 import React, { Suspense } from "react";
-import { prisma } from "@/lib/prisma";
 import {
   Pagination,
   PaginationContent,
@@ -11,15 +10,15 @@ import {
 import ProductSkeleton from "./products/ProductSkeleton";
 import Breadcrumbs from "@/components/breadscums";
 import { ProductListServerWrapper } from "@/components/ProductListServerWrapper";
+import { getProductsCountCached } from "@/lib/action";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function Home(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams;
   const page = Number(searchParams.page) || 1;
   const pageSize = 8;
-  const totalProducts = await prisma.product.count();
+  const totalProducts = await getProductsCountCached();
   const totalPages = Math.ceil(totalProducts / pageSize);
-
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={[{ label: "Home", href: "/" }]} />

@@ -1,7 +1,5 @@
 import { getCart } from "@/lib/action";
 import { formatPrice } from "@/lib/utils";
-import { Button } from "./ui/button";
-import Link from "next/link";
 
 export default async function CartSummary() {
   const cart = await getCart();
@@ -12,7 +10,7 @@ export default async function CartSummary() {
   const subtotal = cart.subtotal;
   const taxes = 0;
   const shipping = 0;
-  const total = subtotal * taxes * shipping;
+  const total = subtotal + taxes + shipping;
 
   return (
     <div className="flex flex-col gap-4">
@@ -34,10 +32,6 @@ export default async function CartSummary() {
           <p className="text-base text-foreground">{formatPrice(total)}</p>
         </div>
       </div>
-
-      <Button size={"lg"} asChild className="mt-4 w-full">
-        <Link href="/checkout">Checkout</Link>
-      </Button>
     </div>
   );
 }

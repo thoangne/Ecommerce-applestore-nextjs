@@ -1,0 +1,278 @@
+[
+    {
+        "name": "MacBook Air M1 (2020)",
+        "slug": "macbook-air-m1-2020",
+        "description": "MacBook Air M1 2020 là chiếc Mac đầu tiên dùng chip Apple Silicon. Hiệu năng mạnh, pin bền, không quạt, thiết kế mỏng nhẹ.",
+        "price": 22990000,
+        "color": "Gold, Silver, Space Gray",
+        "storage": "256GB SSD, 512GB SSD",
+        "specs": {
+            "chip": "Apple M1 (8-core CPU, 7-core GPU)",
+            "ram": "8GB Unified Memory",
+            "display": "13.3 inch Retina (2560x1600)",
+            "battery": "18 giờ",
+            "os": "macOS Sonoma",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "1.29 kg"
+        },
+        "releasedAt": "2020-11-17T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-air-m1-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m1-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m1-back.jpg"
+        ],
+        "inventory": 40,
+        "categoryId": "macbook-air"
+    },
+    {
+        "name": "MacBook Air M2 (2022)",
+        "slug": "macbook-air-m2-2022",
+        "description": "MacBook Air M2 2022 với thiết kế hoàn toàn mới, viền mỏng hơn, camera 1080p và chip M2 nhanh hơn 40% so với M1.",
+        "price": 28990000,
+        "color": "Midnight, Starlight, Silver, Space Gray",
+        "storage": "256GB SSD, 512GB SSD, 1TB SSD",
+        "specs": {
+            "chip": "Apple M2 (8-core CPU, 8-core GPU)",
+            "ram": "8GB / 16GB Unified Memory",
+            "display": "13.6 inch Liquid Retina (2560x1664)",
+            "battery": "18 giờ",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe 3, 2x Thunderbolt 3, Headphone jack",
+            "weight": "1.24 kg"
+        },
+        "releasedAt": "2022-07-15T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-air-m2-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m2-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m2-back.jpg"
+        ],
+        "inventory": 55,
+        "categoryId": "macbook-air"
+    },
+    {
+        "name": "MacBook Air M2 (15-inch, 2023)",
+        "slug": "macbook-air-m2-15-2023",
+        "description": "MacBook Air M2 15 inch 2023 có màn hình lớn hơn, mỏng ấn tượng chỉ 11.5mm, chip M2 và âm thanh 6 loa sống động.",
+        "price": 33990000,
+        "color": "Midnight, Starlight, Silver, Space Gray",
+        "storage": "256GB SSD, 512GB SSD, 1TB SSD",
+        "specs": {
+            "chip": "Apple M2 (8-core CPU, 10-core GPU)",
+            "ram": "8GB / 16GB Unified Memory",
+            "display": "15.3 inch Liquid Retina (2880x1864)",
+            "battery": "18 giờ",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe 3, 2x Thunderbolt 3, Headphone jack",
+            "weight": "1.51 kg"
+        },
+        "releasedAt": "2023-06-13T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-air-m2-15-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m2-15-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m2-15-back.jpg"
+        ],
+        "inventory": 45,
+        "categoryId": "macbook-air"
+    },
+    {
+        "name": "MacBook Air M3 (2024)",
+        "slug": "macbook-air-m3-2024",
+        "description": "MacBook Air M3 2024 mang chip M3 3nm mới, hiệu năng GPU vượt trội, hỗ trợ tối đa 2 màn hình ngoài và thời lượng pin 18 giờ.",
+        "price": 31990000,
+        "color": "Midnight, Starlight, Silver, Space Gray",
+        "storage": "256GB SSD, 512GB SSD, 1TB SSD, 2TB SSD",
+        "specs": {
+            "chip": "Apple M3 (8-core CPU, 10-core GPU)",
+            "ram": "8GB / 16GB / 24GB Unified Memory",
+            "display": "13.6 inch Liquid Retina (2560x1664)",
+            "battery": "18 giờ",
+            "os": "macOS Sequoia",
+            "ports": "MagSafe 3, 2x Thunderbolt 3, Headphone jack",
+            "weight": "1.24 kg"
+        },
+        "releasedAt": "2024-03-08T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-air-m3-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m3-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-air-m3-back.jpg"
+        ],
+        "inventory": 60,
+        "categoryId": "macbook-air"
+    },
+    {
+        "name": "MacBook Pro 13-inch M2 (2022)",
+        "slug": "macbook-pro-13-m2-2022",
+        "description": "MacBook Pro 13-inch M2 2022 giữ nguyên thiết kế truyền thống nhưng được nâng cấp chip M2 cho hiệu năng CPU nhanh hơn 18% và GPU mạnh hơn 35% so với M1.",
+        "price": 32990000,
+        "color": "Silver, Space Gray",
+        "storage": "256GB SSD, 512GB SSD, 1TB SSD, 2TB SSD",
+        "specs": {
+            "chip": "Apple M2 (8-core CPU, 10-core GPU)",
+            "ram": "8GB / 16GB / 24GB Unified Memory",
+            "display": "13.3 inch Retina (2560x1600)",
+            "battery": "20 giờ",
+            "os": "macOS Sonoma",
+            "ports": "2x Thunderbolt 3 (USB-C), Headphone jack",
+            "weight": "1.4 kg",
+            "touchBar": true
+        },
+        "releasedAt": "2022-06-24T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-pro-13-m2-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-13-m2-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-13-m2-back.jpg"
+        ],
+        "inventory": 40,
+        "categoryId": "macbook-pro"
+    },
+    {
+        "name": "MacBook Pro 14-inch M1 Pro (2021)",
+        "slug": "macbook-pro-14-m1pro-2021",
+        "description": "MacBook Pro 14-inch M1 Pro 2021 có màn hình Mini-LED, hiệu năng vượt trội và cổng HDMI, MagSafe 3 quay trở lại.",
+        "price": 49990000,
+        "color": "Silver, Space Gray",
+        "storage": "512GB SSD, 1TB SSD, 2TB SSD",
+        "specs": {
+            "chip": "Apple M1 Pro (10-core CPU, 16-core GPU)",
+            "ram": "16GB / 32GB Unified Memory",
+            "display": "14.2 inch Liquid Retina XDR (3024x1964, ProMotion 120Hz)",
+            "battery": "17 giờ",
+            "os": "macOS Monterey",
+            "ports": "MagSafe 3, HDMI, SDXC, 3x Thunderbolt 4",
+            "weight": "1.6 kg"
+        },
+        "releasedAt": "2021-10-26T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m1pro-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m1pro-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m1pro-back.jpg"
+        ],
+        "inventory": 35,
+        "categoryId": "macbook-pro"
+    },
+    {
+        "name": "MacBook Pro 16-inch M1 Max (2021)",
+        "slug": "macbook-pro-16-m1max-2021",
+        "description": "MacBook Pro 16-inch M1 Max là dòng máy mạnh nhất của Apple năm 2021, với GPU 32 nhân, RAM 64GB và pin 100Wh cho 21 giờ sử dụng.",
+        "price": 69990000,
+        "color": "Silver, Space Gray",
+        "storage": "1TB SSD, 2TB SSD, 4TB SSD, 8TB SSD",
+        "specs": {
+            "chip": "Apple M1 Max (10-core CPU, 32-core GPU)",
+            "ram": "32GB / 64GB Unified Memory",
+            "display": "16.2 inch Liquid Retina XDR (3456x2234, ProMotion 120Hz)",
+            "battery": "21 giờ",
+            "os": "macOS Monterey",
+            "ports": "MagSafe 3, HDMI, SDXC, 3x Thunderbolt 4",
+            "weight": "2.1 kg"
+        },
+        "releasedAt": "2021-10-26T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m1max-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m1max-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m1max-back.jpg"
+        ],
+        "inventory": 25,
+        "categoryId": "macbook-pro"
+    },
+    {
+        "name": "MacBook Pro 14-inch M2 Pro (2023)",
+        "slug": "macbook-pro-14-m2pro-2023",
+        "description": "MacBook Pro 14-inch M2 Pro 2023 mang đến hiệu năng đồ họa cao hơn 30%, màn hình XDR siêu sáng và thời lượng pin 18 giờ.",
+        "price": 51990000,
+        "color": "Silver, Space Gray",
+        "storage": "512GB SSD, 1TB SSD, 2TB SSD",
+        "specs": {
+            "chip": "Apple M2 Pro (12-core CPU, 19-core GPU)",
+            "ram": "16GB / 32GB Unified Memory",
+            "display": "14.2 inch Liquid Retina XDR (3024x1964, ProMotion 120Hz)",
+            "battery": "18 giờ",
+            "os": "macOS Ventura",
+            "ports": "MagSafe 3, HDMI, SDXC, 3x Thunderbolt 4",
+            "weight": "1.6 kg"
+        },
+        "releasedAt": "2023-01-24T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m2pro-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m2pro-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m2pro-back.jpg"
+        ],
+        "inventory": 45,
+        "categoryId": "macbook-pro"
+    },
+    {
+        "name": "MacBook Pro 16-inch M2 Max (2023)",
+        "slug": "macbook-pro-16-m2max-2023",
+        "description": "MacBook Pro 16-inch M2 Max 2023 là cỗ máy tối thượng cho nhà sáng tạo: GPU 38 nhân, RAM 96GB, pin 22 giờ và màn hình XDR tuyệt đẹp.",
+        "price": 72990000,
+        "color": "Silver, Space Gray",
+        "storage": "1TB SSD, 2TB SSD, 4TB SSD, 8TB SSD",
+        "specs": {
+            "chip": "Apple M2 Max (12-core CPU, 38-core GPU)",
+            "ram": "32GB / 64GB / 96GB Unified Memory",
+            "display": "16.2 inch Liquid Retina XDR (3456x2234, ProMotion 120Hz)",
+            "battery": "22 giờ",
+            "os": "macOS Ventura",
+            "ports": "MagSafe 3, HDMI, SDXC, 3x Thunderbolt 4",
+            "weight": "2.2 kg"
+        },
+        "releasedAt": "2023-01-24T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m2max-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m2max-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m2max-back.jpg"
+        ],
+        "inventory": 30,
+        "categoryId": "macbook-pro"
+    },
+    {
+        "name": "MacBook Pro 14-inch M3 Pro (2024)",
+        "slug": "macbook-pro-14-m3pro-2024",
+        "description": "MacBook Pro 14-inch M3 Pro 2024 sử dụng chip 3nm, hiệu năng CPU tăng 20%, GPU hỗ trợ ray tracing, và pin lên đến 18 giờ.",
+        "price": 53990000,
+        "color": "Space Black, Silver",
+        "storage": "512GB SSD, 1TB SSD, 2TB SSD",
+        "specs": {
+            "chip": "Apple M3 Pro (12-core CPU, 18-core GPU)",
+            "ram": "18GB / 36GB Unified Memory",
+            "display": "14.2 inch Liquid Retina XDR (3024x1964, ProMotion 120Hz)",
+            "battery": "18 giờ",
+            "os": "macOS Sequoia",
+            "ports": "MagSafe 3, HDMI, SDXC, 3x Thunderbolt 4",
+            "weight": "1.6 kg"
+        },
+        "releasedAt": "2024-03-08T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m3pro-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m3pro-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m3pro-back.jpg"
+        ],
+        "inventory": 50,
+        "categoryId": "macbook-pro"
+    },
+    {
+        "name": "MacBook Pro 16-inch M3 Max (2024)",
+        "slug": "macbook-pro-16-m3max-2024",
+        "description": "MacBook Pro 16-inch M3 Max là biểu tượng hiệu năng mới của Apple với GPU 40 nhân, RAM 128GB và thời lượng pin khủng 22 giờ.",
+        "price": 79990000,
+        "color": "Space Black, Silver",
+        "storage": "1TB SSD, 2TB SSD, 4TB SSD, 8TB SSD",
+        "specs": {
+            "chip": "Apple M3 Max (16-core CPU, 40-core GPU)",
+            "ram": "36GB / 64GB / 128GB Unified Memory",
+            "display": "16.2 inch Liquid Retina XDR (3456x2234, ProMotion 120Hz)",
+            "battery": "22 giờ",
+            "os": "macOS Sequoia",
+            "ports": "MagSafe 3, HDMI, SDXC, 3x Thunderbolt 4",
+            "weight": "2.2 kg"
+        },
+        "releasedAt": "2024-03-08T00:00:00.000Z",
+        "images": [
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m3max-front.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m3max-side.jpg",
+            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m3max-back.jpg"
+        ],
+        "inventory": 25,
+        "categoryId": "macbook-pro"
+    }
+]

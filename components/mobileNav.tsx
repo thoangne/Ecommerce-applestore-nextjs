@@ -15,9 +15,11 @@ import Link from "next/link";
 
 const Category = [
   { name: "All", href: "/products" },
-  { name: "Electronics", href: "/products/electronics" },
-  { name: "Books", href: "/products/books" },
-  { name: "Clothing", href: "/products/clothing" },
+  { name: "Iphone", href: "/search/iphone " },
+  { name: "Ipad", href: "/search/ipad" },
+  { name: "Macbook", href: "/search/macbook" },
+  { name: "Apple Watch", href: "/search/apple-watch" },
+  { name: "Airpods", href: "/search/airpods" },
 ];
 
 export default function MobileNav() {

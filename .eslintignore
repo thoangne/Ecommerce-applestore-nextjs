@@ -1,0 +1,13 @@
+# Bỏ qua các thư mục auto-generated
+.next/
+node_modules/
+dist/
+build/
+
+# Prisma & client generated
+prisma/generated/
+app/generated/
+**/generated/
+
+# TypeScript build outputs
+*.tsbuildinfo

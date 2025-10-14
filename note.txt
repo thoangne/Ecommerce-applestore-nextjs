@@ -49,3 +49,15 @@ useSearchParams()	Truy cập các query string hiện tại, giống URLSearchPa
 [23:48] 8/4/2025 Đã fix xong giao diện chi tiết
 
 [22:32] 8/5/2025 VCC phần sorting hay filter nó làm chi tiết vãi cả linh hồn, nói chung là chia tách từng component khá là rắc rối
+
+[tìm hiểu về workflow của stripe] 
+
+[Catch all segment in nextjs] cần đọc về cái này
+
+
+//SEO
+[sitemap] [metadata]
+[jsonLd] =
+{robots.txt} => để hướng dẫn Bot search engine truy cập vào các metadata để crawl dữ liệu, 
+//Perform
+[Incremental Static Regeneration (ISR)]https://chatgpt.com/s/t_68ccd1f9da9c8191b88f361a35d37278

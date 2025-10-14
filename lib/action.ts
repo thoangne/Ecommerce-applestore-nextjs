@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 import { cookies } from 'next/headers';
 import { revalidateTag, unstable_cache } from 'next/cache';
-import { exportTraceState } from 'next/dist/trace';
+import { createProductCacheKEY, createProductsTagKey } from '@/components/cache-keys';
 
 
 
@@ -59,7 +59,37 @@ export async function getProducts({ slug, query, sort, page=1, pageSize=18 }: Ge
         take
     })
 }
-export async function getProductBySlug(slug: string) {
+export async function getProductCached({
+  query,
+  slug,
+  sort,
+  page = 1,
+  pageSize = 3,
+}: GetProductParams) {
+  const cacheKey = createProductCacheKEY({
+    categorySlug: slug,
+    search: query,
+    sort,
+    limit: pageSize,
+    page,
+  });
+
+  const cacheTag = createProductsTagKey({
+    search: query,
+    categorySlug: slug,
+  });
+
+  return await unstable_cache(
+    async () => {
+      return await getProducts({ query, slug, sort, page, pageSize });
+    },
+    [cacheKey], // cache key phải là mảng
+      {
+          tags: [cacheTag],
+        revalidate: 3600
+     }
+  )();
+}export async function getProductBySlug(slug: string) {
     const product = await prisma.product.findUnique({
         where: {
             slug
@@ -73,7 +103,6 @@ export async function getProductBySlug(slug: string) {
 
     return product;
 }
-
 export type CartWithProducts = Prisma.CartGetPayload<{
     include: {
         items: {
@@ -83,14 +112,11 @@ export type CartWithProducts = Prisma.CartGetPayload<{
         }
     }
 }>
-
 export type ShoppingCart = CartWithProducts & {
     size: number,
     subtotal: number,
    
 }
-
-
 async function findCartFromCookie():Promise<CartWithProducts | null> {
     const cartId = (await cookies()).get('cartId')?.value;
     if (!cartId) return null;
@@ -127,8 +153,6 @@ export async function getCart(): Promise<ShoppingCart | null> {
         subtotal: cart.items.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
     }
 }
-
-
 async function getOrCreateCart(): Promise<CartWithProducts> {
     let cart = await findCartFromCookie(); 
 
@@ -155,8 +179,6 @@ async function getOrCreateCart(): Promise<CartWithProducts> {
 
     return cart;
 }
-
-
 export async function addToCart(ProductId:string,quantity: number =1 ) {
     if (quantity < 1) {
         throw new Error("Quantity must be at least 1");
@@ -189,14 +211,11 @@ export async function addToCart(ProductId:string,quantity: number =1 ) {
     }
     revalidateTag(`cart-${cart.id}`);
 }
-
 export type CartItemWithProduct = Prisma.CartItemGetPayload<{
     include: {
         product: true
     }
 }>
-
-
 export async function setProductQuantity(productId: string, quantity: number) {
     
     const cart = await findCartFromCookie();
@@ -227,12 +246,43 @@ export async function setProductQuantity(productId: string, quantity: number) {
         }
         revalidateTag(`cart-${cart.id}`);
 
-        console.debug(`Updated cart ${cart.id} item ${productId} to quantity ${quantity}`);
 
     } catch (error) {
-        console.log("Error setting product quantity", error);
+        console.error("Error setting product quantity", error);
         throw new Error("Error setting product quantity");
     } 
 
 
 }   
+
+export async function getProductsCountCached() {
+    return unstable_cache(
+        async () => {
+            return await prisma.product.count();
+        },
+        ["product-count"],
+        { revalidate: 3600 }
+    )();
+}
+
+export async function getCategoryBySlug(slug:string) {
+    return await prisma.category.findUnique({
+        where: {
+            slug
+        },select: {
+            name: true,
+            slug: true,
+        }
+    })
+}
+
+export async function getCategoriesCountCached(slug: string) {
+    return unstable_cache(
+         () => {
+            return  prisma.category.count();
+        },
+        ["category-count"], {
+        tags: [`category-count-${slug}`],revalidate: 3600
+    }
+    )();
+}

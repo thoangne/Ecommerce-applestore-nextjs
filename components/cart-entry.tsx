@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { Minus, Plus, X, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/lib/use-cart";
 
 interface CartEntryProps {
   cartItem: CartItemWithProduct;
@@ -11,11 +12,12 @@ interface CartEntryProps {
 
 export default function CartEntry({ cartItem }: CartEntryProps) {
   const [loading, setLoading] = useState(false);
-
+  const { revalidateCart } = useCart();
   const handleSetProductQuantity = async (quantity: number) => {
     setLoading(true);
     try {
       await setProductQuantity(cartItem.product.id, quantity);
+      revalidateCart();
     } catch (error) {
       console.error("Failed to set item quantity", error);
     } finally {
@@ -45,13 +47,16 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
       {/* Hình ảnh + thông tin */}
       <div className="flex space-x-4">
         <div className="overflow-hidden rounded-md border border-muted w-28 h-28 flex-shrink-0">
-          <Image
-            src={cartItem.product.image ?? "/placeholder.png"}
-            alt={cartItem.product.name}
-            className="object-cover w-full h-full"
-            width={112}
-            height={112}
-          />
+          {cartItem.product.image && (
+            <Image
+              src={cartItem.product.image ?? "/placeholder.png"}
+              alt={cartItem.product.name}
+              className="object-cover w-full h-full"
+              width={112}
+              height={112}
+              priority
+            />
+          )}
         </div>
         <div className="flex flex-col justify-center">
           <h2 className="text-lg font-semibold">{cartItem.product.name}</h2>
