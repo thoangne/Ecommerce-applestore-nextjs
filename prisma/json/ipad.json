@@ -20,9 +20,9 @@
         },
         "releasedAt": "2022-10-26T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/ipad10-front.jpg",
-            "https://store.storeimages.cdn-apple.com/ipad10-back.jpg",
-            "https://store.storeimages.cdn-apple.com/ipad10-side.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 50,
         "categoryId": "ipad-10th-gen"
@@ -49,9 +49,9 @@
         },
         "releasedAt": "2024-05-07T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/ipadpro/11-2024-front.jpg",
-            "https://store.storeimages.cdn-apple.com/ipadpro/11-2024-back.jpg",
-            "https://store.storeimages.cdn-apple.com/ipadpro/11-2024-side.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 50,
         "categoryId": "ipad-pro"
@@ -78,9 +78,9 @@
         },
         "releasedAt": "2024-05-07T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/ipadpro/13-2024-front.jpg",
-            "https://store.storeimages.cdn-apple.com/ipadpro/13-2024-back.jpg",
-            "https://store.storeimages.cdn-apple.com/ipadpro/13-2024-side.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 40,
         "categoryId": "ipad-pro"
@@ -107,9 +107,9 @@
         },
         "releasedAt": "2022-10-26T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/ipadpro/12-9-2022-front.jpg",
-            "https://store.storeimages.cdn-apple.com/ipadpro/12-9-2022-back.jpg",
-            "https://store.storeimages.cdn-apple.com/ipadpro/12-9-2022-side.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 35,
         "categoryId": "ipad-pro"

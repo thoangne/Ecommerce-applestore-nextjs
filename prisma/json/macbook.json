@@ -17,9 +17,9 @@
         },
         "releasedAt": "2020-11-17T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-air-m1-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m1-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m1-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 40,
         "categoryId": "macbook-air"
@@ -42,9 +42,9 @@
         },
         "releasedAt": "2022-07-15T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-air-m2-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m2-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m2-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 55,
         "categoryId": "macbook-air"
@@ -67,9 +67,9 @@
         },
         "releasedAt": "2023-06-13T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-air-m2-15-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m2-15-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m2-15-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 45,
         "categoryId": "macbook-air"
@@ -92,9 +92,9 @@
         },
         "releasedAt": "2024-03-08T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-air-m3-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m3-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-air-m3-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 60,
         "categoryId": "macbook-air"
@@ -118,9 +118,9 @@
         },
         "releasedAt": "2022-06-24T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-pro-13-m2-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-13-m2-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-13-m2-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 40,
         "categoryId": "macbook-pro"
@@ -143,9 +143,9 @@
         },
         "releasedAt": "2021-10-26T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m1pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m1pro-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m1pro-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 35,
         "categoryId": "macbook-pro"
@@ -168,9 +168,9 @@
         },
         "releasedAt": "2021-10-26T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m1max-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m1max-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m1max-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 25,
         "categoryId": "macbook-pro"
@@ -193,9 +193,9 @@
         },
         "releasedAt": "2023-01-24T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m2pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m2pro-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m2pro-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 45,
         "categoryId": "macbook-pro"
@@ -218,9 +218,9 @@
         },
         "releasedAt": "2023-01-24T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m2max-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m2max-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m2max-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 30,
         "categoryId": "macbook-pro"
@@ -243,9 +243,9 @@
         },
         "releasedAt": "2024-03-08T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m3pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m3pro-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-14-m3pro-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 50,
         "categoryId": "macbook-pro"
@@ -268,9 +268,9 @@
         },
         "releasedAt": "2024-03-08T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m3max-front.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m3max-side.jpg",
-            "https://store.storeimages.cdn-apple.com/macbook-pro-16-m3max-back.jpg"
+            "../image/default.png",
+            "../image/default.png",
+            "../image/default.png"
         ],
         "inventory": 25,
         "categoryId": "macbook-pro"

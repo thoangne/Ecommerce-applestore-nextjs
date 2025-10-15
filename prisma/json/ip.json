@@ -18,9 +18,8 @@
         },
         "releasedAt": "2021-09-24T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone13-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone13-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone13-side.jpg"
+            "../image/13d.png",
+            "../image/13h.png"
         ],
         "inventory": 75,
         "categoryId": "iphone-13"
@@ -44,9 +43,7 @@
         },
         "releasedAt": "2021-09-24T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone13pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone13pro-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone13pro-side.jpg"
+            "../image/13pro.png"
         ],
         "inventory": 60,
         "categoryId": "iphone-13"
@@ -70,9 +67,7 @@
         },
         "releasedAt": "2021-09-24T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone13promax-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone13promax-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone13promax-side.jpg"
+            "../image/13promax.png"
         ],
         "inventory": 55,
         "categoryId": "iphone-13"
@@ -95,9 +90,7 @@
         },
         "releasedAt": "2022-09-16T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone14-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone14-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone14-side.jpg"
+            "../image/14.png"
         ],
         "inventory": 80,
         "categoryId": "iphone-14"
@@ -120,9 +113,7 @@
         },
         "releasedAt": "2022-09-16T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone14pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone14pro-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone14pro-side.jpg"
+            "../image/14t.png"
         ],
         "inventory": 60,
         "categoryId": "iphone-14"
@@ -145,9 +136,7 @@
         },
         "releasedAt": "2022-09-16T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone14promax-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone14promax-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone14promax-side.jpg"
+            "../image/14t.png"
         ],
         "inventory": 55,
         "categoryId": "iphone-14"
@@ -170,9 +159,7 @@
         },
         "releasedAt": "2023-09-22T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone15-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone15-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone15-side.jpg"
+            "../image/15.png"
         ],
         "inventory": 90,
         "categoryId": "iphone-15"
@@ -195,9 +182,7 @@
         },
         "releasedAt": "2023-09-22T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone15pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone15pro-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone15pro-side.jpg"
+            "../image/15.png"
         ],
         "inventory": 70,
         "categoryId": "iphone-15"
@@ -220,9 +205,7 @@
         },
         "releasedAt": "2023-09-22T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone15promax-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone15promax-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone15promax-side.jpg"
+            "../image/15.png"
         ],
         "inventory": 65,
         "categoryId": "iphone-15"
@@ -245,9 +228,7 @@
         },
         "releasedAt": "2024-09-20T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone16-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16-side.jpg"
+            "../image/16.png"
         ],
         "inventory": 85,
         "categoryId": "iphone-16"
@@ -270,9 +251,7 @@
         },
         "releasedAt": "2024-09-20T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone16plus-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16plus-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16plus-side.jpg"
+            "../image/16.png"
         ],
         "inventory": 75,
         "categoryId": "iphone-16"
@@ -295,9 +274,7 @@
         },
         "releasedAt": "2024-09-20T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone16pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16pro-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16pro-side.jpg"
+            "../image/16.png"
         ],
         "inventory": 70,
         "categoryId": "iphone-16"
@@ -320,9 +297,7 @@
         },
         "releasedAt": "2024-09-20T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone16promax-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16promax-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone16promax-side.jpg"
+            "../image/16.png"
         ],
         "inventory": 60,
         "categoryId": "iphone-17"
@@ -345,9 +320,7 @@
         },
         "releasedAt": "2025-09-19T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone17-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone17-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone17-side.jpg"
+            "../image/17.png"
         ],
         "inventory": 90,
         "categoryId": "iphone-17"
@@ -370,9 +343,7 @@
         },
         "releasedAt": "2025-09-19T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone17promax-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone17promax-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone17promax-side.jpg"
+            "../image/17.png"
         ],
         "inventory": 55,
         "categoryId": "iphone-17"
@@ -396,9 +367,7 @@
         },
         "releasedAt": "2020-10-23T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone12-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone12-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone12-side.jpg"
+            "../image/12d.png"
         ],
         "inventory": 70,
         "categoryId": "iphone-12"
@@ -422,9 +391,7 @@
         },
         "releasedAt": "2020-10-23T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone12pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone12pro-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone12pro-side.jpg"
+            "../image/12d.png"
         ],
         "inventory": 60,
         "categoryId": "iphone-12"
@@ -448,9 +415,7 @@
         },
         "releasedAt": "2020-11-13T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone12promax-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone12promax-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone12promax-side.jpg"
+            "../image/12d.png"
         ],
         "inventory": 55,
         "categoryId": "iphone-12"
@@ -473,9 +438,7 @@
         },
         "releasedAt": "2019-09-20T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone11-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone11-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone11-side.jpg"
+            "../image/11d.png"
         ],
         "inventory": 50,
         "categoryId": "iphone-11"
@@ -498,9 +461,7 @@
         },
         "releasedAt": "2019-09-20T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone11pro-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone11pro-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone11pro-side.jpg"
+            "../image/11d.png"
         ],
         "inventory": 40,
         "categoryId": "iphone-11"
@@ -523,9 +484,7 @@
         },
         "releasedAt": "2019-09-20T00:00:00.000Z",
         "images": [
-            "https://store.storeimages.cdn-apple.com/iphone11promax-front.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone11promax-back.jpg",
-            "https://store.storeimages.cdn-apple.com/iphone11promax-side.jpg"
+            "../image/11d.png"
         ],
         "inventory": 30,
         "categoryId": "iphone-11"
