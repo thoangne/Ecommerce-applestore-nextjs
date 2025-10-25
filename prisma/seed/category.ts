@@ -22,12 +22,7 @@ async function main() {
     {
       name: "iPad",
       slug: "ipad",
-      subcategories: [
-        "iPad (10th Gen)",
-        "iPad mini",
-        "iPad Air",
-        "iPad Pro",
-      ],
+      subcategories: ["iPad (10th Gen)", "iPad mini", "iPad Air", "iPad Pro"],
     },
     {
       name: "iPhone",
@@ -91,3 +86,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+//category.ts

@@ -11,6 +11,7 @@ import ProductSkeleton from "./products/ProductSkeleton";
 import Breadcrumbs from "@/components/breadscums";
 import { ProductListServerWrapper } from "@/components/ProductListServerWrapper";
 import { getProductsCountCached } from "@/lib/action";
+import Carousel from "../components/carousel";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function Home(props: { searchParams: SearchParams }) {
@@ -22,6 +23,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={[{ label: "Home", href: "/" }]} />
+      <Carousel />
       <Suspense key={page} fallback={<ProductSkeleton />}>
         <ProductListServerWrapper params={{ page, pageSize }} />
       </Suspense>
@@ -79,3 +81,4 @@ export default async function Home(props: { searchParams: SearchParams }) {
     </main>
   );
 }
+// page.tsx

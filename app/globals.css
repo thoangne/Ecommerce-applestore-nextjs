@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Optional: Add custom styles if needed */
+body {
+  @apply font-sans antialiased;
+}
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
