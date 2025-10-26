@@ -1,17 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// 👉 Tạo lại __dirname tương thích với ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const prisma = new PrismaClient();
 
-// Helper để đọc JSON file
-const readJSON = (path: string) => {
-  return JSON.parse(fs.readFileSync(path, "utf-8"));
+// Hàm đọc JSON an toàn
+const readJSON = (filename: string) => {
+  const filePath = path.join(__dirname, filename);
+  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
 };
 
-// Đọc dữ liệu
-const macbookPro = readJSON("./macbook.json");
-const ip = readJSON("./ip.json");
-const ipad = readJSON("./ipad.json");
+// Đọc dữ liệu JSON
+const macbookPro = readJSON("macbook.json");
+const ip = readJSON("ip.json");
+const ipad = readJSON("ipad.json");
 
 async function main() {
   console.log("🌱 Seeding Apple products...");

@@ -30,7 +30,7 @@ export async function generateMetadata({
       description: product.description,
       images: [
         {
-          url: product.image,
+          url: product.images,
           width: 1200,
           height: 630,
         },
@@ -69,7 +69,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     "@context": "https://schema.org/",
     "@type": "Product",
     name: product.name,
-    image: product.image,
+    image: product.images,
     description: product.description,
     offers: {
       "@type": "Offer",
@@ -87,9 +87,9 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
         <CardContent className="p-6 grid lg:grid-cols-2 grid-cols-1 gap-4">
           <div>
             <div className=" relative aspect-[6/3] rounded-lg overflow-hidden mb-4">
-              {product.image && (
+              {product.images && (
                 <Image
-                  src={product.image}
+                  src={product.images[0]}
                   alt={product.name}
                   priority
                   fill

@@ -1,0 +1,20 @@
+/* components/carousel.css */
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  width: fit-content;
+  animation: scroll 25s linear infinite;
+}
+
+.carousel-track.paused {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
