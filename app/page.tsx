@@ -12,6 +12,8 @@ import Breadcrumbs from "@/components/breadscums";
 import { ProductListServerWrapper } from "@/components/ProductListServerWrapper";
 import { getProductsCountCached } from "@/lib/action";
 import Carousel from "../components/carousel";
+import ExpandableGallery from "../components/gallery";
+import AppleBanner from "../components/banner";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function Home(props: { searchParams: SearchParams }) {
@@ -23,7 +25,9 @@ export default async function Home(props: { searchParams: SearchParams }) {
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={[{ label: "Home", href: "/" }]} />
+      <AppleBanner />
       <Carousel />
+      <ExpandableGallery />
       <Suspense key={page} fallback={<ProductSkeleton />}>
         <ProductListServerWrapper params={{ page, pageSize }} />
       </Suspense>

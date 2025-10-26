@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import "@/components/styles/carousel.css"; // ← Giữ lại animation CSS
+import "@/components/styles/carousel.css";
 
 export default function Carousel() {
   const [isPaused, setIsPaused] = useState(false);
@@ -39,17 +39,15 @@ export default function Carousel() {
   const tripledImages = [...images, ...images, ...images];
 
   return (
-    <div className="w-full py-8 bg-black">
+    <div className="w-full py-8 ">
       <h1 className="text-center text-2xl font-semibold mb-6 text-white">
-        Bộ Sưu Tập Mới
+        Iphone Series
       </h1>
 
       <div className="relative max-w-[1200px] mx-auto overflow-hidden rounded-xl">
         {/* Gradient overlays */}
         <div className="absolute top-0 bottom-0 left-0 w-16 z-10 bg-gradient-to-r from-black to-transparent pointer-events-none"></div>
         <div className="absolute top-0 bottom-0 right-0 w-16 z-10 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
-
-        {/* Track chính — dùng class từ carousel.css */}
         <div
           className={`carousel-track ${isPaused ? "paused" : ""}`}
           onMouseEnter={() => setIsPaused(true)}
