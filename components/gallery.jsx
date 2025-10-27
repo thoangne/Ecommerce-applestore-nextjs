@@ -1,5 +1,6 @@
 // ExpandableGallery.jsx
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function ExpandableGallery() {
@@ -52,17 +53,37 @@ export default function ExpandableGallery() {
 
   return (
     <>
-      <section className="max-w-7xl mx-auto py-16 px-10">
+      <section className="max-w-[2400px] mx-auto py-16 px-10">
         <div className="text-center mb-5 animate-[fadeInDown_0.8s_ease-out]">
-          <h2 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-black to-gray-700 tracking-[-1px] mb-4 text-white">
+          <h2
+            className="
+    text-3xl font-bold tracking-tight mb-3
+    bg-gradient-to-r from-[#000000] via-[#555555] to-[#aaaaaa]
+    dark:from-[#ffffff] dark:via-[#cccccc] dark:to-[#777777]
+    bg-[length:200%_auto] bg-clip-text text-transparent
+    animate-gradient-move
+    drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]
+    transition-transform duration-700 ease-in-out
+    hover:scale-[1.03]
+  "
+          >
             Bộ Sưu Tập Mới Của Apple
           </h2>
-          <p className="text-base text-gray-600 font-medium">
+
+          <Link
+            className="
+    text-base font-medium tracking-wide
+    text-gray-600 dark:text-gray-300
+    animate-fade-in [animation-delay:0.2s]
+
+  "
+            href={"/"}
+          >
             Chạm vào để xem chi tiết
-          </p>
+          </Link>
         </div>
 
-        <div className="flex gap-4 h-[500px] max-w-6xl mx-auto overflow-visible">
+        <div className="flex gap-0 h-[500px] max-w-9xl mx-auto overflow-visible">
           {galleryItems.map((item, index) => (
             <div
               key={item.id}

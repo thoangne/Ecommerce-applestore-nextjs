@@ -39,15 +39,42 @@ export default function Carousel() {
   const tripledImages = [...images, ...images, ...images];
 
   return (
-    <div className="w-full py-8 ">
-      <h1 className="text-center text-2xl font-semibold mb-6 text-white">
-        Iphone Series
-      </h1>
+    <section className="w-full py-12 bg-white dark:bg-[#0a0a0a] transition-colors duration-500">
+      {/* ======= Tiêu đề ======= */}
+      <div className="text-center mb-8">
+        <h1
+          className="
+            text-4xl sm:text-5xl font-extrabold mb-3
+            bg-gradient-to-r from-[#000000] via-[#555555] to-[#aaaaaa]
+            dark:from-[#ffffff] dark:via-[#cccccc] dark:to-[#777777]
+            bg-[length:200%_auto] bg-clip-text text-transparent
+            animate-gradient-flow
+            tracking-tight leading-tight
+            drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]
+            hover:scale-[1.05] transition-transform duration-700 ease-in-out
+            animate-fade-in
+          "
+        >
+          iPhone Series
+        </h1>
+        <p
+          className="
+            text-base sm:text-lg font-medium text-gray-600 dark:text-gray-300
+            animate-fade-in-delayed
+          "
+        >
+          Khám phá những siêu phẩm mới nhất từ Apple — sang trọng, mạnh mẽ, đột
+          phá.
+        </p>
+      </div>
 
-      <div className="relative max-w-[1200px] mx-auto overflow-hidden rounded-xl">
-        {/* Gradient overlays */}
-        <div className="absolute top-0 bottom-0 left-0 w-16 z-10 bg-gradient-to-r from-black to-transparent pointer-events-none"></div>
-        <div className="absolute top-0 bottom-0 right-0 w-16 z-10 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
+      {/* ======= Carousel ======= */}
+      <div className="relative max-w-[2400px] mx-auto overflow-hidden rounded-2xl shadow-2xl">
+        {/* Overlay gradient 2 bên */}
+        <div className="absolute top-0 bottom-0 left-0 w-24 z-20 bg-gradient-to-r  dark:from-black to-transparent pointer-events-none" />
+        <div className="absolute top-0 bottom-0 right-0 w-24 z-20 bg-gradient-to-l  dark:from-black to-transparent pointer-events-none" />
+
+        {/* Track hình */}
         <div
           className={`carousel-track ${isPaused ? "paused" : ""}`}
           onMouseEnter={() => setIsPaused(true)}
@@ -56,22 +83,28 @@ export default function Carousel() {
           {tripledImages.map((image, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[500px] h-[350px] relative group"
+              className="
+                flex-shrink-0 w-[500px] h-[350px] relative group 
+                transition-transform duration-500 ease-out hover:scale-[1.04]
+              "
             >
-              <div className="relative w-full h-full rounded-lg overflow-hidden shadow-lg transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
+              <div className="relative w-full h-full rounded-xl overflow-hidden">
                 <Image
                   src={image.url.trim()}
                   alt={image.title}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 300px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, 500px"
                 />
-                {/* Overlay tối */}
-                <div className="absolute inset-0 bg-black/50 transition-opacity duration-300 group-hover:bg-black/70"></div>
 
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="font-bold text-lg">{image.title}</h3>
+                {/* Overlay tối */}
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-500" />
+
+                {/* Nội dung overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 text-white opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-500">
+                  <h3 className="font-bold text-xl drop-shadow-md">
+                    {image.title}
+                  </h3>
                   <p className="text-sm text-gray-200 mt-1">{image.subtitle}</p>
                 </div>
               </div>
@@ -80,15 +113,19 @@ export default function Carousel() {
         </div>
       </div>
 
-      {/* Indicators */}
+      {/* ======= Indicators ======= */}
       <div className="flex justify-center gap-2 mt-6">
         {images.map((_, index) => (
           <span
             key={index}
-            className="w-2 h-2 rounded-full bg-white/30 cursor-pointer transition-all duration-300 hover:bg-white/60"
-          ></span>
+            className="
+              w-3 h-3 rounded-full bg-gray-400/40 dark:bg-white/20 
+              cursor-pointer transition-all duration-300
+              hover:bg-gray-600 dark:hover:bg-white/60
+            "
+          />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

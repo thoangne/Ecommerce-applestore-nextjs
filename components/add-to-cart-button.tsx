@@ -26,7 +26,7 @@ export function AddToCartButton({ product }: { product: Product }) {
     <Button
       onClick={handleAddToCart}
       disabled={product.inventory === 0 || isAdded}
-      className="w-full hover:cursor-pointer"
+      className="w-full hover:cursor-pointer sm:w-auto"
     >
       <ShoppingCart className="mr-2 w-4 h-4" />
       {product.inventory > 0 ? "Add to Cart" : "Out of Stock"}

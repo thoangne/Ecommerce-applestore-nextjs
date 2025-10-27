@@ -23,10 +23,13 @@ const ProductCard = ({ product }: { product: Product }) => {
       <CardContent>
         <Link href={`/products/${product.slug}`} className="no-underline">
           <div className=" relative aspect-video rounded-lg overflow-hidden">
-            {product.image && (
+            {product.images && (
               <Image
                 alt={product.name}
-                src={product.image}
+                src={
+                  product.images[0] ??
+                  "https://i.ytimg.com/vi/KpI-QDbrf0Y/maxresdefault.jpg"
+                }
                 className="object-cover"
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 fill

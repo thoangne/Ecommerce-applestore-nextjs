@@ -16,9 +16,9 @@ export default function OrderItem({ orderItem }: OrderItemProps) {
       {/* Hình ảnh + thông tin */}
       <div className="flex space-x-4">
         <div className="overflow-hidden rounded-md border border-muted w-28 h-28 flex-shrink-0">
-          {orderItem.product.image && (
+          {orderItem.product.images && (
             <Image
-              src={orderItem.product.image ?? "/placeholder.png"}
+              src={orderItem.product.images[0] ?? "/placeholder.png"}
               alt={orderItem.product.name}
               className="object-cover w-full h-full"
               width={112}

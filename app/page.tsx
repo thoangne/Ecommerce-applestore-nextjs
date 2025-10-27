@@ -1,87 +1,27 @@
-import React, { Suspense } from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import ProductSkeleton from "./products/ProductSkeleton";
+import React from "react";
 import Breadcrumbs from "@/components/breadscums";
-import { ProductListServerWrapper } from "@/components/ProductListServerWrapper";
-import { getProductsCountCached } from "@/lib/action";
+import { getProductsByCategory } from "@/lib/action";
 import Carousel from "../components/carousel";
 import ExpandableGallery from "../components/gallery";
 import AppleBanner from "../components/banner";
+import ProductCarouselGallery from "@/components/ProductCarouselGallery";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function Home(props: { searchParams: SearchParams }) {
-  const searchParams = await props.searchParams;
-  const page = Number(searchParams.page) || 1;
-  const pageSize = 8;
-  const totalProducts = await getProductsCountCached();
-  const totalPages = Math.ceil(totalProducts / pageSize);
+  const ipad = await getProductsByCategory("Ipad");
+  const macbook = await getProductsByCategory("Macbook");
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={[{ label: "Home", href: "/" }]} />
       <AppleBanner />
       <Carousel />
       <ExpandableGallery />
-      <Suspense key={page} fallback={<ProductSkeleton />}>
-        <ProductListServerWrapper params={{ page, pageSize }} />
-      </Suspense>
-      <Pagination className="mt-6">
-        <PaginationContent>
-          <PaginationPrevious href={`?page=${page - 1}`} />
-
-          {page > 3 && (
-            <>
-              <PaginationItem key={0}>
-                <PaginationLink href={`?page=1`}>1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem key={1}>
-                <PaginationLink href={`?page=2`}>2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem key={2}>
-                <span>...</span>
-              </PaginationItem>
-            </>
-          )}
-
-          {Array.from({ length: totalPages }).map((_, index) => {
-            const pageNumber = index + 1;
-            if (pageNumber >= page - 1 && pageNumber <= page + 1) {
-              return (
-                <PaginationItem key={index}>
-                  <PaginationLink
-                    href={`?page=${pageNumber}`}
-                    className={page === pageNumber ? "active" : ""}
-                  >
-                    {pageNumber}
-                  </PaginationLink>
-                </PaginationItem>
-              );
-            }
-            return null;
-          })}
-
-          {page < totalPages - 2 && (
-            <>
-              <PaginationItem key={totalPages - 1}>
-                <span>...</span>
-              </PaginationItem>
-              <PaginationItem key={totalPages}>
-                <PaginationLink href={`?page=${totalPages}`}>
-                  {totalPages}
-                </PaginationLink>
-              </PaginationItem>
-            </>
-          )}
-
-          <PaginationNext href={`?page=${page + 1}`} />
-        </PaginationContent>
-      </Pagination>
+      <ProductCarouselGallery products={ipad} title="Ipad" />
+      <ProductCarouselGallery products={macbook} title="Macbook" />
+      <ProductCarouselGallery
+        products={macbook}
+        title="Có thể bạn cũng thích"
+      />
     </main>
   );
 }

@@ -29,7 +29,7 @@ export async function createCheckoutSession(order: OrderWithItemsAndProduct) {
         product_data: {
           name: item.product.name ?? "",
           description: item.product.description ?? "",
-          images: item.product.image ? [item.product.image] : [],
+          images: item.product.images[0] ? [item.product.images[0]] : [],
         },
         unit_amount: Math.round(item.product.price * 100),
       },

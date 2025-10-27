@@ -47,9 +47,9 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
       {/* Hình ảnh + thông tin */}
       <div className="flex space-x-4">
         <div className="overflow-hidden rounded-md border border-muted w-28 h-28 flex-shrink-0">
-          {cartItem.product.image && (
+          {cartItem.product.images && (
             <Image
-              src={cartItem.product.image ?? "/placeholder.png"}
+              src={cartItem.product.images[0] ?? "/placeholder.png"}
               alt={cartItem.product.name}
               className="object-cover w-full h-full"
               width={112}
