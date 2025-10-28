@@ -53,7 +53,6 @@ export default function AuthPage() {
         <div className="signUpContainer formContainer">
           <div className="flex flex-col items-center justify-center h-full p-8 text-center">
             {" "}
-            {/* ↓ padding nhỏ hơn */}
             <h1 className="text-xl font-bold mb-2 text-white">Sign Up</h1>
             <p className="mb-5 text-gray-400 text-sm">
               Create your account to start shopping

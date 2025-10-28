@@ -12,7 +12,7 @@ import {
   Send,
   ChevronDown,
 } from "lucide-react";
-
+import "./styles/footer.css";
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,26 +54,6 @@ export default function Footer() {
 
   return (
     <footer className="border-t bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80">
-      <style jsx>{`
-        .hover-lift {
-          transition: transform 0.2s ease;
-        }
-        .hover-lift:hover {
-          transform: translateY(-2px);
-        }
-        .accordion-content {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.3s ease-out;
-        }
-        .accordion-content.open {
-          max-height: 300px; /* Tăng chiều cao để chứa đủ link */
-        }
-        /* ĐÃ XÓA MEDIA QUERY Ở ĐÂY - logic này ngăn accordion
-           hoạt động trên desktop. Bằng cách xóa nó đi,
-           nút bấm sẽ hoạt động trên mọi kích thước màn hình. */
-      `}</style>
-
       <div className="container max-w-7xl mx-auto px-4 py-8">
         {/* Map Section */}
         <div className="mb-12 rounded-2xl overflow-hidden border border-border/50 shadow-lg hover-lift">
@@ -208,8 +188,6 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-
-          {/* KHỐI BỊ LẶP ĐÃ ĐƯỢC XÓA BỎ TỪ ĐÂY */}
 
           {/* Newsletter & Social */}
           <div className="flex-1 min-w-[250px]">
