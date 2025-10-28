@@ -16,7 +16,8 @@ import {
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Notification from "./notification";
-
+import { IMAGES } from "@/lib/images";
+import Image from "next/image";
 interface Category {
   id: string;
   name: string;
@@ -46,7 +47,7 @@ export default function NavBar() {
             className="text-2xl font-bold hidden md:block tracking-tight"
             href="/"
           >
-            Store
+            ICorner
           </Link>
 
           {/* NAVIGATION */}
