@@ -36,8 +36,7 @@ export default function AuthPage() {
     <div
       className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-gray-950 font-sans"
       style={{
-        backgroundImage:
-          "url('https://i.pinimg.com/1200x/d3/7e/3e/d37e3ebd66d484d4af0c6e5750548248.jpg')",
+        backgroundImage: "url('/picture/authBackGround.webp')",
         backgroundPosition: "center",
       }}
     >
