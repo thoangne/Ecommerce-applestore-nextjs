@@ -34,7 +34,7 @@ export default function Footer() {
   const quickLinks = [
     { name: "Giới thiệu", href: "/about" },
     { name: "Sản phẩm", href: "/products" },
-    { name: "Tin tức", href: "/news" },
+    { name: "Tin tức", href: "/blogs" },
     { name: "Liên hệ", href: "/contact" },
   ];
 
