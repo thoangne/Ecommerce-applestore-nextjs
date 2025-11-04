@@ -18,7 +18,7 @@ export default function OrderItem({ orderItem }: OrderItemProps) {
         <div className="overflow-hidden rounded-md border border-muted w-28 h-28 flex-shrink-0">
           {orderItem.product.images && (
             <Image
-              src={orderItem.product.images[0] ?? "/placeholder.png"}
+              src={orderItem.product.images[0]}
               alt={orderItem.product.name}
               className="object-cover w-full h-full"
               width={112}

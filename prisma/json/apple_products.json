@@ -1,0 +1,1252 @@
+[
+    {
+        "name": "MacBook Air M1 2022",
+        "slug": "macbook-air-m1-2022",
+        "description": "MacBook Air M1 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2103.25,
+        "color": "Space Gray, Starlight, Blue",
+        "storage": "256GB, 512GB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "6GB",
+            "display": "13.3 inch Retina",
+            "battery": "15 hours",
+            "os": "iPadOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.53 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 70,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Pro M1 Pro 2021",
+        "slug": "macbook-pro-m1-pro-2021",
+        "description": "MacBook Pro M1 Pro là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2702.83,
+        "color": "Blue, Pink, Silver",
+        "storage": "512GB, 1TB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "32GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "15 hours",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.58 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 37,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPad Pro M2 11-inch 2024",
+        "slug": "ipad-pro-m2-11-inch-2024",
+        "description": "iPad Pro M2 11-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1521.45,
+        "color": "Midnight, Starlight, Space Gray",
+        "storage": "256GB, 1TB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "16GB",
+            "display": "13.3 inch Retina",
+            "battery": "15 hours",
+            "os": "macOS Sonoma",
+            "ports": "USB-C",
+            "weight": "1.4 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 74,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "MacBook Air M1 2022",
+        "slug": "macbook-air-m1-2022",
+        "description": "MacBook Air M1 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2354.23,
+        "color": "Silver, Midnight, Blue",
+        "storage": "128GB, 1TB",
+        "specs": {
+            "chip": "Apple M3",
+            "ram": "32GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "15 hours",
+            "os": "iPadOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.6 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 13,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Air M1 2023",
+        "slug": "macbook-air-m1-2023",
+        "description": "MacBook Air M1 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2701.42,
+        "color": "Pink, Silver, Gold",
+        "storage": "128GB, 256GB",
+        "specs": {
+            "chip": "Apple M1",
+            "ram": "32GB",
+            "display": "6.1 inch OLED",
+            "battery": "15 hours",
+            "os": "iOS 17",
+            "ports": "Lightning",
+            "weight": "1.57 kg"
+        },
+        "releasedAt": "2023-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 97,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Air M1 2022",
+        "slug": "macbook-air-m1-2022",
+        "description": "MacBook Air M1 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2546.09,
+        "color": "Silver, Midnight, Space Gray",
+        "storage": "1TB, 512GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "8GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "18 hours",
+            "os": "iPadOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.45 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 69,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPad Air 5 2021",
+        "slug": "ipad-air-5-2021",
+        "description": "iPad Air 5 là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3304.9,
+        "color": "Midnight, Starlight, Blue",
+        "storage": "512GB, 1TB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "32GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "20 hours",
+            "os": "macOS Sonoma",
+            "ports": "USB-C",
+            "weight": "1.54 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 79,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "MacBook Air M2 2021",
+        "slug": "macbook-air-m2-2021",
+        "description": "MacBook Air M2 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3289.43,
+        "color": "Starlight, Space Gray, Midnight",
+        "storage": "256GB, 1TB",
+        "specs": {
+            "chip": "Apple M1",
+            "ram": "32GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "15 hours",
+            "os": "iOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.85 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 98,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Air M2 2020",
+        "slug": "macbook-air-m2-2020",
+        "description": "MacBook Air M2 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2016.3,
+        "color": "Blue, Silver, Midnight",
+        "storage": "1TB, 256GB",
+        "specs": {
+            "chip": "Apple M3",
+            "ram": "32GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "20 hours",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.29 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 41,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPhone 13 Pro 2022",
+        "slug": "iphone-13-pro-2022",
+        "description": "iPhone 13 Pro là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2578.08,
+        "color": "Midnight, Silver, Pink",
+        "storage": "1TB, 256GB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "32GB",
+            "display": "6.1 inch OLED",
+            "battery": "18 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.3 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 22,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPhone 14 2020",
+        "slug": "iphone-14-2020",
+        "description": "iPhone 14 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1507.33,
+        "color": "Gold, Midnight, Silver",
+        "storage": "512GB, 128GB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "32GB",
+            "display": "6.1 inch OLED",
+            "battery": "15 hours",
+            "os": "macOS Sonoma",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.96 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 92,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "MacBook Pro M1 Pro 2021",
+        "slug": "macbook-pro-m1-pro-2021",
+        "description": "MacBook Pro M1 Pro là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2059.96,
+        "color": "Silver, Blue, Starlight",
+        "storage": "1TB, 512GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "6GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "18 hours",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.91 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 88,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Air M2 2021",
+        "slug": "macbook-air-m2-2021",
+        "description": "MacBook Air M2 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3010.79,
+        "color": "Silver, Space Gray, Blue",
+        "storage": "128GB, 1TB",
+        "specs": {
+            "chip": "Apple M1",
+            "ram": "16GB",
+            "display": "6.1 inch OLED",
+            "battery": "15 hours",
+            "os": "macOS Sonoma",
+            "ports": "USB-C",
+            "weight": "1.67 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 21,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Pro M1 Pro 2022",
+        "slug": "macbook-pro-m1-pro-2022",
+        "description": "MacBook Pro M1 Pro là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1052.9,
+        "color": "Space Gray, Midnight, Pink",
+        "storage": "1TB, 256GB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "32GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "20 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "0.38 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 21,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPad Air 5 2024",
+        "slug": "ipad-air-5-2024",
+        "description": "iPad Air 5 là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1490.86,
+        "color": "Gold, Silver, Pink",
+        "storage": "512GB, 256GB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "8GB",
+            "display": "6.1 inch OLED",
+            "battery": "18 hours",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.06 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 98,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPad Pro M2 12.9-inch 2024",
+        "slug": "ipad-pro-m2-12.9-inch-2024",
+        "description": "iPad Pro M2 12.9-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2714.74,
+        "color": "Gold, Space Gray, Starlight",
+        "storage": "512GB, 1TB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "32GB",
+            "display": "13.3 inch Retina",
+            "battery": "18 hours",
+            "os": "iPadOS 17",
+            "ports": "Lightning",
+            "weight": "1.2 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 34,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPad Pro M2 11-inch 2024",
+        "slug": "ipad-pro-m2-11-inch-2024",
+        "description": "iPad Pro M2 11-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2720.88,
+        "color": "Starlight, Silver, Midnight",
+        "storage": "256GB, 1TB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "6GB",
+            "display": "13.3 inch Retina",
+            "battery": "20 hours",
+            "os": "iOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "1.57 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 20,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "MacBook Pro M2 Max 2022",
+        "slug": "macbook-pro-m2-max-2022",
+        "description": "MacBook Pro M2 Max là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3369.67,
+        "color": "Pink, Silver, Starlight",
+        "storage": "128GB, 512GB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "8GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "15 hours",
+            "os": "iOS 17",
+            "ports": "USB-C",
+            "weight": "0.87 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 24,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Pro M1 Pro 2020",
+        "slug": "macbook-pro-m1-pro-2020",
+        "description": "MacBook Pro M1 Pro là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2715.33,
+        "color": "Space Gray, Silver, Midnight",
+        "storage": "1TB, 256GB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "32GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "20 hours",
+            "os": "iPadOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "0.48 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 10,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPhone 15 Pro 2020",
+        "slug": "iphone-15-pro-2020",
+        "description": "iPhone 15 Pro là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1553.73,
+        "color": "Silver, Pink, Space Gray",
+        "storage": "512GB, 256GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "6GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "20 hours",
+            "os": "iPadOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "0.79 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 92,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPhone 15 Pro 2021",
+        "slug": "iphone-15-pro-2021",
+        "description": "iPhone 15 Pro là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2528.39,
+        "color": "Gold, Starlight, Silver",
+        "storage": "256GB, 1TB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "32GB",
+            "display": "11 inch Liquid Retina",
+            "battery": "18 hours",
+            "os": "macOS Sonoma",
+            "ports": "Lightning",
+            "weight": "0.83 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 55,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPad Pro M2 11-inch 2024",
+        "slug": "ipad-pro-m2-11-inch-2024",
+        "description": "iPad Pro M2 11-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2051.77,
+        "color": "Silver, Space Gray, Starlight",
+        "storage": "128GB, 1TB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "8GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "18 hours",
+            "os": "iPadOS 17",
+            "ports": "Lightning",
+            "weight": "1.07 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 84,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPhone 15 2020",
+        "slug": "iphone-15-2020",
+        "description": "iPhone 15 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 831.6,
+        "color": "Midnight, Pink, Gold",
+        "storage": "256GB, 1TB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "6GB",
+            "display": "13.3 inch Retina",
+            "battery": "15 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.6 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 100,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "MacBook Air M1 2020",
+        "slug": "macbook-air-m1-2020",
+        "description": "MacBook Air M1 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2137.46,
+        "color": "Space Gray, Pink, Blue",
+        "storage": "512GB, 1TB",
+        "specs": {
+            "chip": "Apple M3",
+            "ram": "32GB",
+            "display": "11 inch Liquid Retina",
+            "battery": "20 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.04 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 92,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPad Pro M2 12.9-inch 2022",
+        "slug": "ipad-pro-m2-12.9-inch-2022",
+        "description": "iPad Pro M2 12.9-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1921.58,
+        "color": "Silver, Midnight, Starlight",
+        "storage": "128GB, 512GB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "8GB",
+            "display": "13.3 inch Retina",
+            "battery": "18 hours",
+            "os": "iOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "1.53 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 99,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPad Air 5 2024",
+        "slug": "ipad-air-5-2024",
+        "description": "iPad Air 5 là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1212.9,
+        "color": "Space Gray, Gold, Starlight",
+        "storage": "128GB, 512GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "8GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "18 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "0.55 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 71,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPad Air 5 2021",
+        "slug": "ipad-air-5-2021",
+        "description": "iPad Air 5 là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3479.4,
+        "color": "Blue, Silver, Starlight",
+        "storage": "128GB, 256GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "32GB",
+            "display": "6.1 inch OLED",
+            "battery": "18 hours",
+            "os": "iPadOS 17",
+            "ports": "USB-C",
+            "weight": "1.0 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 49,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPad Pro M2 12.9-inch 2020",
+        "slug": "ipad-pro-m2-12.9-inch-2020",
+        "description": "iPad Pro M2 12.9-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2133.37,
+        "color": "Midnight, Silver, Starlight",
+        "storage": "256GB, 512GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "32GB",
+            "display": "11 inch Liquid Retina",
+            "battery": "15 hours",
+            "os": "iOS 17",
+            "ports": "USB-C",
+            "weight": "0.99 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 23,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPhone 14 2022",
+        "slug": "iphone-14-2022",
+        "description": "iPhone 14 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2246.95,
+        "color": "Starlight, Silver, Space Gray",
+        "storage": "128GB, 256GB",
+        "specs": {
+            "chip": "Apple M3",
+            "ram": "16GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "18 hours",
+            "os": "macOS Sonoma",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.5 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 63,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPhone 15 Pro 2021",
+        "slug": "iphone-15-pro-2021",
+        "description": "iPhone 15 Pro là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3321.75,
+        "color": "Pink, Gold, Space Gray",
+        "storage": "512GB, 256GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "8GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "15 hours",
+            "os": "iPadOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.24 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 62,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPhone 13 Pro 2020",
+        "slug": "iphone-13-pro-2020",
+        "description": "iPhone 13 Pro là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2547.37,
+        "color": "Pink, Midnight, Space Gray",
+        "storage": "128GB, 1TB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "32GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "18 hours",
+            "os": "iPadOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.97 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 20,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPhone 15 2023",
+        "slug": "iphone-15-2023",
+        "description": "iPhone 15 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2050.36,
+        "color": "Blue, Starlight, Pink",
+        "storage": "256GB, 512GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "6GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "20 hours",
+            "os": "macOS Sonoma",
+            "ports": "Lightning",
+            "weight": "1.98 kg"
+        },
+        "releasedAt": "2023-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 67,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPad Pro M2 11-inch 2024",
+        "slug": "ipad-pro-m2-11-inch-2024",
+        "description": "iPad Pro M2 11-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2026.45,
+        "color": "Pink, Midnight, Gold",
+        "storage": "256GB, 512GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "8GB",
+            "display": "14 inch Liquid Retina XDR",
+            "battery": "20 hours",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe + USB-C",
+            "weight": "0.68 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 81,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "MacBook Air M2 2022",
+        "slug": "macbook-air-m2-2022",
+        "description": "MacBook Air M2 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 988.23,
+        "color": "Silver, Blue, Starlight",
+        "storage": "1TB, 512GB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "8GB",
+            "display": "11 inch Liquid Retina",
+            "battery": "15 hours",
+            "os": "iPadOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "1.86 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 60,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPhone 13 2023",
+        "slug": "iphone-13-2023",
+        "description": "iPhone 13 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1211.92,
+        "color": "Gold, Starlight, Space Gray",
+        "storage": "256GB, 1TB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "8GB",
+            "display": "6.1 inch OLED",
+            "battery": "15 hours",
+            "os": "iOS 17",
+            "ports": "USB-C",
+            "weight": "0.33 kg"
+        },
+        "releasedAt": "2023-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 45,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPad 9th Gen 2024",
+        "slug": "ipad-9th-gen-2024",
+        "description": "iPad 9th Gen là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2712.1,
+        "color": "Midnight, Starlight, Silver",
+        "storage": "512GB, 128GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "32GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "20 hours",
+            "os": "macOS Sonoma",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.94 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 86,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "MacBook Pro M1 Pro 2024",
+        "slug": "macbook-pro-m1-pro-2024",
+        "description": "MacBook Pro M1 Pro là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1967.51,
+        "color": "Starlight, Pink, Space Gray",
+        "storage": "1TB, 512GB",
+        "specs": {
+            "chip": "Apple M1",
+            "ram": "6GB",
+            "display": "6.1 inch OLED",
+            "battery": "18 hours",
+            "os": "iPadOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.65 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 37,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "MacBook Pro M1 Pro 2024",
+        "slug": "macbook-pro-m1-pro-2024",
+        "description": "MacBook Pro M1 Pro là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 726.04,
+        "color": "Midnight, Pink, Gold",
+        "storage": "1TB, 512GB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "6GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "20 hours",
+            "os": "iPadOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "1.76 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 64,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPhone 13 2022",
+        "slug": "iphone-13-2022",
+        "description": "iPhone 13 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1789.65,
+        "color": "Space Gray, Blue, Silver",
+        "storage": "128GB, 512GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "8GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "18 hours",
+            "os": "iPadOS 17",
+            "ports": "Lightning",
+            "weight": "1.66 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 72,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPad Pro M2 11-inch 2021",
+        "slug": "ipad-pro-m2-11-inch-2021",
+        "description": "iPad Pro M2 11-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1471.5,
+        "color": "Pink, Gold, Silver",
+        "storage": "128GB, 1TB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "16GB",
+            "display": "6.1 inch OLED",
+            "battery": "15 hours",
+            "os": "macOS Sonoma",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.38 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 56,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPhone 15 Pro Max 2020",
+        "slug": "iphone-15-pro-max-2020",
+        "description": "iPhone 15 Pro Max là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3482.8,
+        "color": "Blue, Starlight, Silver",
+        "storage": "128GB, 512GB",
+        "specs": {
+            "chip": "Apple M1",
+            "ram": "32GB",
+            "display": "13.3 inch Retina",
+            "battery": "20 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.78 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 27,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "MacBook Air M2 2022",
+        "slug": "macbook-air-m2-2022",
+        "description": "MacBook Air M2 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 3201.88,
+        "color": "Pink, Midnight, Starlight",
+        "storage": "128GB, 512GB",
+        "specs": {
+            "chip": "A17 Pro",
+            "ram": "6GB",
+            "display": "13.3 inch Retina",
+            "battery": "20 hours",
+            "os": "macOS Sonoma",
+            "ports": "USB-C",
+            "weight": "1.1 kg"
+        },
+        "releasedAt": "2022-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 17,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPad 9th Gen 2020",
+        "slug": "ipad-9th-gen-2020",
+        "description": "iPad 9th Gen là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1227.8,
+        "color": "Blue, Midnight, Silver",
+        "storage": "512GB, 256GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "32GB",
+            "display": "13.3 inch Retina",
+            "battery": "15 hours",
+            "os": "iPadOS 17",
+            "ports": "USB-C",
+            "weight": "0.3 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 96,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPhone 13 2021",
+        "slug": "iphone-13-2021",
+        "description": "iPhone 13 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1551.24,
+        "color": "Silver, Space Gray, Gold",
+        "storage": "512GB, 128GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "32GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "15 hours",
+            "os": "iPadOS 17",
+            "ports": "USB-C",
+            "weight": "1.93 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 17,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "MacBook Air M1 2020",
+        "slug": "macbook-air-m1-2020",
+        "description": "MacBook Air M1 là sản phẩm thuộc dòng macbook của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1459.32,
+        "color": "Pink, Starlight, Space Gray",
+        "storage": "128GB, 256GB",
+        "specs": {
+            "chip": "Apple M2",
+            "ram": "8GB",
+            "display": "13.3 inch Retina",
+            "battery": "18 hours",
+            "os": "macOS Sonoma",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.3 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 72,
+        "categoryId": "macbook"
+    },
+    {
+        "name": "iPhone 13 2020",
+        "slug": "iphone-13-2020",
+        "description": "iPhone 13 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 852.92,
+        "color": "Gold, Midnight, Blue",
+        "storage": "128GB, 512GB",
+        "specs": {
+            "chip": "Apple M1",
+            "ram": "16GB",
+            "display": "13.3 inch Retina",
+            "battery": "18 hours",
+            "os": "iOS 17",
+            "ports": "2x Thunderbolt 3 (USB-C)",
+            "weight": "0.8 kg"
+        },
+        "releasedAt": "2020-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 34,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPhone 14 2021",
+        "slug": "iphone-14-2021",
+        "description": "iPhone 14 là sản phẩm thuộc dòng iphone của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1742.58,
+        "color": "Gold, Space Gray, Midnight",
+        "storage": "256GB, 1TB",
+        "specs": {
+            "chip": "A15 Bionic",
+            "ram": "32GB",
+            "display": "6.1 inch OLED",
+            "battery": "20 hours",
+            "os": "iPadOS 17",
+            "ports": "Lightning",
+            "weight": "0.64 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 66,
+        "categoryId": "iphone"
+    },
+    {
+        "name": "iPad 9th Gen 2024",
+        "slug": "ipad-9th-gen-2024",
+        "description": "iPad 9th Gen là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1870.97,
+        "color": "Space Gray, Silver, Midnight",
+        "storage": "512GB, 1TB",
+        "specs": {
+            "chip": "Apple M1",
+            "ram": "8GB",
+            "display": "6.7 inch Super Retina XDR",
+            "battery": "15 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "1.55 kg"
+        },
+        "releasedAt": "2024-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 67,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPad Pro M2 11-inch 2021",
+        "slug": "ipad-pro-m2-11-inch-2021",
+        "description": "iPad Pro M2 11-inch là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 1136.73,
+        "color": "Blue, Silver, Pink",
+        "storage": "256GB, 128GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "8GB",
+            "display": "11 inch Liquid Retina",
+            "battery": "15 hours",
+            "os": "iPadOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "0.92 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 46,
+        "categoryId": "ipad"
+    },
+    {
+        "name": "iPad 9th Gen 2021",
+        "slug": "ipad-9th-gen-2021",
+        "description": "iPad 9th Gen là sản phẩm thuộc dòng ipad của Apple, hiệu năng mạnh mẽ, thiết kế tinh tế và hiện đại.",
+        "price": 2362.8,
+        "color": "Blue, Gold, Midnight",
+        "storage": "512GB, 256GB",
+        "specs": {
+            "chip": "A16 Bionic",
+            "ram": "8GB",
+            "display": "6.1 inch OLED",
+            "battery": "20 hours",
+            "os": "iOS 17",
+            "ports": "MagSafe + USB-C",
+            "weight": "0.51 kg"
+        },
+        "releasedAt": "2021-09-15T00:00:00Z",
+        "images": [
+            "/picture/ip.png",
+            "/picture/ip.png",
+            "/picture/ip.png"
+        ],
+        "inventory": 33,
+        "categoryId": "ipad"
+    }
+]

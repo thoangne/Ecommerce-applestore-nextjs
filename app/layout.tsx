@@ -7,7 +7,6 @@ import Footer from "@/components/footer";
 import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
 import BackToTopButton from "@/components/back-to-top";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -68,7 +67,15 @@ export default function RootLayout({
                 <NavBar />
               </header>
 
-              <main className="flex-grow">{children}</main>
+              <main className="flex-grow">
+                {children}
+                {/* <Toaster
+                  position="top-right"
+                  richColors
+                  expand
+                  duration={3000}
+                /> */}
+              </main>
               <BackToTopButton />
               <Footer />
             </ThemeProvider>

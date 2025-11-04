@@ -8,17 +8,33 @@ datasource db {
 }
 
 model User {
-  id               String             @id @default(cuid())
-  email            String             @unique
-  password         String
-  name             String?
-  role             String             @default("user")
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  address          String?
-  phone            String?
-  isActive         Boolean            @default(true)
-  lastLogin        DateTime?
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  avatarUrl String?
+
+  // 🏠 Thông tin địa chỉ theo chuẩn GHN
+  addressLine1 String? // Số nhà, tên đường
+  ward         String? // Phường/Xã
+  district     String? // Quận/Huyện
+  province     String? // Tỉnh/Thành phố
+  postalCode   String? // Mã bưu điện
+  country      String? @default("Vietnam")
+
+  // 🆔 Mã địa lý GHN
+  GHNProvinceId Int?
+  GHNDistrictId Int?
+  GHNWardCode   String?
+
+  phone     String?
+  isActive  Boolean   @default(true)
+  lastLogin DateTime?
+
+  // 🧭 Quan hệ
   activityLogs     ActivityLog[]
   Feedback         Feedback[]
   InventoryHistory InventoryHistory[]
@@ -26,6 +42,10 @@ model User {
   orders           Order[]
   promotions       PromotionUsage[]
   reviews          Review[]
+
+  // 📝 Blog
+  posts    BlogPost[]
+  comments BlogComment[]
 }
 
 model Category {
@@ -84,22 +104,28 @@ model CartItem {
 }
 
 model Order {
-  id                    String           @id @default(cuid())
+  id                    String   @id @default(cuid())
   total                 Float
   stripeSessionId       String?
   stripePaymentIntentId String?
-  status                String           @default("PENDING")
-  createdAt             DateTime         @default(now())
-  updatedAt             DateTime         @updatedAt
-  userId                String?
-  promotionId           String?
-  usedPromotionId       String?
-  Promotion             Promotion?       @relation(fields: [promotionId], references: [id])
-  usedPromotion         Promotion?       @relation("OrderPromotion", fields: [usedPromotionId], references: [id])
-  user                  User?            @relation(fields: [userId], references: [id])
-  items                 OrderItem[]
-  Payment               Payment[]
-  PromotionUsage        PromotionUsage[]
+  status                String   @default("PENDING")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  promotionId     String?
+  usedPromotionId String?
+  Promotion       Promotion? @relation(fields: [promotionId], references: [id])
+  usedPromotion   Promotion? @relation("OrderPromotion", fields: [usedPromotionId], references: [id])
+
+  shippingDetailId String?         @unique // ✅ thêm dòng này
+  ShippingDetail   ShippingDetail? @relation(fields: [shippingDetailId], references: [id])
+
+  items          OrderItem[]
+  Payment        Payment[]
+  PromotionUsage PromotionUsage[]
 }
 
 model OrderItem {
@@ -221,4 +247,66 @@ model DashboardStat {
   totalRevenue Float
   newUsers     Int
   createdAt    DateTime @default(now())
+}
+
+model ShippingDetail {
+  id           String  @id @default(cuid())
+  fullName     String
+  phoneNumber  String
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  province     String
+  postalCode   String?
+  country      String  @default("Vietnam")
+
+  shippingMethod String @default("Standard")
+  shippingFee    Float  @default(0)
+  estimatedDays  Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order Order?
+}
+
+//
+// 📰 BLOG MODELS
+//
+model BlogCategory {
+  id        String     @id @default(cuid())
+  name      String
+  slug      String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  posts     BlogPost[]
+}
+
+model BlogPost {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  content     String
+  thumbnail   String?
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  categoryId  String?
+  authorId    String?
+
+  category BlogCategory? @relation(fields: [categoryId], references: [id])
+  author   User?         @relation(fields: [authorId], references: [id])
+  comments BlogComment[]
+}
+
+model BlogComment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  postId    String
+  userId    String?
+
+  post BlogPost @relation(fields: [postId], references: [id])
+  user User?    @relation(fields: [userId], references: [id])
 }
