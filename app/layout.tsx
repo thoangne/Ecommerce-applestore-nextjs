@@ -63,18 +63,12 @@ export default function RootLayout({
               disableTransitionOnChange
               storageKey="theme"
             >
-              <header>
-                <NavBar />
-              </header>
+              <NavBar />
 
               <main className="flex-grow">
+                {" "}
+                {/* Thêm pt-16 (64px) để tránh bị navbar che */}
                 {children}
-                {/* <Toaster
-                  position="top-right"
-                  richColors
-                  expand
-                  duration={3000}
-                /> */}
               </main>
               <BackToTopButton />
               <Footer />

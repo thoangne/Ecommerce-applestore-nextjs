@@ -18,6 +18,7 @@ declare module "next-auth" {
       province?: string | null;
       district?: string | null;
       ward?: string | null;
+      avatarUrl?: string | null;
     };
     refreshedAt?: string;
   }
@@ -32,6 +33,7 @@ declare module "next-auth" {
     province?: string | null;
     district?: string | null;
     ward?: string | null;
+    avatarUrl?: string | null;
   }
 }
 
@@ -46,6 +48,7 @@ declare module "next-auth/jwt" {
     province?: string | null;
     district?: string | null;
     ward?: string | null;
+    avatarUrl?: string | null;
   }
 }
 
@@ -92,6 +95,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           province: user.province ?? null,
           district: user.district ?? null,
           ward: user.ward ?? null,
+          avatarUrl: user.avatarUrl ?? null,
         };
       },
     }),
@@ -99,18 +103,41 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   // ⚙️ Callbacks để đồng bộ JWT ↔ Session
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
+        // Đăng nhập lần đầu
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
         token.role = user.role;
         token.phone = user.phone ?? null;
         token.addressLine1 = user.addressLine1 ?? null;
-        token.province = user.province ?? null;
-        token.district = user.district ?? null;
-        token.ward = user.ward ?? null;
+        token.avatarUrl = user.avatarUrl ?? null;
       }
+
+      // ✅ Xử lý khi gọi `update()` từ client
+      if (trigger === "update") {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id },
+          select: {
+            name: true,
+            phone: true,
+            addressLine1: true,
+            avatarUrl: true,
+            email: true,
+            role: true,
+          },
+        });
+
+        if (dbUser) {
+          token.name = dbUser.name ?? "";
+          token.phone = dbUser.phone ?? null;
+          token.addressLine1 = dbUser.addressLine1 ?? null;
+          token.avatarUrl = dbUser.avatarUrl ?? null;
+          // (email, role thường không đổi, nhưng vẫn đồng bộ để an toàn)
+        }
+      }
+
       return token;
     },
 
@@ -122,9 +149,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.role = token.role;
         session.user.phone = token.phone ?? null;
         session.user.addressLine1 = token.addressLine1 ?? null;
-        session.user.province = token.province ?? null;
-        session.user.district = token.district ?? null;
-        session.user.ward = token.ward ?? null;
+        session.user.avatarUrl = token.avatarUrl ?? null;
       }
       return session;
     },
@@ -141,6 +166,9 @@ export async function hashPassword(password: string) {
   return await bcrypt.hash(password, saltRounds);
 }
 
-export async function comparePassword(password: string, hashedPassword: string) {
+export async function comparePassword(
+  password: string,
+  hashedPassword: string
+) {
   return await bcrypt.compare(password, hashedPassword);
 }
