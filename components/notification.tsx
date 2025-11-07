@@ -48,7 +48,7 @@ export default function Notification() {
         >
           <Bell className="w-5 h-5 text-muted-foreground" />
           {/* 🔴 Badge thông báo */}
-          <span className="absolute top-1.5 right-1.5 inline-flex items-center justify-center w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></span>
+          <span className="absolute top-1.5 right-1.5 inline-flex items-center justify-center w-2.5 h-2.5 bg-red-500 rounded-full "></span>
         </Button>
       </DropdownMenuTrigger>
 
@@ -59,7 +59,7 @@ export default function Notification() {
           w-80 p-2 
           bg-background/95 backdrop-blur-md
           border border-border/40 shadow-xl rounded-xl
-          animate-in fade-in-0 zoom-in-95
+           zoom-in-95
         "
       >
         <DropdownMenuLabel className="text-base font-semibold px-2 py-1">

@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { toast } from "sonner";
 
 export default function AuthStatus() {
   const { data: session, status } = useSession();
@@ -31,7 +32,10 @@ export default function AuthStatus() {
       </Button>
     );
   }
-
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/" });
+    toast.success("Successfully signed out!");
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,7 +58,7 @@ export default function AuthStatus() {
         </DropdownMenuItem>
 
         <DropdownMenuItem
-          onClick={() => signOut()}
+          onClick={handleSignOut}
           className="hover:cursor-pointer"
         >
           <LogOut className="w-4 h-4 mr-2" />

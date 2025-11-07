@@ -27,6 +27,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Chrome, Facebook, Github } from "lucide-react";
+import { toast } from "sonner";
 
 export default function SignInPage() {
   const [error, setError] = useState<string | null>(null);
@@ -50,12 +51,14 @@ export default function SignInPage() {
         redirect: false,
       });
       if (result?.error) {
+        toast.error("An error occurred while signing in.");
         setError(
           result.error === "CredentialsSignin"
             ? "Invalid email or password."
             : "An error occurred while signing in."
         );
       } else {
+        toast.success(`Successfully signed in as ${data.email}!`);
         await updateSession?.();
         route.push("/");
       }

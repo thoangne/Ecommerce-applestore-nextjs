@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
 import BackToTopButton from "@/components/back-to-top";
+import { Toaster } from "sonner";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -69,6 +70,7 @@ export default function RootLayout({
                 {" "}
                 {/* Thêm pt-16 (64px) để tránh bị navbar che */}
                 {children}
+                <Toaster richColors position="bottom-right" />
               </main>
               <BackToTopButton />
               <Footer />

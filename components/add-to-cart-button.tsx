@@ -5,6 +5,7 @@ import { ShoppingCart } from "lucide-react";
 import { addToCart } from "@/lib/action";
 import { useState } from "react";
 import { mutate } from "swr";
+import { toast } from "sonner";
 
 export function AddToCartButton({ product }: { product: Product }) {
   const [isAdded, setIsAdded] = useState(false);
@@ -13,10 +14,11 @@ export function AddToCartButton({ product }: { product: Product }) {
     try {
       setIsAdded(true);
       await addToCart(product.id);
-
+      toast.success("Product added to cart!");
       mutate("/api/cart");
     } catch {
       console.error("Error adding to cart");
+      toast.error("Error adding to cart");
     } finally {
       setIsAdded(false);
     }

@@ -4,13 +4,14 @@ import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import AuthModal from "@/components/auth-modal";
 import { useAuth } from "@/app/hooks/useAuth";
+import { toast } from "sonner";
 
 export function CheckoutButton({
   handleCheckout,
 }: {
   handleCheckout: () => Promise<void>;
 }) {
-  const { isAuthenticated, isLoading } = useAuth(); // ✅ kiểm tra đăng nhập
+  const { isAuthenticated, isLoading } = useAuth();
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
 
@@ -26,6 +27,7 @@ export function CheckoutButton({
 
     // ✅ Nếu đã đăng nhập → tiến hành checkout
     startTransition(async () => {
+      toast.info("Processing your checkout...");
       await handleCheckout();
     });
   };

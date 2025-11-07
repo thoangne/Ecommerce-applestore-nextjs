@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -27,6 +26,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/lib/action/auth";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
@@ -55,8 +55,12 @@ export default function SignUpPage() {
           redirect: false,
         });
         if (signInResult?.error) {
+          toast.error("An error occurred while signing in.");
           setError("An error occurred while signing in after registration.");
         } else {
+          toast.success(
+            `Successfully registered and signed in as ${data.email}!`
+          );
           await updateSession?.();
           router.push("/");
         }
