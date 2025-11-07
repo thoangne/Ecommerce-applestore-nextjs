@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import "./styles/blogs.css";
+
 interface BlogPost {
   id: string;
   title: string;
@@ -95,18 +96,20 @@ const InteractiveBlogSlider: React.FC = () => {
   return (
     <section>
       <h1
-        className="text-4xl font-bold text-center text-white mb-8 mt-0 bg-gradient-to-r from-[#000000] via-[#555555] to-[#aaaaaa]
+        className="text-4xl font-bold text-center mb-8 mt-0 
+            bg-gradient-to-r from-[#000000] via-[#555555] to-[#aaaaaa]
             dark:from-[#ffffff] dark:via-[#cccccc] dark:to-[#777777]
             bg-[length:200%_auto] bg-clip-text text-transparent
             animate-gradient-flow
             tracking-tight leading-tight
-            drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]
+            drop-shadow-[0_0_15px_rgba(0,0,0,0.15)]
+            dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]
             hover:scale-[1.05] transition-transform duration-700 ease-in-out
             animate-fade-in"
       >
         Blog công nghệ
       </h1>
-      <div className="relative min-h-screen bg-black overflow-hidden rounded-xl">
+      <div className="relative min-h-screen bg-white dark:bg-black overflow-hidden rounded-xl">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
@@ -115,29 +118,28 @@ const InteractiveBlogSlider: React.FC = () => {
             alt={activePost.title}
             className="background-image w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          {/* Light mode: lighter overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/60 to-transparent dark:from-black/70 dark:via-black/50 dark:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-transparent dark:from-black/60 dark:via-transparent dark:to-transparent" />
         </div>
 
         {/* Main Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 h-screen flex flex-col justify-between py-8">
-          {/* Header */}
-
           {/* Main Content Area */}
           <div className="flex flex-col gap-8">
             {/* Left Content */}
-            <div className=" content-animate max-w-2xl mt-[50px]">
+            <div className="content-animate max-w-2xl mt-[50px]">
               <div className="mb-4">
-                <span className="text-gray-400 text-xs tracking-wider uppercase">
+                <span className="text-gray-600 dark:text-gray-400 text-xs tracking-wider uppercase">
                   {activePost.category}
                 </span>
               </div>
 
-              <h1 className="text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight uppercase tracking-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 leading-tight uppercase tracking-tight">
                 {activePost.title}
               </h1>
 
-              <p className="text-gray-300 text-base mb-6 max-w-xl leading-relaxed">
+              <p className="text-gray-700 dark:text-gray-300 text-base mb-6 max-w-xl leading-relaxed">
                 {activePost.excerpt}
               </p>
 
@@ -146,24 +148,31 @@ const InteractiveBlogSlider: React.FC = () => {
                   <img
                     src={activePost.author.avatar}
                     alt={activePost.author.name}
-                    className="w-10 h-10 rounded-full ring-2 ring-white/20"
+                    className="w-10 h-10 rounded-full ring-2 ring-gray-300 dark:ring-white/20"
                   />
                   <div>
-                    <p className="text-white font-medium text-sm">
+                    <p className="text-gray-900 dark:text-white font-medium text-sm">
                       {activePost.author.name}
                     </p>
-                    <p className="text-gray-400 text-xs">{activePost.date}</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-xs">
+                      {activePost.date}
+                    </p>
                   </div>
                 </div>
-                <div className="h-10 w-px bg-gray-700" />
-                <div className="text-gray-400 text-xs">
+                <div className="h-10 w-px bg-gray-300 dark:bg-gray-700" />
+                <div className="text-gray-600 dark:text-gray-400 text-xs">
                   {activePost.readTime}
                 </div>
               </div>
 
               <Link
                 href={`/blog/${activePost.id}`}
-                className="mt-[20px] explore-button inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm font-semibold rounded-full hover:bg-gray-200 transition-all duration-300 relative z-10"
+                className="mt-[20px] explore-button inline-flex items-center gap-2 px-6 py-3 
+                  bg-gray-900 dark:bg-white 
+                  text-white dark:text-black 
+                  text-sm font-semibold rounded-full 
+                  hover:bg-gray-800 dark:hover:bg-gray-200 
+                  transition-all duration-300 relative z-10"
               >
                 <span>KHÁM PHÁ NGAY</span>
                 <svg
@@ -183,7 +192,7 @@ const InteractiveBlogSlider: React.FC = () => {
             </div>
 
             {/* Thumbnail Cards - Moved Below */}
-            <div className="ml-[500px]  cards-animate flex items-center gap-4">
+            <div className="ml-[500px] cards-animate flex items-center gap-4">
               {blogPosts.map((post, index) => (
                 <div
                   key={post.id}
@@ -225,7 +234,11 @@ const InteractiveBlogSlider: React.FC = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={handlePrevious}
-                className="nav-button w-10 h-10 rounded-full flex items-center justify-center text-white"
+                className="nav-button w-10 h-10 rounded-full flex items-center justify-center 
+                  text-gray-900 dark:text-white 
+                  bg-gray-200/50 dark:bg-white/10 
+                  hover:bg-gray-300/70 dark:hover:bg-white/20 
+                  transition-all"
               >
                 <svg
                   className="w-5 h-5"
@@ -243,7 +256,11 @@ const InteractiveBlogSlider: React.FC = () => {
               </button>
               <button
                 onClick={handleNext}
-                className="nav-button w-10 h-10 rounded-full flex items-center justify-center text-white"
+                className="nav-button w-10 h-10 rounded-full flex items-center justify-center 
+                  text-gray-900 dark:text-white 
+                  bg-gray-200/50 dark:bg-white/10 
+                  hover:bg-gray-300/70 dark:hover:bg-white/20 
+                  transition-all"
               >
                 <svg
                   className="w-5 h-5"
@@ -261,9 +278,9 @@ const InteractiveBlogSlider: React.FC = () => {
               </button>
 
               {/* Progress Bar */}
-              <div className="w-20 h-0.5 bg-white/20 rounded-full overflow-hidden">
+              <div className="w-20 h-0.5 bg-gray-300 dark:bg-white/20 rounded-full overflow-hidden">
                 <div
-                  className="progress-bar h-full"
+                  className="progress-bar h-full bg-gray-900 dark:bg-white"
                   style={{
                     width: `${((activeBlog + 1) / blogPosts.length) * 100}%`,
                   }}
@@ -278,3 +295,4 @@ const InteractiveBlogSlider: React.FC = () => {
 };
 
 export default InteractiveBlogSlider;
+//blogs.tsx

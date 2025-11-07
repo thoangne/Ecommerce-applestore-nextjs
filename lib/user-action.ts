@@ -47,7 +47,6 @@ export async function updateProfile(formData: FormData) {
 
   let avatarUrl: string | undefined = undefined;
 
-  // ✅ Lưu ảnh vào public/uploads
   if (avatarFile) {
     const buffer = Buffer.from(await avatarFile.arrayBuffer());
     const uploadDir = path.join(process.cwd(), "public/uploads");
@@ -70,3 +69,4 @@ export async function updateProfile(formData: FormData) {
 
   return { success: true };
 }
+//user-action.ts
