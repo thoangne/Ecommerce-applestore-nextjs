@@ -179,3 +179,4 @@ export default function AccountProfile() {
     </div>
   );
 }
+//account/page.tsx

@@ -5,7 +5,6 @@ import Carousel from "../components/carousel";
 import ExpandableGallery from "../components/gallery";
 import AppleBanner from "../components/banner";
 import ProductCarouselGallery from "@/components/ProductCarouselGallery";
-import InteractiveBlogSlider from "@/components/blogs";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function Home(props: { searchParams: SearchParams }) {
@@ -23,7 +22,6 @@ export default async function Home(props: { searchParams: SearchParams }) {
         products={macbook}
         title="Có thể bạn cũng thích"
       />
-      <InteractiveBlogSlider />
     </main>
   );
 }
