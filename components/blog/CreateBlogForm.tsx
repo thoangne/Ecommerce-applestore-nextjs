@@ -1,14 +1,35 @@
 "use client";
 
-import { useRef, useState } from "react"; // (useRef đã có sẵn)
-import { createBlogPost } from "@/lib/action/blog";
+import { useRef, useState, useEffect } from "react";
+import { createBlogPost, getBlogCategories } from "@/lib/action/blog"; // Import cả 2 actions
+
+// Định nghĩa kiểu cho danh mục
+type BlogCategory = {
+  id: string;
+  name: string;
+};
 
 export default function CreateBlogForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 1. Tạo một ref cho form
+  // State để lưu danh sách danh mục
+  const [categories, setCategories] = useState<BlogCategory[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
+
+  // Dùng useEffect để tải danh mục khi component mount
+  useEffect(() => {
+    async function loadCategories() {
+      const result = await getBlogCategories();
+      if (result.categories) {
+        setCategories(result.categories);
+      } else {
+        console.error(result.error);
+        setError("Không thể tải danh mục blog.");
+      }
+    }
+    loadCategories();
+  }, []); // Chạy 1 lần
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,17 +41,13 @@ export default function CreateBlogForm() {
     try {
       const result = await createBlogPost(formData);
 
-      // 2. Xử lý lỗi do server action trả về (cải thiện)
       if (result && result.error) {
         throw new Error(result.error);
       }
 
       if (result && result.success) {
         alert("Tạo bài viết thành công!");
-
-        // 3. Sử dụng ref để reset form (SỬA LỖI)
-        // e.currentTarget.reset(); // <-- Dòng cũ gây lỗi
-        formRef.current?.reset(); // <-- Dòng mới, an toàn
+        formRef.current?.reset();
       }
     } catch (err: any) {
       console.error(err);
@@ -41,7 +58,6 @@ export default function CreateBlogForm() {
   };
 
   return (
-    // 4. Gắn ref vào thẻ form
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="block mb-1">Tiêu đề *</label>
@@ -50,6 +66,26 @@ export default function CreateBlogForm() {
           required
           className="w-full p-2 border rounded dark:bg-black dark:border-gray-700"
         />
+      </div>
+
+      {/* --- PHẦN CHỌN DANH MỤC --- */}
+      <div>
+        <label className="block mb-1">Danh mục *</label>
+        <select
+          name="categoryId"
+          required
+          defaultValue=""
+          className="w-full p-2 border rounded dark:bg-black dark:border-gray-700"
+        >
+          <option value="" disabled>
+            -- Chọn một danh mục --
+          </option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>
@@ -77,23 +113,6 @@ export default function CreateBlogForm() {
           name="thumbnail"
           type="file"
           accept="image/*"
-          className="w-full p-2 border rounded dark:bg-black dark:border-gray-700"
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1">Thời gian đọc (VD: 5 phút đọc)</label>
-        <input
-          name="readTime"
-          className="w-full p-2 border rounded dark:bg-black dark:border-gray-700"
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1">ID danh mục (nếu có)</label>
-        <input
-          name="categoryId"
-          placeholder="cuid của BlogCategory"
           className="w-full p-2 border rounded dark:bg-black dark:border-gray-700"
         />
       </div>
