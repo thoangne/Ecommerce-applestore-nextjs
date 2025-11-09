@@ -56,6 +56,11 @@ async function getPost(slug: string, userId?: string) {
     return null;
   }
 }
+interface User {
+  name: string;
+  avatarUrl?: string;
+}
+// Trang Server Component
 
 /**
  * HÀM 2: Lấy các bài viết liên quan (MỚI)
@@ -166,6 +171,9 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
   const currentUser = session?.user
     ? {
         name: session.user.name ?? "User",
+        // ✅ ĐÃ SỬA: Lấy avatarUrl từ session, khớp với `user-action.ts`
+        // Dùng 'as any' để truy cập trường đã được custom trong session
+        avatarUrl: (session.user as User).avatarUrl ?? undefined,
         avatarUrl: (session.user as any).avatarUrl ?? undefined,
       }
     : null;
