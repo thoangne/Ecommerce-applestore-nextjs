@@ -5,6 +5,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth"; // Giả sử bạn đã có file auth
 
+// Cấu hình Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -12,8 +13,10 @@ cloudinary.config({
   secure: true,
 });
 
+/**
+ * Tải ảnh lên Cloudinary
+ */
 async function uploadToCloudinary(base64DataUri: string): Promise<string> {
-  // base64DataUri giờ sẽ là `data:image/png;base64,UklGR...`
   const result = await cloudinary.uploader.upload(base64DataUri, {
     folder: "blog/thumbnails",
     resource_type: "image",
@@ -23,65 +26,64 @@ async function uploadToCloudinary(base64DataUri: string): Promise<string> {
   return result.secure_url;
 }
 
+/**
+ * ACTION 1: Tạo bài viết mới
+ */
 export async function createBlogPost(formData: FormData) {
   const session = await auth();
-  if (!session?.user?.id) throw new Error("Unauthorized");
-
-  const title = formData.get("title")?.toString() || "";
-  const content = formData.get("content")?.toString() || "";
-  const excerpt = formData.get("excerpt")?.toString() || "";
-  const readTime = formData.get("readTime")?.toString() || "";
-  const categoryId = formData.get("categoryId")?.toString() || undefined;
-  const imageFile = formData.get("thumbnail") as File | null;
-
-  if (!title || !content) {
-    // Nên trả về lỗi thay vì throw
-    return { error: "Thiếu tiêu đề hoặc nội dung" };
+  if (!session?.user?.id) {
+    return { error: "Unauthorized" };
   }
 
-  let thumbnailUrl = "";
-
   try {
+    const title = formData.get("title")?.toString() || "";
+    const content = formData.get("content")?.toString() || "";
+    const excerpt = formData.get("excerpt")?.toString() || "";
+    const readTime = formData.get("readTime")?.toString() || "";
+    const categoryId = formData.get("categoryId")?.toString() || undefined;
+    const imageFile = formData.get("thumbnail") as File | null;
+
+    if (!title || !content || !categoryId) {
+      return { error: "Thiếu tiêu đề, nội dung, hoặc danh mục" };
+    }
+
+    let thumbnailUrl = "";
+
     if (imageFile && imageFile.size > 0) {
       const bytes = await imageFile.arrayBuffer();
       const buffer = Buffer.from(bytes);
-
-      // ✅ SỬA LỖI: Thêm "data:" vào trước imageFile.type
+      // Sửa lỗi ENAMETOOLONG: Thêm "data:"
       const dataUri = `data:${imageFile.type};base64,${buffer.toString("base64")}`;
-
       thumbnailUrl = await uploadToCloudinary(dataUri);
     }
 
-    // Tạo slug-an-toàn
+    // Tạo slug
     const slug = title
       .toLowerCase()
       .trim()
-      .replace(/[\s\W-]+/g, "-") // Thay thế khoảng trắng và ký tự đặc biệt bằng -
+      .replace(/[\s\W-]+/g, "-") // Thay thế khoảng trắng và ký tự đặc biệt
       .replace(/^-+|-+$/g, "") // Xóa dấu - ở đầu và cuối
       .substring(0, 100);
 
-    // Kiểm tra slug có bị trùng không (nên làm)
-    // const existingSlug = await prisma.blogPost.findUnique({ where: { slug } });
-    // if (existingSlug) {
-    //   slug = `${slug}-${Date.now()}`; // Thêm timestamp nếu trùng
-    // }
+    // (Nên kiểm tra slug trùng lặp ở đây)
 
     await prisma.blogPost.create({
       data: {
         title,
         slug,
         content,
-        excerpt: excerpt || content.substring(0, 150) + "...", // Tự tạo excerpt nếu rỗng
+        excerpt: excerpt || content.substring(0, 150) + "...",
         readTime,
-        thumbnail: thumbnailUrl,
-        published: true, // Mặc định publish
+        thumbnail: thumbnailUrl || undefined, // Lưu là undefined nếu rỗng
+        published: true,
         publishedAt: new Date(),
         authorId: session.user.id,
-        categoryId: categoryId || undefined, // Sẽ là null nếu rỗng
+        categoryId: categoryId, // Lưu ID danh mục
       },
     });
 
     revalidatePath("/blog");
+    revalidatePath("/blog/create");
     return { success: true };
   } catch (error: any) {
     console.error("Lỗi khi tạo bài viết:", error);
@@ -89,6 +91,47 @@ export async function createBlogPost(formData: FormData) {
   }
 }
 
+/**
+ * ACTION 2: Like/Unlike bài viết
+ * (Giả sử bạn dùng model BlogLike)
+ */
+export async function toggleBlogLike(postId: string) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "Unauthorized" };
+  }
+
+  try {
+    const existing = await prisma.blogLike.findUnique({
+      where: { postId_userId: { postId, userId: session.user.id } },
+    });
+
+    if (existing) {
+      await prisma.blogLike.delete({ where: { id: existing.id } });
+    } else {
+      await prisma.blogLike.create({
+        data: {
+          postId,
+          userId: session.user.id,
+        },
+      });
+    }
+
+    // Lấy slug để revalidate (tùy chọn nhưng nên làm)
+    // const post = await prisma.blogPost.findUnique({ where: { id: postId }, select: { slug: true }});
+    // if (post) revalidatePath(`/blog/${post.slug}`);
+
+    revalidatePath("/blog");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Lỗi khi like:", error);
+    return { error: "Thao tác thất bại." };
+  }
+}
+
+/**
+ * ACTION 3: Tạo bình luận mới
+ */
 export async function createComment(formData: FormData) {
   const session = await auth();
   if (!session?.user?.id) {
@@ -97,7 +140,7 @@ export async function createComment(formData: FormData) {
 
   const content = formData.get("content")?.toString();
   const postId = formData.get("postId")?.toString();
-  const postSlug = formData.get("postSlug")?.toString(); // Lấy slug từ form
+  const postSlug = formData.get("postSlug")?.toString();
 
   if (!postId || !postSlug) {
     return { error: "Lỗi: Không tìm thấy bài viết." };
@@ -118,42 +161,22 @@ export async function createComment(formData: FormData) {
     // Revalidate lại đúng trang slug này để hiển thị comment mới
     revalidatePath(`/blog/${postSlug}`);
     return { success: true };
-  } catch (error: any) {
+  } catch (error) {
     console.error("Lỗi khi tạo bình luận:", error);
     return { error: "Đã xảy ra lỗi, không thể gửi bình luận." };
   }
 }
 
-export async function toggleBlogLike(postId: string) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    throw new Error("Unauthorized");
-    // Hoặc trả về { error: "Unauthorized" }
-  }
-
-  // Chú ý: Tên model này (BlogLike) phải khớp với schema của bạn
+/**
+ * ACTION 4: Lấy danh sách danh mục Blog
+ */
+export async function getBlogCategories() {
   try {
-    const existing = await prisma.blogLike.findUnique({
-      where: { postId_userId: { postId, userId: session.user.id } },
+    const categories = await prisma.blogCategory.findMany({
+      orderBy: { name: "asc" },
     });
-
-    if (existing) {
-      await prisma.blogLike.delete({ where: { id: existing.id } });
-    } else {
-      await prisma.blogLike.create({
-        data: {
-          postId,
-          userId: session.user.id,
-        },
-      });
-    }
-
-    revalidatePath(`/blog/${postId}`); // Tên slug chứ không phải ID
-    revalidatePath("/blog");
-    return { success: true };
-  } catch (error: any) {
-    console.error("Lỗi khi like:", error);
-    return { error: "Thao tác thất bại." };
+    return { categories };
+  } catch (error) {
+    return { error: "Không thể tải danh mục." };
   }
 }
-//blog.ts

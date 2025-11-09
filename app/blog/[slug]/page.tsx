@@ -4,17 +4,14 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, MessageCircle, ThumbsUp, UserCircle } from "lucide-react";
-import LikeButton from "@/components/blog/LikeButton"; // Import LikeButton của bạn
-import BlogComments from "@/components/blog/BlogComment"; // Component Client mới
+import LikeButton from "@/components/blog/LikeButton";
+import BlogComments from "@/components/blog/BlogComment"; // Sửa lại đường dẫn
 
-// Định nghĩa kiểu cho params
+// Định nghĩa kiểu cho props
 interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>; // <-- Promise!
 }
 
-// Hàm fetch dữ liệu
 async function getPost(slug: string, userId?: string) {
   try {
     const post = await prisma.blogPost.findUnique({
@@ -24,7 +21,7 @@ async function getPost(slug: string, userId?: string) {
           select: { name: true, avatarUrl: true, id: true },
         },
         category: {
-          select: { name: true, slug: true },
+          select: { name: true, slug: true, id: true }, // Lấy cả 'id'
         },
         likes: {
           select: { userId: true },
@@ -35,7 +32,7 @@ async function getPost(slug: string, userId?: string) {
               select: { name: true, avatarUrl: true, id: true },
             },
           },
-          orderBy: { createdAt: "asc" }, // Sắp xếp bình luận
+          orderBy: { createdAt: "asc" },
         },
       },
     });
@@ -44,7 +41,6 @@ async function getPost(slug: string, userId?: string) {
       return null;
     }
 
-    // Xử lý dữ liệu
     const likeCount = post.likes.length;
     const userHasLiked = userId
       ? post.likes.some((like) => like.userId === userId)
@@ -65,18 +61,113 @@ interface User {
   avatarUrl?: string;
 }
 // Trang Server Component
+
+/**
+ * HÀM 2: Lấy các bài viết liên quan (MỚI)
+ */
+async function getRelatedPosts(categoryId: string, currentPostId: string) {
+  try {
+    return await prisma.blogPost.findMany({
+      where: {
+        categoryId: categoryId, // Cùng danh mục
+        id: { not: currentPostId }, // Trừ bài hiện tại
+        published: true,
+      },
+      orderBy: { publishedAt: "desc" },
+      take: 4, // Lấy 4 bài
+      select: {
+        title: true,
+        slug: true,
+        thumbnail: true,
+        publishedAt: true,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching related posts:", error);
+    return []; // Trả về mảng rỗng nếu lỗi
+  }
+}
+
+// Kiểu dữ liệu cho bài viết liên quan
+type RelatedPost = {
+  title: string;
+  slug: string;
+  thumbnail: string | null;
+  publishedAt: Date | null;
+};
+
+/**
+
+ * Component con để hiển thị các bài viết liên quan
+ */
+function RelatedPostsSidebar({ posts }: { posts: RelatedPost[] }) {
+  return (
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6">
+      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+        Bài viết liên quan
+      </h3>
+      {posts.length > 0 ? (
+        <div className="space-y-5">
+          {posts.map((post) => (
+            <Link
+              href={`/blog/${post.slug}`}
+              key={post.slug}
+              className="group flex items-center gap-4 transform transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden shadow-md">
+                <Image
+                  src={
+                    post.thumbnail ||
+                    "https://placehold.co/80x80/e2e8f0/94a3b8?text=Blog"
+                  }
+                  alt={post.title}
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                  {post.title}
+                </h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+                  {post.publishedAt
+                    ? new Date(post.publishedAt).toLocaleDateString("vi-VN")
+                    : ""}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+          Không có bài viết liên quan.
+        </p>
+      )}
+    </div>
+  );
+}
+
+/**
+ * TRANG CHÍNH (Đã cập nhật layout)
+ */
 export default async function BlogPostPage(props: BlogPostPageProps) {
-  const session = await auth();
   const { params } = props;
+  const { slug } = await params; // <-- await trước khi dùng
+
+  const session = await auth();
   const currentUserId = session?.user?.id;
 
-  const post = await getPost(params.slug, currentUserId);
+  const post = await getPost(slug, currentUserId); // <-- dùng slug đã await
 
   if (!post) {
-    notFound(); // Trả về 404 nếu không tìm thấy bài viết
+    notFound();
   }
 
-  // Lấy thông tin user hiện tại (để truyền cho component comment)
+  const relatedPosts = post.category
+    ? await getRelatedPosts(post.category.id, post.id)
+    : [];
+
   const currentUser = session?.user
     ? {
         name: session.user.name ?? "User",
@@ -87,128 +178,141 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
     : null;
 
   return (
-    <div className="bg-gray-100 dark:bg-black min-h-screen py-8 md:py-12">
-      <div className="max-w-2xl mx-auto">
-        {/* Nút quay lại */}
-        <Link
-          href="/blog"
-          className="text-sm text-gray-600 dark:text-gray-400 hover:underline mb-4 inline-block px-4 md:px-0"
-        >
-          &larr; Quay lại Blog
-        </Link>
+    <div className="bg-gray-50 dark:bg-black min-h-screen py-8 md:py-12">
+      {/* THAY ĐỔI LAYOUT: Chuyển sang max-w-7xl (rộng hơn) */}
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Nút quay lại (giữ nguyên) */}
+        <div className="max-w-4xl ">
+          <Link
+            href="/blog"
+            className="text-sm text-gray-600 dark:text-gray-400 hover:underline mb-6 inline-block"
+          >
+            &larr; Quay lại Blog
+          </Link>
+        </div>
 
-        {/* Khung bài post kiểu Facebook */}
-        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-          {/* 1. Header bài post */}
-          <div className="p-4 flex items-center gap-3">
-            {post.author?.avatarUrl ? (
-              <Image
-                src={post.author.avatarUrl}
-                alt={post.author.name ?? "Avatar"}
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            ) : (
-              <UserCircle className="w-10 h-10 text-gray-400" />
-            )}
-            <div>
-              <p className="font-semibold text-gray-900 dark:text-white">
-                {post.author?.name ?? "Anonymous"}
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {post.publishedAt
-                  ? new Date(post.publishedAt).toLocaleDateString("vi-VN", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })
-                  : "Chưa công bố"}
-              </p>
-            </div>
-          </div>
+        {/* THAY ĐỔI LAYOUT: Grid 2 cột */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          {/* === CỘT NỘI DUNG CHÍNH (TRÁI) === */}
+          <div className="lg:col-span-2">
+            {/* Khung bài viết chính */}
+            <article className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 md:p-8 lg:p-10">
+              {/* 1. Header (Category, Title, Metadata) */}
+              <header className="mb-8">
+                {post.category && (
+                  <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-3 py-1 rounded-full">
+                    {post.category.name}
+                  </span>
+                )}
+                <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white mt-4 mb-5 leading-tight">
+                  {post.title}
+                </h1>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center gap-2">
+                    {post.author?.avatarUrl ? (
+                      <Image
+                        src={post.author.avatarUrl}
+                        alt={post.author.name ?? "Avatar"}
+                        width={32}
+                        height={32}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <UserCircle className="w-8 h-8 text-gray-400" />
+                    )}
+                    <span className="font-medium text-gray-800 dark:text-gray-200">
+                      {post.author?.name ?? "Anonymous"}
+                    </span>
+                  </div>
+                  <span className="hidden md:inline">•</span>
+                  <time dateTime={post.publishedAt?.toISOString()}>
+                    {post.publishedAt
+                      ? new Date(post.publishedAt).toLocaleDateString("vi-VN", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : "Chưa công bố"}
+                  </time>
+                  {post.readTime && (
+                    <>
+                      <span className="hidden md:inline">•</span>
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-4 h-4" />
+                        {post.readTime}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </header>
 
-          {/* 2. Nội dung bài post */}
-          <div className="px-4 pb-4">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-              {post.title}
-            </h1>
-            {/* Thẻ tag */}
-            {post.category && (
-              <span className="text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2.5 py-0.5 rounded-full">
-                {post.category.name}
-              </span>
-            )}
-            {/* Thêm thời gian đọc */}
-            {post.readTime && (
-              <span className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 mt-3">
-                <Clock className="w-3 h-3" />
-                {post.readTime}
-              </span>
-            )}
+              {/* 2. Ảnh bìa (Thumbnail) */}
+              {post.thumbnail && (
+                <div className="my-8 rounded-lg overflow-hidden shadow-lg">
+                  <Image
+                    src={post.thumbnail}
+                    alt={post.title}
+                    width={1200}
+                    height={675}
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
+                </div>
+              )}
 
-            {/* Nội dung chính */}
-            <p className="text-gray-700 dark:text-gray-300 mt-4 whitespace-pre-wrap leading-relaxed">
-              {post.content}
-            </p>
-          </div>
+              {/* 3. Nội dung bài viết */}
+              <div className="text-gray-700 dark:text-gray-300 mt-4 whitespace-pre-wrap leading-relaxed prose prose-lg dark:prose-invert max-w-none">
+                <p>{post.content}</p>
+              </div>
 
-          {/* 3. Ảnh thumbnail (nếu có) */}
-          {post.thumbnail && (
-            <div className="w-full bg-gray-200 dark:bg-gray-700">
-              <Image
-                src={post.thumbnail}
-                alt={post.title}
-                width={720}
-                height={405}
-                className="w-full h-auto object-cover"
-                priority
-              />
-            </div>
-          )}
+              {/* 4. Thống kê & Nút Like (Cuối bài viết) */}
+              <div className="mt-10 pt-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                  <span className="flex items-center gap-1.5">
+                    <ThumbsUp className="w-4 h-4" />
+                    {post.likeCount} {post.likeCount === 1 ? "Like" : "Likes"}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <MessageCircle className="w-4 h-4" />
+                    {post.comments.length}{" "}
+                    {post.comments.length === 1 ? "Bình luận" : "Bình luận"}
+                  </span>
+                </div>
+                <LikeButton
+                  postId={post.id}
+                  initialLikeCount={post.likeCount}
+                  userHasLiked={post.userHasLiked}
+                  className="flex items-center gap-2 py-2 px-4 rounded-full font-semibold transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+                />
+              </div>
+            </article>
 
-          {/* 4. Thống kê (Like/Comment) */}
-          <div className="px-4 py-3 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
-            <span className="flex items-center gap-1">
-              <ThumbsUp className="w-4 h-4 text-blue-500" />
-              {post.likeCount}
-            </span>
-            <span>{post.comments.length} bình luận</span>
-          </div>
-
-          {/* 5. Hàng Nút Action (Like / Comment) */}
-          <div className="border-t border-b border-gray-200 dark:border-gray-700 grid grid-cols-2">
-            {/* Nút Like (Client Component) */}
-            <LikeButton
-              postId={post.id}
-              initialLikeCount={post.likeCount}
-              userHasLiked={post.userHasLiked}
-              // Tùy chỉnh class cho nút to hơn
-              className={`flex items-center justify-center gap-2 py-2 text-base font-semibold transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                post.userHasLiked
-                  ? "text-blue-600 dark:text-blue-400"
-                  : "text-gray-600 dark:text-gray-400"
-              }`}
-            />
-            {/* Nút Bình luận (chỉ là anchor) */}
-            <a
-              href="#comment-section"
-              className="flex items-center justify-center gap-2 py-2 text-base font-semibold text-gray-600 dark:text-gray-400 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+            {/* 5. Khu vực Bình luận (Tách biệt) */}
+            <div
+              id="comment-section"
+              className="mt-12 bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 md:p-8 lg:p-10"
             >
-              <MessageCircle className="w-5 h-5" />
-              Bình luận
-            </a>
+              <BlogComments
+                postId={post.id}
+                postSlug={post.slug}
+                initialComments={post.comments}
+                currentUser={currentUser}
+              />
+            </div>
           </div>
 
-          {/* 6. Khu vực Bình luận (Client Component mới) */}
-          <div id="comment-section" className="p-4">
-            <BlogComments
-              postId={post.id}
-              postSlug={post.slug}
-              initialComments={post.comments}
-              currentUser={currentUser}
-            />
-          </div>
+          {/* === CỘT SIDEBAR (PHẢI) (MỚI) === */}
+          <aside className="lg:col-span-1">
+            {/* Thêm 'sticky' để sidebar đi theo khi cuộn */}
+            <div className="lg:sticky lg:top-24 space-y-8">
+              {/* Component Bài viết liên quan */}
+              <RelatedPostsSidebar posts={relatedPosts} />
+
+              {/* Bạn có thể thêm các widget khác ở đây */}
+              {/* <NewsletterSignup /> */}
+              {/* <PopularTags /> */}
+            </div>
+          </aside>
         </div>
       </div>
     </div>

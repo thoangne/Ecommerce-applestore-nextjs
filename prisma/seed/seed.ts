@@ -167,3 +167,26 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+async function seedBlogCategories() {
+  console.log("🌱 Bắt đầu seeding danh mục Blog...");
+
+  const blogCategories = [
+    { name: "Tin tức & Sự kiện", slug: "tin-tuc-su-kien" },
+    { name: "Đánh giá sản phẩm", slug: "danh-gia-san-pham" },
+    { name: "Thủ thuật & Hướng dẫn", slug: "thu-thuat-huong-dan" },
+    { name: "So sánh & Tư vấn", slug: "so-sanh-tu-van" },
+    { name: "Khuyến mãi", slug: "khuyen-mai" },
+  ];
+
+  for (const cat of blogCategories) {
+    await prisma.blogCategory.upsert({
+      where: { slug: cat.slug },
+      update: { name: cat.name },
+      create: { name: cat.name, slug: cat.slug },
+    });
+    console.log(`Đã tạo/cập nhật danh mục Blog: ${cat.name}`);
+  }
+
+  console.log("✅ Seed danh mục Blog hoàn tất.");
+}
+
