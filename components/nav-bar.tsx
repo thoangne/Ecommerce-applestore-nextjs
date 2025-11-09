@@ -18,7 +18,6 @@ import { ChevronDown } from "lucide-react";
 import Notification from "./notification";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Interface cho danh mục Sản phẩm
 interface Category {
   id: string;
   name: string;
@@ -26,7 +25,6 @@ interface Category {
   subcategories: { id: string; name: string; slug: string }[];
 }
 
-// Interface mới cho danh mục Blog
 interface SimpleCategory {
   id: string;
   name: string;
@@ -35,13 +33,11 @@ interface SimpleCategory {
 
 export default function NavBar() {
   const [categories, setCategories] = useState<Category[]>([]);
-  // State mới cho danh mục Blog
   const [blogCategories, setBlogCategories] = useState<SimpleCategory[]>([]);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Fetch danh mục Sản phẩm (Giữ nguyên)
     async function fetchCategories() {
       try {
         setIsLoading(true);
@@ -53,17 +49,8 @@ export default function NavBar() {
       } finally {
         setIsLoading(false);
       }
-      try {
-        const res = await fetch("/api/categories");
-        if (!res.ok) throw new Error("Failed to fetch product categories");
-        const data = await res.json();
-        setCategories(data);
-      } catch (error) {
-        console.error(error);
-      }
     }
 
-    // 2. Fetch danh mục Blog (Mới)
     async function fetchBlogCategories() {
       try {
         const res = await fetch("/api/blog");
@@ -93,7 +80,7 @@ export default function NavBar() {
 
           {/* NAVIGATION */}
           <nav className="hidden md:flex items-center gap-4 lg:gap-6">
-            {/* ✅ Loading skeleton UI */}
+            {/* ✅ Loading skeleton */}
             {isLoading
               ? Array.from({ length: 4 }).map((_, i) => (
                   <Skeleton
@@ -135,77 +122,16 @@ export default function NavBar() {
                         )}
                       </button>
                     </DropdownMenuTrigger>
-                    {/* Map danh mục Sản phẩm (Giữ nguyên) */}
-                    {categories.map((cat) => (
-                      <DropdownMenu
-                        key={cat.id}
-                        onOpenChange={(isOpen) =>
-                          setOpenMenu(isOpen ? cat.id : null)
-                        }
-                      >
-                        <DropdownMenuTrigger asChild>
-                          <button
-                            className={`
-                      relative flex items-center gap-1 px-1 py-2
-                      text-sm font-medium transition-all duration-200
-                      hover:text-foreground text-muted-foreground
-                      ${openMenu === cat.id ? "text-foreground" : ""}
-                    `}
-                          >
-                            <span className="whitespace-nowrap">
-                              {cat.name}
-                            </span>
-                            <motion.span
-                              animate={{
-                                rotate: openMenu === cat.id ? 180 : 0,
-                              }}
-                              transition={{ duration: 0.2 }}
-                              className="text-[10px] mt-[1px]"
-                            >
-                              <ChevronDown size={12} />
-                            </motion.span>
-                            {openMenu === cat.id && (
-                              <motion.span
-                                layoutId="activeIndicator"
-                                className="absolute bottom-0 left-0 w-full h-[2px] bg-foreground rounded-full"
-                              />
-                            )}
-                          </button>
-                        </DropdownMenuTrigger>
 
-                        {cat.subcategories.length > 0 && (
-                          <DropdownMenuContent
-                            align="start"
-                            sideOffset={8}
-                            className="
-                          rounded-xl shadow-lg border border-border/40 bg-background/95
-                          min-w-[180px] p-2
-                          backdrop-blur-sm animate-in fade-in-0 zoom-in-95
-                        "
-                          >
-                            {cat.subcategories.map((sub) => (
-                              <DropdownMenuItem key={sub.id} asChild>
-                                <Link
-                                  href={`/search/${sub.slug}`}
-                                  className="flex items-center text-sm px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-all"
-                                >
-                                  {sub.name}
-                                </Link>
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuContent>
-                        )}
-                      </DropdownMenu>
-                    ))}
                     {cat.subcategories.length > 0 && (
                       <DropdownMenuContent
                         align="start"
                         sideOffset={8}
                         className="
-                      rounded-xl shadow-lg border border-border/40 bg-background/95
-                      min-w-[180px] p-2
-                      backdrop-blur-sm animate-in fade-in-0 zoom-in-95
-                    "
+                        rounded-xl shadow-lg border border-border/40 bg-background/95
+                        min-w-[180px] p-2
+                        backdrop-blur-sm animate-in fade-in-0 zoom-in-95
+                      "
                       >
                         {cat.subcategories.map((sub) => (
                           <DropdownMenuItem key={sub.id} asChild>
@@ -222,7 +148,7 @@ export default function NavBar() {
                   </DropdownMenu>
                 ))}
 
-            {/* --- THÊM DROPDOWN CHO BLOG --- */}
+            {/* ✅ BLOG DROPDOWN */}
             <DropdownMenu
               key="blog-menu"
               onOpenChange={(isOpen) =>
@@ -255,7 +181,6 @@ export default function NavBar() {
                 </button>
               </DropdownMenuTrigger>
 
-              {/* Nội dung dropdown của Blog */}
               <DropdownMenuContent
                 align="start"
                 sideOffset={8}
@@ -265,7 +190,6 @@ export default function NavBar() {
                   backdrop-blur-sm animate-in fade-in-0 zoom-in-95
                 "
               >
-                {/* Link đến trang Blog chính */}
                 <DropdownMenuItem asChild>
                   <Link
                     href="/blog"
@@ -275,11 +199,9 @@ export default function NavBar() {
                   </Link>
                 </DropdownMenuItem>
 
-                {/* Map danh mục Blog */}
                 {blogCategories.map((sub) => (
                   <DropdownMenuItem key={sub.id} asChild>
                     <Link
-                      // Tạo link đến trang lọc theo danh mục
                       href={`/blog/category/${sub.slug}`}
                       className="flex items-center text-sm px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-all"
                     >
@@ -289,7 +211,6 @@ export default function NavBar() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            {/* --- KẾT THÚC DROPDOWN BLOG --- */}
           </nav>
 
           <MobileNav />
