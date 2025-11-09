@@ -72,9 +72,11 @@ export default function RootLayout({
                 {/* Thêm pt-16 (64px) để tránh bị navbar che */}
                 {children}
                 <Toaster richColors position="bottom-right" />
-                <Chatbot />
               </main>
-              <BackToTopButton />
+              <div className="fixed bottom-5 right-5 flex flex-col gap-3 z-[9999]">
+                <Chatbot />
+                <BackToTopButton />
+              </div>
               <Footer />
             </ThemeProvider>
           </SessionProvider>

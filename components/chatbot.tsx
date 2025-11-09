@@ -40,8 +40,6 @@ export default function Chatbot() {
       });
 
       if (!res.ok) {
-        console.error("❌ API error", res.status, res.statusText);
-
         const text = await res.text();
         console.error("❌ API response:", text);
 
@@ -62,35 +60,49 @@ export default function Chatbot() {
   }
 
   return (
-    <>
+    <div className="z-[9999]">
       {/* 🔘 Floating chat button */}
       <Button
         size="icon"
         onClick={() => setOpen(!open)}
-        className="fixed bottom-5 right-5 rounded-full w-12 h-12 bg-orange-500 hover:bg-orange-600 shadow-lg"
+        className="fixed bottom-5 right-5 z-[9999] rounded-full 
+        w-12 h-12 bg-black hover:bg-neutral-800 text-white shadow-xl
+        transition-colors"
       >
         {open ? (
-          <X className="w-5 h-5 text-white" />
+          <X className="w-5 h-5" />
         ) : (
-          <MessageCircle className="w-5 h-5 text-white" />
+          <MessageCircle className="w-5 h-5" />
         )}
       </Button>
 
       {/* 💬 Chat window */}
       {open && (
-        <Card className="fixed bottom-20 right-5 w-80 sm:w-96 max-h-[500px] flex flex-col border-gray-200 shadow-xl rounded-2xl overflow-hidden bg-white dark:bg-slate-900">
+        <Card
+          className="
+            fixed bottom-20 right-5 w-80 sm:w-96 max-h-[500px]
+            flex flex-col overflow-hidden rounded-2xl shadow-2xl
+            bg-white dark:bg-neutral-950 dark:border-neutral-800
+            border border-neutral-200 z-[9999]
+          "
+        >
           <CardContent className="flex flex-col flex-grow p-4 space-y-3 overflow-y-auto">
             {messages.map((m, i) => (
               <div
                 key={i}
-                className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex ${
+                  m.role === "user" ? "justify-end" : "justify-start"
+                }`}
               >
                 <div
-                  className={`px-3 py-2 rounded-xl text-sm whitespace-pre-wrap ${
-                    m.role === "user"
-                      ? "bg-orange-500 text-white"
-                      : "bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-gray-200"
-                  }`}
+                  className={`
+                    px-3 py-2 rounded-xl text-sm whitespace-pre-wrap
+                    ${
+                      m.role === "user"
+                        ? "bg-black text-white"
+                        : "bg-neutral-200 dark:bg-neutral-800 text-black dark:text-white"
+                    }
+                  `}
                 >
                   {m.content}
                 </div>
@@ -98,7 +110,7 @@ export default function Chatbot() {
             ))}
 
             {loading && (
-              <div className="text-xs text-gray-500 animate-pulse">
+              <div className="text-xs text-neutral-500 animate-pulse">
                 Đang trả lời...
               </div>
             )}
@@ -107,25 +119,33 @@ export default function Chatbot() {
           </CardContent>
 
           {/* ✍️ Input area */}
-          <div className="p-3 border-t border-gray-200 dark:border-slate-700 flex gap-2">
+          <div className="p-3 border-t border-neutral-200 dark:border-neutral-800 flex gap-2">
             <Input
               placeholder="Nhập tin nhắn..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              className="flex-1 text-sm"
+              className="
+                flex-1 text-sm 
+                bg-white dark:bg-neutral-950
+                border-neutral-300 dark:border-neutral-700
+                focus:ring-0 focus:border-black dark:focus:border-white
+              "
             />
             <Button
               size="icon"
               onClick={sendMessage}
               disabled={loading}
-              className="bg-orange-500 hover:bg-orange-600 text-white"
+              className="
+                bg-black hover:bg-neutral-800 text-white
+                transition-colors
+              "
             >
               <Send className="w-4 h-4" />
             </Button>
           </div>
         </Card>
       )}
-    </>
+    </div>
   );
 }
