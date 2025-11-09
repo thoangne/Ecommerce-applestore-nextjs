@@ -73,10 +73,8 @@ export default function RootLayout({
                 {children}
                 <Toaster richColors position="bottom-right" />
               </main>
-              <div className="fixed bottom-5 right-5 flex flex-col gap-3 z-[9999]">
-                <Chatbot />
-                <BackToTopButton />
-              </div>
+              <Chatbot />
+              <BackToTopButton />
               <Footer />
             </ThemeProvider>
           </SessionProvider>

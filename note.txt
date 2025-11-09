@@ -1,63 +1,29 @@
-- Cài đặt nextjs typescript
-- cài đặt docker 
-- cài đặt prisma là ORM (Object-Relational Mapping) tương tự như sequilize của mysql giúp kết nối với postgre
-     
+Run chatbot local 
 
 
-Học về Suspense trong react 
-    Định Nghĩa:
-    Suspense là một công cụ trong React giúp bạn hiển thị một phần giao diện tạm thời trong khi chờ dữ liệu được tải về từ server hoặc khi một thành phần đang được tải.
-    Cách Hoạt Động:
-    Bạn sử dụng Suspense để bao bọc các thành phần mà bạn muốn chờ đợi. Khi thành phần bên trong đang tải, bạn có thể chỉ định một thông báo hoặc spinner để hiển thị cho người dùng biết rằng dữ liệu đang được tải.
-    Cách Sử Dụng:
-    Bạn cần chỉ định một thuộc tính gọi là fallback, nơi bạn có thể đặt nội dung sẽ hiển thị trong khi chờ.
+1) tải ollamba 
+https://ollama.com/library 
 
-Về loading.tsx trong nextjs
-    1. Khái Niệm về loading.js
-    Mục Đích: loading.js giúp hiển thị một giao diện người dùng tạm thời (như một spinner hoặc thông báo "Đang tải...") 
-    trong khi nội dung của trang hoặc thành phần đang được tải.
-    Sử Dụng Trong Các Tình Huống: Khi bạn sử dụng React.lazy() hoặc khi Next.js cần tải dữ liệu từ server, 
-    bạn có thể sử dụng loading.js để cải thiện trải nghiệm người dùng.
-    2. Cách Hoạt Động
-    Tự Động Nhận Diện: Khi bạn tạo một tệp loading.js trong một thư mục trang (pages) hoặc trong thư mục app, 
-    Next.js sẽ tự động sử dụng nó để hiển thị trong khi các thành phần hoặc trang con đang tải.
-    Kết Hợp Với Suspense: loading.js thường được sử dụng cùng với Suspense để quản lý trạng thái tải cho các thành phần được tải bất đồng bộ.
+tải model "llama3.1:8b-instant"  => kêu chatgpt chỉ 
 
-về Pagination trong shadcn
-    Hơi khó set up ở chỗ 1 2 ... 9 10 cái này cần lưu ý
-    
+2) pull docker 
 
+tạo file docker-compose.yml rồi paste code ở dưới vào 
 
-trong Nextjs có component notfound => chỉ các trang ko tìm thấy
-mình có thể tự custom not-found.jsx/tsx/js
-có thể tự custom loading.jsx/tsx.js lun 
+version: "3.9"
 
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
 
+volumes:
+  qdrant_storage:
 
-Có cái hay về breadcrums 
-là thanh điều hướng của trang, cái này khá hay của shadcn 
+chạy docker-compose kêu chatgpt chỉ 
 
-cần sửa mobile navbar 
-card của product 
-tạo trang product 
-
-chỉnh sửa chi tiết phần padding hay margin để hiển thị hợp lí hơn
-phải nhớ responsive đầy đủ
-
-useSearchParams()	Truy cập các query string hiện tại, giống URLSearchParams.
-
-[23:48] 8/4/2025 Đã fix xong giao diện chi tiết
-
-[22:32] 8/5/2025 VCC phần sorting hay filter nó làm chi tiết vãi cả linh hồn, nói chung là chia tách từng component khá là rắc rối
-
-[tìm hiểu về workflow của stripe] 
-
-[Catch all segment in nextjs] cần đọc về cái này
-
-
-//SEO
-[sitemap] [metadata]
-[jsonLd] =
-{robots.txt} => để hướng dẫn Bot search engine truy cập vào các metadata để crawl dữ liệu, 
-//Perform
-[Incremental Static Regeneration (ISR)]https://chatgpt.com/s/t_68ccd1f9da9c8191b88f361a35d37278
+3) chạy  file typescript qdrant-init.ts trước, sau đó chạy tiếp file indexProducts.ts 
