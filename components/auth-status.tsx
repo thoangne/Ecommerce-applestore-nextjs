@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { LogIn, LogOut, User } from "lucide-react";
+import { LogIn, LogOut, User, User2 } from "lucide-react";
 import { signOut } from "next-auth/react"; // nếu bạn dùng next-auth mặc định
 import {
   DropdownMenu,
@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { toast } from "sonner";
+import Image from "next/image";
 
 export default function AuthStatus() {
   const { data: session, status } = useSession();
@@ -27,7 +28,7 @@ export default function AuthStatus() {
     return (
       <Button variant={"ghost"} className="hover:cursor-pointer" size={"icon"}>
         <Link href="/auth/signin">
-          <LogIn className="w-4 h-4" />
+          <User2 className="w-4 h-4" />
         </Link>
       </Button>
     );
@@ -44,7 +45,13 @@ export default function AuthStatus() {
           className="hover:cursor-pointer"
           size={"icon"}
         >
-          <User className="w-4 h-4" />
+          <Image
+            src={session?.user?.avatarUrl || "/picture/background-dark.png"}
+            alt="logo"
+            width={25}
+            height={25}
+            className="rounded-xl"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Camera } from "lucide-react";
-import { updateProfile } from "@/lib/user-action";
+import { uploadAvatar, updateProfile } from "@/lib/user-action";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function AccountProfile() {
   const { data: session, update } = useSession();
@@ -18,12 +19,11 @@ export default function AccountProfile() {
     phone: user?.phone ?? "",
     addressLine1: user?.addressLine1 ?? "",
   });
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string>(
+
+  const [avatarPreview, setAvatarPreview] = useState(
     user?.avatarUrl || "/default-avatar.png"
   );
 
-  // ✨ SỬ DỤNG useEffect ĐỂ ĐỒNG BỘ STATE KHI SESSION THAY ĐỔI
   useEffect(() => {
     if (session?.user) {
       setFormData({
@@ -35,61 +35,54 @@ export default function AccountProfile() {
     }
   }, [session]);
 
-  console.log(formData);
-
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setAvatarPreview(url);
-      setAvatarFile(file);
+    if (!file) return;
+
+    const localUrl = URL.createObjectURL(file);
+    setAvatarPreview(localUrl);
+
+    const form = new FormData();
+    form.append("avatar", file);
+
+    const res = await uploadAvatar(form);
+
+    if (res.success) {
+      toast.success("Avatar updated!");
+      await update({});
+    } else {
+      toast.error(res.error || "Upload failed");
     }
+
+    URL.revokeObjectURL(localUrl);
   };
 
-  useEffect(() => {
-    return () => {
-      if (avatarPreview.startsWith("blob:")) {
-        URL.revokeObjectURL(avatarPreview);
-      }
-    };
-  }, [avatarPreview]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log("formData after update:", formData);
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSave = async () => {
-    try {
-      const form = new FormData();
-      form.append("name", formData.name);
-      form.append("phone", formData.phone);
-      form.append("addressLine1", formData.addressLine1);
-      if (avatarFile) {
-        form.append("avatar", avatarFile);
-      }
+    const form = new FormData();
+    form.append("name", formData.name);
+    form.append("phone", formData.phone);
+    form.append("addressLine1", formData.addressLine1);
 
-      const res = await updateProfile(form);
+    const res = await updateProfile(form);
 
-      if (res.success) {
-        // Toast thông báo sẽ được hiển thị bằng sonner trong code gốc
-        alert("Profile updated successfully!");
-        // Bỏ setFormData(...) và setAvatarFile(null) ở đây
-        await update({}); // Kích hoạt update session
-        // Sau khi update() xong, useEffect ở trên sẽ tự động chạy
-        // và cập nhật formData + avatarPreview với dữ liệu mới nhất
-      } else {
-        alert(res.error || "Update failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error updating profile");
+    if (res.success) {
+      toast.success("Profile updated!");
+      await update({});
+    } else {
+      toast.error(res.error || "Update failed");
     }
   };
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-slate-900 dark:to-gray-800 flex items-center justify-center text-gray-900 dark:text-white">
+      <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-white">
         Loading...
       </div>
     );
@@ -104,6 +97,7 @@ export default function AccountProfile() {
           </h2>
 
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            {/* Avatar */}
             <div className="relative w-28 h-28 md:w-32 md:h-32">
               <img
                 src={avatarPreview}
@@ -122,6 +116,7 @@ export default function AccountProfile() {
               </label>
             </div>
 
+            {/* Form fields */}
             <div className="flex-1 w-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
@@ -145,7 +140,7 @@ export default function AccountProfile() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="Your phone number"
+                    placeholder="Your phone"
                     className="h-11 bg-gray-50 dark:bg-slate-900 border-gray-300 dark:border-slate-700 text-gray-900 dark:text-slate-200 placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-orange-500 focus:ring-orange-500/20"
                   />
                 </div>

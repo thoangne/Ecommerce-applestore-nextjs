@@ -296,7 +296,7 @@ export async function getProductsByCategory(category: string) {
   return await prisma.product.findMany({
     where: {
       OR: [
-        { categoryId: { contains: category, mode: "insensitive" } },
+        { slug: { contains: category, mode: "insensitive" } },
       ],
     },
     take: 6,
