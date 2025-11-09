@@ -174,7 +174,6 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
         // ✅ ĐÃ SỬA: Lấy avatarUrl từ session, khớp với `user-action.ts`
         // Dùng 'as any' để truy cập trường đã được custom trong session
         avatarUrl: (session.user as User).avatarUrl ?? undefined,
-        avatarUrl: (session.user as any).avatarUrl ?? undefined,
       }
     : null;
 
