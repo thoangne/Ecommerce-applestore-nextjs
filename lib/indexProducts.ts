@@ -1,6 +1,6 @@
-import { embed } from "./embed.ts";
-import { qdrant } from "./qdrant.ts";
-import { dumpProducts } from "./dumpProducts.ts";
+import { embed } from "./embed";
+import { qdrant } from "./qdrant";
+import { dumpProducts } from "./dumpProducts";
 import { randomUUID } from "crypto";
 
 async function indexProducts() {
@@ -36,3 +36,4 @@ indexProducts()
     console.error("❌ Error:", err);
     process.exit(1);
   });
+//indexProducts.ts
