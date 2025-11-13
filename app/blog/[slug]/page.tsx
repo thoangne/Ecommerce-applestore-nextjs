@@ -173,8 +173,7 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
   const currentUser = session?.user
     ? {
         name: session.user.name ?? "User",
-        // ✅ ĐÃ SỬA: Lấy avatarUrl từ session, khớp với `user-action.ts`
-        // Dùng 'as any' để truy cập trường đã được custom trong session
+
         avatarUrl: (session.user as User).avatarUrl ?? undefined,
       }
     : null;

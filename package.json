@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "prisma": {
+    "seed": "tsx prisma/seed/seed.ts"
+  },
   "ts-node": {
     "esm": true
   },
@@ -11,15 +14,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx prisma/json/seed.ts"
+    "seed": "tsx prisma/json/seed.ts",
+    "chatbot:init": "tsx lib/qdrant-init.ts",
+    "chatbot:index": "tsx lib/indexProducts.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-
     "@prisma/client": "^6.18.0",
     "@qdrant/js-client-rest": "^1.15.1",
-
-
+    "@qdrant/qdrant-js": "^1.15.1",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-label": "^2.1.7",
@@ -30,6 +33,7 @@
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "dotenv": "^17.2.3",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
@@ -37,10 +41,12 @@
     "next": "^15.5.6",
     "next-auth": "^5.0.0-beta.29",
     "next-themes": "^0.4.6",
+    "ollama": "^0.6.2",
     "openai": "^6.8.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
+    "recharts": "^3.4.1",
     "sonner": "^2.0.7",
     "stripe": "^18.5.0",
     "swr": "^2.3.6",
