@@ -10,8 +10,6 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 export default async function Home(props: { searchParams: SearchParams }) {
   const ipad = await getProductsByCategory("Ipad");
   const macbook = await getProductsByCategory("Macbook");
-  console.log("ipad", ipad);
-  console.log("macbook", macbook);
   return (
     <main className="container mx-auto p-4">
       <Breadcrumbs items={[{ label: "Home", href: "/" }]} />

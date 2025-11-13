@@ -9,7 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
+/prisma\migrations
 # testing
 /coverage
 docker-compose.yml
