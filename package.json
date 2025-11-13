@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "prisma": {
+    "seed": "tsx prisma/seed/seed.ts"
+  },
   "ts-node": {
     "esm": true
   },
@@ -30,6 +33,7 @@
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "dotenv": "^17.2.3",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
@@ -42,6 +46,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
+    "recharts": "^3.4.1",
     "sonner": "^2.0.7",
     "stripe": "^18.5.0",
     "swr": "^2.3.6",
