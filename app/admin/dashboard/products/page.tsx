@@ -131,7 +131,8 @@ export default async function AdminProductsPage() {
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <div className="flex items-center justify-end gap-3">
                           <Link
-                            href={`/dashboard/products/${product.id}`} // Link đến trang "Sửa"
+                            // ✅ SỬA LỖI: Thêm /admin/ vào trước href
+                            href={`/admin/dashboard/products/${product.id}`}
                             className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
                           >
                             <Edit className="w-4 h-4" />

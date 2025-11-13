@@ -3,9 +3,11 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 /**
  * Lấy các số liệu thống kê chính cho Dashboard.
  */
+const RoleSchema = z.enum(["user", "admin"]);
 export async function getDashboardStats() {
   const session = await auth();
 
@@ -290,6 +292,43 @@ export async function deleteUser(userId: string) {
       };
     }
     return { error: "Đã xảy ra lỗi không xác định." };
+  }
+}
+export async function updateUserRole(userId: string, formData: FormData) {
+  const session = await auth();
+
+  // 1. Xác thực Admin
+  if (session?.user?.role !== "admin") {
+    return { error: "Không được phép truy cập" };
+  }
+
+  // 2. Validate dữ liệu role mới
+  const newRole = formData.get("role");
+  const validatedRole = RoleSchema.safeParse(newRole);
+
+  if (!validatedRole.success) {
+    return { error: "Vai trò không hợp lệ." };
+  }
+
+  // 3. ✅ Kiểm tra an toàn: Không cho admin tự hạ vai trò của mình
+  if (session.user.id === userId) {
+    return { error: "Không thể tự thay đổi vai trò của chính mình." };
+  }
+
+  // 4. Cập nhật CSDL
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        role: validatedRole.data, // Gán vai trò đã validate
+      },
+    });
+
+    revalidatePath("/admin/dashboard/customers");
+    return { success: "Đã cập nhật vai trò thành công." };
+  } catch (error: any) {
+    console.error("Lỗi khi cập nhật vai trò:", error);
+    return { error: "Không thể cập nhật vai trò." };
   }
 }
 //action/admin.ts

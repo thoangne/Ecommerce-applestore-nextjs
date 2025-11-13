@@ -3,12 +3,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Edit, UserCircle } from "lucide-react";
 import { DeleteUserButton } from "@/components/admin/DeleteUserButton";
-import { format } from "date-fns";
+import { auth } from "@/lib/auth";
+import { UpdateRoleDropdown } from "@/components/admin/UpdateRoleDropdown";
 
 /**
  * Trang "Quản lý Khách hàng" (Server Component)
  */
 export default async function AdminCustomersPage() {
+  const session = await auth();
   // ✅ CẬP NHẬT 1: Lấy dữ liệu chi tiêu (chỉ tính đơn 'paid')
   const spendingData = await prisma.order.groupBy({
     by: ["userId"],
@@ -141,19 +143,26 @@ export default async function AdminCustomersPage() {
                       </td>
                       {/* Vai trò */}
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                        <span
-                          className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                            user.role === "admin"
-                              ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200"
-                              : "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200"
-                          }`}
-                        >
-                          {user.role}
-                        </span>
-                      </td>
-                      {/* Ngày tham gia */}
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                        {format(new Date(user.createdAt), "dd/MM/yyyy")}
+                        {/* Kiểm tra an toàn: Nếu user.id là của admin đang đăng nhập,
+                  chỉ hiển thị text tĩnh, không cho sửa.
+                */}
+                        {user.id === session?.user?.id ? (
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                              user.role === "admin"
+                                ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200"
+                                : "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200"
+                            }`}
+                          >
+                            {user.role} (Bạn)
+                          </span>
+                        ) : (
+                          // Nếu là user khác, hiển thị Dropdown
+                          <UpdateRoleDropdown
+                            userId={user.id}
+                            currentRole={user.role as "user" | "admin"}
+                          />
+                        )}
                       </td>
                       {/* Số đơn hàng */}
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
