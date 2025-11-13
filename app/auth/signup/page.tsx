@@ -72,7 +72,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center p-6 overflow-hidden bg-gradient-to-br from-[#FAFAFA] via-[#E5E5E5] to-[#DADADA] dark:from-[#0B0B0B] dark:via-[#1A1A1A] dark:to-[#2A2A2A] transition-colors duration-500">
+    <main className="relative  flex min-h-screen items-center justify-center p-6 overflow-hidden bg-gradient-to-br from-[#FAFAFA] via-[#E5E5E5] to-[#DADADA] dark:from-[#0B0B0B] dark:via-[#1A1A1A] dark:to-[#2A2A2A] transition-colors duration-500">
       {/* Nền mờ nhẹ */}
       <div
         className="absolute inset-0 -z-10 bg-cover bg-center"

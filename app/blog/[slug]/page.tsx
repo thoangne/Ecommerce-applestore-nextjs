@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Clock, MessageCircle, ThumbsUp, UserCircle } from "lucide-react";
 import LikeButton from "@/components/blog/LikeButton";
 import BlogComments from "@/components/blog/BlogComment"; // Sửa lại đường dẫn
+import Breadcrumbs from "@/components/breadscums";
 
 // Định nghĩa kiểu cho props
 interface BlogPostPageProps {
@@ -100,6 +101,7 @@ type RelatedPost = {
 
  * Component con để hiển thị các bài viết liên quan
  */
+
 function RelatedPostsSidebar({ posts }: { posts: RelatedPost[] }) {
   return (
     <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6">

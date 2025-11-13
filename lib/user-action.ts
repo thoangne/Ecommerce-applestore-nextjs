@@ -102,3 +102,36 @@ export async function uploadAvatar(formData: FormData) {
     };
   }
 }
+export async function updateAddress(data: {
+  fullName: string;
+  phone: string;
+  province: string;
+  district: string;
+  ward: string;
+  addressLine1: string;
+}) {
+  const session = await auth();
+  const userId = session?.user?.id;
+  if (!userId) return { success: false, error: "Not authenticated" };
+
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        name: data.fullName,
+        phone: data.phone,
+        province: data.province,
+        district: data.district,
+        ward: data.ward,
+        addressLine1: data.addressLine1,
+      },
+    });
+
+    revalidatePath("/account/address");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Update profile info error:", error);
+    return { success: false, error: "Update failed" };
+  }
+}
