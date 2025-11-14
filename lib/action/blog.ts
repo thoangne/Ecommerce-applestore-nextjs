@@ -180,3 +180,37 @@ export async function getBlogCategories() {
     return { error: "Không thể tải danh mục." };
   }
 }
+export async function deleteBlogPost(postId: string) {
+  const session = await auth();
+
+  // 1. Xác thực Admin
+  if (session?.user?.role !== "admin") {
+    return { error: "Không được phép truy cập" };
+  }
+  if (!postId) {
+    return { error: "Không tìm thấy bài viết." };
+  }
+
+  // 2. Xóa khỏi CSDL
+  try {
+    // Lưu ý: Cần đảm bảo BlogLike và BlogComment có 'onDelete: Cascade'
+    // trong schema.prisma, nếu không lệnh này sẽ lỗi.
+    await prisma.blogPost.delete({
+      where: { id: postId },
+    });
+
+    revalidatePath("/admin/dashboard/blog"); // Revalidate trang admin
+
+    return { success: "Đã xóa bài viết thành công." };
+  } catch (error: any) {
+    console.error("Lỗi khi xóa bài viết:", error);
+    if (error.code === "P2003") {
+      // Lỗi này xảy ra nếu comment/like không được set onDelete: Cascade
+      return {
+        error:
+          "Không thể xóa bài viết này vì còn comment hoặc like (Lỗi P2003).",
+      };
+    }
+    return { error: "Đã xảy ra lỗi không xác định." };
+  }
+}
