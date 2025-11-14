@@ -65,3 +65,4 @@ async function seedBlogCategories() {
 }
 
 seedBlogCategories();
+// End of file prisma/seed/seed-blog-category.ts

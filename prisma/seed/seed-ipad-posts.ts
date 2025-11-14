@@ -261,3 +261,4 @@ Kết luận: iPad đáp ứng được 60% nhu cầu của người dùng lapto
 }
 
 seedIpadPosts();
+// End of file prisma/seed/seed-ipad-posts.ts

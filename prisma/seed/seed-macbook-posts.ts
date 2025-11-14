@@ -227,8 +227,7 @@ Dùng MacBook hiệu quả hơn rất nhiều với các app này.
         title: "Cách bảo quản MacBook để sử dụng bền 5–7 năm",
         slug: "cach-bao-quan-macbook-ben",
         categoryId: "cat-macbook",
-        excerpt:
-          "Mẹo giúp MacBook bền hơn, pin tốt hơn và hạn chế hỏng vặt.",
+        excerpt: "Mẹo giúp MacBook bền hơn, pin tốt hơn và hạn chế hỏng vặt.",
         readTime: "3 min",
         thumbnail: "/blog/macbook-care.jpg",
         published: true,
@@ -250,8 +249,7 @@ Bảo quản tốt giúp MacBook dùng bền 5–7 năm không lỗi vặt.
         title: "Top MacBook đáng mua nhất 2025",
         slug: "top-macbook-2025",
         categoryId: "cat-macbook",
-        excerpt:
-          "Danh sách MacBook đáng mua nhất theo từng ngân sách.",
+        excerpt: "Danh sách MacBook đáng mua nhất theo từng ngân sách.",
         readTime: "4 min",
         thumbnail: "/blog/macbook-top2025.jpg",
         published: true,
@@ -290,3 +288,4 @@ Tùy ngân sách mà chọn đúng dòng MacBook phù hợp.
 }
 
 seedMacbookPosts();
+//seed/seed-macbook-posts.ts

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { ProductForm } from "@/components/admin/ProductForm";
+import ProductForm from "@/components/admin/ProductForm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";

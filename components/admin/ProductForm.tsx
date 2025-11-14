@@ -1,340 +1,387 @@
 "use client";
-
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { createProduct, updateProduct } from "@/lib/action/product";
-import { toast } from "sonner";
-import { Category, Product } from "@prisma/client";
-import { ProductSchema } from "@/lib/schemas";
-import { z } from "zod";
 import Image from "next/image";
-import { Prisma } from "@prisma/client"; // Import kiểu JsonValue
+import { createProduct, updateProduct } from "@/lib/action/product";
+import { toast } from "sonner"; // Giả sử bạn dùng Sonner
+import { X, Loader2 } from "lucide-react";
 
-// Định nghĩa kiểu cho lỗi validation
-type FieldErrors = z.inferFlattenedErrors<typeof ProductSchema>["fieldErrors"];
-
-// ✅ THÊM: Định nghĩa kiểu trả về của Action
-type FormResult = {
-  success?: string;
-  error?: string;
-  fieldErrors?: FieldErrors;
-  newProductId?: string; // Sẽ dùng để redirect
+// Định nghĩa kiểu dữ liệu (Bạn nên định nghĩa ở file riêng, vd: types.ts)
+type Category = {
+  id: string;
+  name: string;
 };
 
-type ProductFormProps = {
+type Product = {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  inventory: number;
+  images: string[];
+  categoryId: string | null;
+  color: string | null;
+  storage: string | null;
+  specs: any; // Kiểu JSON
+  releasedAt: Date | null;
+};
+
+interface ProductFormProps {
   categories: Category[];
-  product?: Product | null;
-};
+  product?: Product | null; // Dữ liệu sản phẩm (nếu là edit)
+}
 
-// Hàm trợ giúp để format ngày (YYYY-MM-DD)
-const formatDateForInput = (date: Date | null | undefined) => {
-  if (!date) return "";
-  return new Date(date).toISOString().split("T")[0];
-};
-
-// Hàm trợ giúp để format JSON
-const formatJsonForInput = (json: Prisma.JsonValue | null | undefined) => {
-  if (!json) return "";
-  try {
-    // Chuyển JSON thành string, thụt lề 2 dấu cách
-    return JSON.stringify(json, null, 2);
-  } catch {
-    return String(json); // Fallback nếu nó không phải JSON
-  }
-};
-
-export function ProductForm({ categories, product }: ProductFormProps) {
+export default function ProductForm({ categories, product }: ProductFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [errors, setErrors] = useState<FieldErrors | null>(null);
-  const [imagePreviews, setImagePreviews] = useState<string[]>(
-    product?.images || []
-  );
 
+  // Kiểm tra chế độ Edit hay Create
   const isEditMode = Boolean(product);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // ✅ SỬA LỖI 1: Thêm dòng này để ngăn GET
-    setErrors(null);
+  // State cho các trường
+  const [name, setName] = useState(product?.name || "");
+  const [description, setDescription] = useState(product?.description || "");
+  const [price, setPrice] = useState(product?.price || 0);
+  const [inventory, setInventory] = useState(product?.inventory || 0);
+  const [categoryId, setCategoryId] = useState(product?.categoryId || "");
+  const [color, setColor] = useState(product?.color || "");
+  const [storage, setStorage] = useState(product?.storage || "");
+  // Specs (JSON) cần stringify
+  const [specs, setSpecs] = useState(
+    product?.specs ? JSON.stringify(product.specs, null, 2) : ""
+  );
+  // ReleasedAt (Date) cần format cho input[type=date]
+  const [releasedAt, setReleasedAt] = useState(
+    product?.releasedAt
+      ? new Date(product.releasedAt).toISOString().split("T")[0]
+      : ""
+  );
 
-    const formData = new FormData(e.currentTarget);
+  // State cho hình ảnh
+  const [existingImages, setExistingImages] = useState(product?.images || []);
+  const [newImages, setNewImages] = useState<File[]>([]);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+
+  // Xử lý khi chọn file mới
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setNewImages(Array.from(e.target.files));
+    }
+  };
+
+  // Xử lý khi xóa ảnh ĐÃ TỒN TẠI (existing)
+  const handleDeleteExistingImage = (url: string) => {
+    setExistingImages(existingImages.filter((imgUrl) => imgUrl !== url));
+    setImagesToDelete([...imagesToDelete, url]);
+  };
+
+  // Xử lý khi xóa ảnh MỚI CHỌN (new)
+  const handleDeleteNewImage = (index: number) => {
+    setNewImages(newImages.filter((_, i) => i !== index));
+  };
+
+  // Xử lý Submit
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    // Thêm các trường text
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("price", String(price));
+    formData.append("inventory", String(inventory));
+    formData.append("categoryId", categoryId);
+    formData.append("color", color);
+    formData.append("storage", storage);
+    formData.append("specs", specs);
+    formData.append("releasedAt", releasedAt);
+
+    // Thêm các ảnh cần xóa
+    imagesToDelete.forEach((url) => {
+      formData.append("imagesToDelete", url);
+    });
+
+    // Thêm các ảnh mới cần upload
+    newImages.forEach((file) => {
+      formData.append("images", file);
+    });
 
     startTransition(async () => {
-      try {
-        let result: FormResult; // ✅ Sửa: Dùng kiểu FormResult
-        if (isEditMode) {
-          result = await updateProduct(product!.id, formData); // Dùng ! vì isEditMode đã check
-        } else {
-          result = await createProduct(formData);
-        }
+      let result;
+      if (isEditMode) {
+        result = await updateProduct(product!.id, formData);
+      } else {
+        result = await createProduct(formData);
+      }
 
-        // ✅ SỬA LỖI 2: Đảo ngược logic. Kiểm tra 'success' TRƯỚC.
-        if (result?.success) {
-          toast.success(result.success);
-
-          // ✅ SỬA LỖI: Client xử lý redirect
-          if (!isEditMode && result.newProductId) {
-            // Dùng router.push để chuyển trang
-            router.push(`/admin/dashboard/products/${result.newProductId}`);
-          }
-        }
-        // Nếu không success, THÌ MỚI kiểm tra 'error'
-        else if (result?.error) {
-          if (result.fieldErrors) {
-            setErrors(result.fieldErrors);
-          } else {
-            toast.error(result.error);
-          }
-        }
-      } catch (err) {
-        toast.error("Đã xảy ra lỗi không mong muốn.");
+      if (result.error) {
+        toast.error(result.error, {
+          description: result.fieldErrors
+            ? Object.values(result.fieldErrors).flat().join(", ")
+            : undefined,
+        });
+      } else {
+        toast.success(result.success);
+        // Chuyển hướng về trang danh sách
+        router.push("/admin/dashboard/products");
       }
     });
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const urls = Array.from(files).map((file) => URL.createObjectURL(file));
-      setImagePreviews(urls);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* ... (Toàn bộ phần JSX của form giữ nguyên) ... */}
-      {/* ... (Tên sản phẩm) ... */}
-      {/* ... (Mô tả) ... */}
-      {/* ... (Thông số Specs) ... */}
-      {/* ... (Giá, Tồn kho, Màu, Dung lượng) ... */}
-      {/* ... (Cột phải: Danh mục, Ngày ra mắt, Upload Ảnh) ... */}
-      {/* ... (Nút Submit) ... */}
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-8 p-6 md:p-8 bg-white dark:bg-gray-900 rounded-2xl shadow-lg"
+    >
+      {/* Tiêu đề */}
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        {isEditMode ? "Chỉnh sửa sản phẩm" : "Tạo sản phẩm mới"}
+      </h1>
+
+      {/* Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Cột trái (Thông tin chính) */}
         <div className="md:col-span-2 space-y-6">
-          {/* Tên sản phẩm */}
+          {/* Tên SP */}
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
             >
-              Tên sản phẩm *
+              Tên sản phẩm
             </label>
             <input
               type="text"
-              name="name"
               id="name"
-              defaultValue={product?.name || ""}
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
               required
-              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
             />
-            {errors?.name && (
-              <p className="mt-1 text-sm text-red-500">{errors.name[0]}</p>
-            )}
           </div>
 
           {/* Mô tả */}
           <div>
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
             >
               Mô tả
             </label>
             <textarea
-              name="description"
               id="description"
-              rows={4} // Giảm số dòng
-              defaultValue={product?.description || ""}
-              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
+              name="description"
+              rows={5}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
             />
           </div>
 
-          {/* --- THÊM TRƯỜNG MỚI: Thông số (Specs) --- */}
-          <div>
-            <label
-              htmlFor="specs"
-              className="block text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Thông số (Specs) - (Viết dưới dạng JSON)
-            </label>
-            <textarea
-              name="specs"
-              id="specs"
-              rows={6}
-              defaultValue={formatJsonForInput(product?.specs)}
-              placeholder='{ "chip": "M4", "ram": "16GB" }'
-              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500 font-mono text-sm"
-            />
-          </div>
-
-          {/* Giá, Tồn kho, Màu, Dung lượng */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Giá và Tồn kho */}
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label
                 htmlFor="price"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
               >
-                Giá (VND) *
+                Giá (VND)
               </label>
               <input
                 type="number"
-                name="price"
                 id="price"
-                defaultValue={product?.price || 0}
+                name="price"
+                min="0"
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+                className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
               />
-              {errors?.price && (
-                <p className="mt-1 text-sm text-red-500">{errors.price[0]}</p>
-              )}
             </div>
             <div>
               <label
                 htmlFor="inventory"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
               >
-                Tồn kho *
+                Tồn kho
               </label>
               <input
                 type="number"
-                name="inventory"
                 id="inventory"
-                defaultValue={product?.inventory || 0}
+                name="inventory"
+                min="0"
+                value={inventory}
+                onChange={(e) => setInventory(Number(e.target.value))}
+                className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
-              />
-              {errors?.inventory && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.inventory[0]}
-                </p>
-              )}
-            </div>
-
-            {/* --- THÊM TRƯỜNG MỚI: Màu sắc --- */}
-            <div>
-              <label
-                htmlFor="color"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Màu sắc
-              </label>
-              <input
-                type="text"
-                name="color"
-                id="color"
-                defaultValue={product?.color || ""}
-                placeholder="VD: Space Gray, Midnight"
-                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* --- THÊM TRƯỜNG MỚI: Dung lượng --- */}
-            <div>
-              <label
-                htmlFor="storage"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Dung lượng (Storage)
-              </label>
-              <input
-                type="text"
-                name="storage"
-                id="storage"
-                defaultValue={product?.storage || ""}
-                placeholder="VD: 256GB, 1TB"
-                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
           </div>
+
+          {/* Thông số (Specs) - Dạng JSON */}
+          <div>
+            <label
+              htmlFor="specs"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
+            >
+              Thông số kỹ thuật (JSON)
+            </label>
+            <textarea
+              id="specs"
+              name="specs"
+              rows={8}
+              value={specs}
+              onChange={(e) => setSpecs(e.target.value)}
+              className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2 font-mono"
+              placeholder={`{\n  "display": "6.7 inch",\n  "cpu": "A17 Pro"\n}`}
+            />
+          </div>
         </div>
 
-        {/* Cột phải (Danh mục & Ảnh) */}
-        <div className="md:col-span-1 space-y-6">
+        {/* Cột phải (Thuộc tính & Ảnh) */}
+        <div className="space-y-6">
           {/* Danh mục */}
           <div>
             <label
               htmlFor="categoryId"
-              className="block text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
             >
               Danh mục
             </label>
             <select
-              name="categoryId"
               id="categoryId"
-              // SỬA LỖI: Dùng `product?.categoryId` (là ID)
-              defaultValue={product?.categoryId || ""}
-              // Sửa: không 'required' vì schema là optional
-              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
+              name="categoryId"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
             >
-              <option value="">-- Không có danh mục --</option>
+              <option value="">Chọn danh mục</option>
               {categories.map((cat) => (
-                // SỬA LỖI: Gửi `cat.id` (CUID) thay vì `cat.slug`
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
               ))}
             </select>
-            {errors?.categoryId && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.categoryId[0]}
-              </p>
-            )}
           </div>
 
-          {/* --- THÊM TRƯỜNG MỚI: Ngày ra mắt --- */}
+          {/* Màu & Dung lượng */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="color"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
+              >
+                Màu sắc
+              </label>
+              <input
+                type="text"
+                id="color"
+                name="color"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
+                placeholder="Titan Tự nhiên"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="storage"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
+              >
+                Dung lượng
+              </label>
+              <input
+                type="text"
+                id="storage"
+                name="storage"
+                value={storage}
+                onChange={(e) => setStorage(e.target.value)}
+                className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
+                placeholder="256GB"
+              />
+            </div>
+          </div>
+
+          {/* Ngày ra mắt */}
           <div>
             <label
               htmlFor="releasedAt"
-              className="block text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
             >
               Ngày ra mắt
             </label>
             <input
               type="date"
-              name="releasedAt"
               id="releasedAt"
-              defaultValue={formatDateForInput(product?.releasedAt)}
-              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-blue-500"
+              name="releasedAt"
+              value={releasedAt}
+              onChange={(e) => setReleasedAt(e.target.value)}
+              className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2"
             />
           </div>
 
-          {/* Upload Ảnh */}
+          {/* Hình ảnh */}
           <div>
-            <label className="block text-sm font-medium text-gray-900 dark:text-white">
-              Ảnh sản phẩm
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50">
+              Hình ảnh
             </label>
-            <input
-              type="file"
-              name="images"
-              multiple
-              accept="image/*"
-              onChange={handleImageChange}
-              className="mt-1 block w-full text-sm text-gray-500 dark:text-gray-400
-                         file:mr-4 file:py-2 file:px-4
-                         file:rounded-full file:border-0
-                         file:text-sm file:font-semibold
-                         file:bg-blue-50 file:text-blue-700
-                         dark:file:bg-blue-900/50 dark:file:text-blue-300
-                         hover:file:bg-blue-100 dark:hover:file:bg-blue-800/50"
-            />
-          </div>
 
-          {/* Xem trước ảnh */}
-          {imagePreviews.length > 0 && (
-            <div className="grid grid-cols-3 gap-2">
-              {imagePreviews.map((url, index) => (
-                <Image
-                  key={index}
-                  src={url}
-                  alt={`Preview ${index + 1}`}
-                  width={100}
-                  height={100}
-                  className="w-full h-24 object-cover rounded-md"
-                />
+            {/* Vùng xem trước ảnh (Hiện có + Mới) */}
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              {/* Ảnh hiện có */}
+              {existingImages.map((url, index) => (
+                <div key={`${url}-${index}`} className="relative">
+                  <Image
+                    src={url}
+                    alt="Ảnh sản phẩm"
+                    width={100}
+                    height={100}
+                    className="w-full h-24 object-cover rounded-md"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteExistingImage(url)}
+                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-0.5"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+              {/* Ảnh mới (preview) */}
+              {newImages.map((file, index) => (
+                <div key={index} className="relative">
+                  <Image
+                    src={URL.createObjectURL(file)}
+                    alt="Ảnh xem trước"
+                    width={100}
+                    height={100}
+                    className="w-full h-24 object-cover rounded-md"
+                    onLoad={(e) =>
+                      URL.revokeObjectURL((e.target as HTMLImageElement).src)
+                    }
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteNewImage(index)}
+                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-0.5"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               ))}
             </div>
-          )}
+
+            {/* Input file */}
+            <input
+              type="file"
+              id="images"
+              name="images"
+              multiple
+              onChange={handleFileChange}
+              className="block w-full p-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-2 focus:outline-blue-600 focus:outline-offset-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+          </div>
         </div>
       </div>
 
@@ -343,15 +390,18 @@ export function ProductForm({ categories, product }: ProductFormProps) {
         <button
           type="submit"
           disabled={isPending}
-          className="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+          className="flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isPending
-            ? isEditMode
-              ? "Đang cập nhật..."
-              : "Đang tạo..."
-            : isEditMode
-              ? "Lưu thay đổi"
-              : "Tạo sản phẩm"}
+          {isPending ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              Đang xử lý...
+            </>
+          ) : isEditMode ? (
+            "Cập nhật sản phẩm"
+          ) : (
+            "Tạo sản phẩm"
+          )}
         </button>
       </div>
     </form>

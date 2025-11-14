@@ -180,8 +180,7 @@ Nếu những tin đồn này thành sự thật, iPhone 17 hứa hẹn đột p
         title: "Cách tối ưu pin iPhone để dùng lâu hơn",
         slug: "cach-toi-uu-pin-iphone",
         categoryId: "cat-iphone",
-        excerpt:
-          "Hướng dẫn cách tiết kiệm pin và kéo dài tuổi thọ cho iPhone.",
+        excerpt: "Hướng dẫn cách tiết kiệm pin và kéo dài tuổi thọ cho iPhone.",
         readTime: "3 min",
         thumbnail: "/blog/iphone-battery.jpg",
         published: true,
@@ -224,3 +223,4 @@ Settings → Battery.
 }
 
 seedIphonePosts();
+// End of file prisma/seed/seed-blog-post-iphone.ts

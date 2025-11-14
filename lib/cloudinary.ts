@@ -1,8 +1,6 @@
-"use server";
-
 import { v2 as cloudinary } from "cloudinary";
 
-// Cấu hình Cloudinary (chỉ cần ở 1 nơi)
+// (Giữ nguyên cấu hình cloudinary của bạn)
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -10,26 +8,39 @@ cloudinary.config({
   secure: true,
 });
 
-/**
- * Tải một file (dưới dạng Data URI) lên Cloudinary
- * @param base64DataUri Chuỗi Data URI (data:image/png;base64,...)
- * @param folder Thư mục trên Cloudinary (ví dụ: 'products' hoặc 'avatars')
- * @returns Promise<string> URL an toàn của ảnh đã tải lên
- */
+// (Giữ nguyên hàm uploadToCloudinary của bạn)
 export async function uploadToCloudinary(
-  base64DataUri: string,
+  dataUri: string,
   folder: string
 ): Promise<string> {
+  const result = await cloudinary.uploader.upload(dataUri, {
+    folder: folder,
+  });
+  return result.secure_url;
+}
+
+/**
+ * ✅ HÀM MỚI: Xóa ảnh khỏi Cloudinary
+ * Cần lấy public_id từ URL
+ */
+export async function deleteFromCloudinary(url: string): Promise<boolean> {
   try {
-    const result = await cloudinary.uploader.upload(base64DataUri, {
-      folder: folder,
-      resource_type: "image",
-      overwrite: false,
-      invalidate: true,
-    });
-    return result.secure_url;
+    // URL có dạng: .../upload/folder/public_id.jpg
+    // 1. Lấy phần sau /upload/
+    const parts = url.split("/upload/");
+    if (parts.length < 2) return false;
+
+    // 2. Lấy phần public_id (bỏ .jpg, .png...)
+    const publicIdWithFolder = parts[1].substring(0, parts[1].lastIndexOf("."));
+
+    if (!publicIdWithFolder) return false;
+
+    // 3. Xóa
+    const result = await cloudinary.uploader.destroy(publicIdWithFolder);
+
+    return result.result === "ok";
   } catch (error) {
-    console.error("Lỗi khi tải ảnh lên Cloudinary:", error);
-    throw new Error("Tải ảnh thất bại.");
+    console.error("Lỗi khi xóa ảnh Cloudinary:", error);
+    return false;
   }
 }
