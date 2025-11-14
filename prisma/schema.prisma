@@ -47,6 +47,8 @@ model User {
   posts    BlogPost[]
   comments BlogComment[]
   likes    BlogLike[]
+  //chat
+  chatSessions ChatSession[]
 }
 
 model Category {
@@ -325,4 +327,35 @@ model BlogComment {
 
   post BlogPost @relation(fields: [postId], references: [id])
   user User?    @relation(fields: [userId], references: [id])
+}
+model ChatSession {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // Tùy chọn: Liên kết với user đã đăng nhập
+  userId    String?  
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // Quan hệ: Một phiên có nhiều tin nhắn
+  messages  ChatMessage[]
+
+  @@index([userId])
+  @@map("chat_sessions")
+}
+
+// Bảng mới: Lưu từng tin nhắn
+model ChatMessage {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  
+  // "user" hoặc "assistant"
+  role      String   
+  content   String   @db.Text
+
+  // Liên kết với phiên trò chuyện
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade) // Xóa tin nhắn nếu xóa phiên
+
+  @@index([sessionId])
+  @@map("chat_messages")
 }
