@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { LogIn, LogOut, User, User2 } from "lucide-react";
+import { LogIn, LogOut, Settings, User, User2 } from "lucide-react";
 import { signOut } from "next-auth/react"; // nếu bạn dùng next-auth mặc định
 import {
   DropdownMenu,
@@ -63,6 +63,14 @@ export default function AuthStatus() {
             Your account
           </Link>
         </DropdownMenuItem>
+        {session?.user?.role === "admin" && (
+          <DropdownMenuItem asChild>
+            <Link href={"/admin/dashboard"} className="hover:cursor-pointer">
+              <Settings className="w-4 h-4 mr-2" />
+              Admin Panel
+            </Link>
+          </DropdownMenuItem>
+        )}
 
         <DropdownMenuItem
           onClick={handleSignOut}
