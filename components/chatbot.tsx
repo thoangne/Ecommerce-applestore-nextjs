@@ -5,10 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { MessageCircle, Send, X } from "lucide-react";
+import { useSession } from "next-auth/react"; // ✅ 1. Import useSession
+
+// Định nghĩa kiểu cho tin nhắn (để nhất quán)
+type Message = {
+  role: "user" | "assistant";
+  content: string;
+};
 
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
+    // Sử dụng kiểu Message
     {
       role: "assistant",
       content:
@@ -19,24 +27,46 @@ export default function Chatbot() {
   const chatEndRef = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // State cho sessionId
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  // ✅ 2. Lấy session của người dùng
+  const { data: session } = useSession();
+  const userId = session?.user?.id; // Lấy userId nếu đã đăng nhập
+
+  // Scroll
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Load sessionId từ localStorage khi component mount
+  useEffect(() => {
+    // Chỉ chạy ở client
+    const savedSessionId = localStorage.getItem("chatSessionId");
+    if (savedSessionId) {
+      setSessionId(savedSessionId);
+    }
+  }, []); // Mảng rỗng đảm bảo nó chỉ chạy một lần
+
   async function sendMessage() {
     if (!input.trim()) return;
 
-    const newMsg = { role: "user", content: input };
+    const newMsg: Message = { role: "user", content: input };
     const updated = [...messages, newMsg];
     setMessages(updated);
     setInput("");
     setLoading(true);
 
     try {
+      // ✅ 3. Gửi `sessionId` VÀ `userId` lên API
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: updated }),
+        body: JSON.stringify({
+          messages: updated,
+          sessionId: sessionId, // Gửi ID phiên hiện tại
+          userId: userId, // Gửi ID người dùng nếu có
+        }),
       });
 
       if (!res.ok) {
@@ -51,6 +81,14 @@ export default function Chatbot() {
       }
 
       const data = await res.json();
+
+      // ✅ 4. Nhận, lưu và cập nhật sessionId từ API
+      const newSessionId = data.sessionId as string;
+      if (newSessionId && newSessionId !== sessionId) {
+        setSessionId(newSessionId); // Cập nhật state
+        localStorage.setItem("chatSessionId", newSessionId); // Lưu vào localStorage
+      }
+
       setMessages([...updated, data.reply]);
     } catch (err) {
       console.error("❌ JSON parse error:", err);
