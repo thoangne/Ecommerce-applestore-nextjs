@@ -125,19 +125,19 @@ npx prisma migrate dev
     ``` 
 
   ### 🏠 Homepage
-![Homepage](public/picture/screenshots/homepage.png)
+![Homepage](public/picture/screenshots/Home - 1.png)
+![Homepage](public/picture/screenshots/Home - 2.png)
+![Homepage](public/picture/screenshots/Home - 3.png)
 
 ### 📱 Product Listing
-![Product Listing](public/picture/screenshots/products.png)
+![Product Listing](public/picture/screenshots/products-details.png)
 
-### 📦 Product Detail
-![Product Detail](public/picture/screenshots/product-detail.png)
+### 📦 Product Cart
+![Product Detail](public/picture/screenshots/shopping-cart.png)
 
-### 🛒 Cart & Checkout
-![Cart](public/picture/screenshots/cart.png)
 
 ### 🧑‍💼 Admin Dashboard
-![Admin Dashboard](public/picture/screenshots/admin-dashboard.png)
+![Admin Dashboard](public/picture/screenshots/admin-panel.png)
 
-### 🤖 AI Chatbot
-![AI Chatbot](public/picture/screenshots/chatbot.png)
+### Sign in
+![AI Chatbot](public/picture/screenshots/sign-in.png)
