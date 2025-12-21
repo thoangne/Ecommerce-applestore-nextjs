@@ -127,9 +127,6 @@ npx prisma migrate dev
   ### 🏠 Homepage
 ![Homepage](public/picture/screenshots/Home - 1.png)
 
-![Homepage](public/picture/screenshots/Home - 2.png)
-
-![Homepage](public/picture/screenshots/Home - 3.png)
 
 ### 📱 Product Listing
 ![Product Listing](public/picture/screenshots/products-details.png)
