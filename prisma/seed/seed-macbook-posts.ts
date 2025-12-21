@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 async function seedMacbookPosts() {
@@ -31,7 +32,7 @@ MacBook Pro M3 là một trong những chiếc laptop mạnh nhất thế giới
 - Chạy mượt Final Cut Pro, DaVinci Resolve
 
 ### 🔋 Pin lên đến 22 tiếng
-- Một trong những laptop pin trâu nhất của Apple  
+- Một trong những laptop pin trâu nhất của Apple 
         `,
       },
 
@@ -61,7 +62,7 @@ MacBook Pro M3 là một trong những chiếc laptop mạnh nhất thế giới
 
 ### 🎯 Kết luận
 - Cần hiệu năng cao → **Air M3**
-- Muốn tiết kiệm → **Air M2** vẫn rất đáng mua  
+- Muốn tiết kiệm → **Air M2** vẫn rất đáng mua 
         `,
       },
 
@@ -88,7 +89,7 @@ MacBook Pro M3 là một trong những chiếc laptop mạnh nhất thế giới
 - Giá cao
 - Chơi game không tốt
 
-Nếu bạn làm Web, Mobile, AI cơ bản → MacBook là lựa chọn số 1.  
+Nếu bạn làm Web, Mobile, AI cơ bản → MacBook là lựa chọn số 1. 
         `,
       },
 
@@ -115,9 +116,8 @@ Nếu bạn làm Web, Mobile, AI cơ bản → MacBook là lựa chọn số 1.
 - Render video
 - Chạy nhiều VM cùng lúc
 
-Chỉ cần nhớ:  
-**Air → nhẹ & rẻ, Pro → mạnh & bền**  
-        `,
+Chỉ cần nhớ: 
+**Air → nhẹ & rẻ, Pro → mạnh & bền** `,
       },
 
       {
@@ -142,7 +142,7 @@ Chỉ cần nhớ:
 ### Nhược điểm:
 - Giá cao
 
-Nếu bạn cần một chiếc máy Pro mà không quá to → 14 inch là hoàn hảo.  
+Nếu bạn cần một chiếc máy Pro mà không quá to → 14 inch là hoàn hảo. 
         `,
       },
 
@@ -168,9 +168,8 @@ Nếu bạn cần một chiếc máy Pro mà không quá to → 14 inch là hoà
 ### Nhược điểm:
 - Màn 60Hz (không quan trọng lắm)
 
-Kết luận:  
-**MacBook Air là máy học online tốt nhất hiện nay.**  
-        `,
+Kết luận: 
+**MacBook Air là máy học online tốt nhất hiện nay.** `,
       },
 
       {
@@ -186,13 +185,13 @@ Kết luận:
         content: `
 ## Top ứng dụng nên cài trên MacBook
 
-- **Raycast:** công cụ tìm kiếm mạnh hơn Spotlight  
-- **Magnet:** chia cửa sổ nhanh  
-- **iStat Menus:** theo dõi nhiệt độ & hiệu năng  
-- **Notion:** ghi chú & quản lý công việc  
-- **Warp Terminal:** terminal hiện đại cho dev  
+- **Raycast:** công cụ tìm kiếm mạnh hơn Spotlight 
+- **Magnet:** chia cửa sổ nhanh 
+- **iStat Menus:** theo dõi nhiệt độ & hiệu năng 
+- **Notion:** ghi chú & quản lý công việc 
+- **Warp Terminal:** terminal hiện đại cho dev 
 
-Dùng MacBook hiệu quả hơn rất nhiều với các app này.  
+Dùng MacBook hiệu quả hơn rất nhiều với các app này. 
         `,
       },
 
@@ -219,8 +218,7 @@ Dùng MacBook hiệu quả hơn rất nhiều với các app này.
 - Pin trâu
 - Chạy mát
 
-**Air 15 inch = Rộng như Pro nhưng nhẹ như Air.**  
-        `,
+**Air 15 inch = Rộng như Pro nhưng nhẹ như Air.** `,
       },
 
       {
@@ -235,13 +233,13 @@ Dùng MacBook hiệu quả hơn rất nhiều với các app này.
         content: `
 ## Giữ MacBook bền & khỏe
 
-### 1) Không sạc quá nóng  
-### 2) Vệ sinh bàn phím & màn hình định kỳ  
-### 3) Dùng case mỏng để tránh móp  
-### 4) Không để máy trong balo bí hơi  
+### 1) Không sạc quá nóng 
+### 2) Vệ sinh bàn phím & màn hình định kỳ 
+### 3) Dùng case mỏng để tránh móp 
+### 4) Không để máy trong balo bí hơi 
 ### 5) Cập nhật macOS thường xuyên
 
-Bảo quản tốt giúp MacBook dùng bền 5–7 năm không lỗi vặt.  
+Bảo quản tốt giúp MacBook dùng bền 5–7 năm không lỗi vặt. 
         `,
       },
 
@@ -268,15 +266,19 @@ Bảo quản tốt giúp MacBook dùng bền 5–7 năm không lỗi vặt.
 - MacBook Pro 14 M3
 - MacBook Pro 16 M3/M4
 
-Tùy ngân sách mà chọn đúng dòng MacBook phù hợp.  
+Tùy ngân sách mà chọn đúng dòng MacBook phù hợp. 
         `,
       },
     ];
 
+    // Sử dụng vòng lặp với upsert để tránh lỗi trùng lặp
     for (const post of macbookPosts) {
-      await prisma.blogPost.create({
-        data: post,
+      await prisma.blogPost.upsert({
+        where: { slug: post.slug }, // Tìm bài viết theo slug
+        update: post, // Nếu tìm thấy thì cập nhật lại nội dung
+        create: post, // Nếu không tìm thấy thì tạo mới
       });
+      console.log(`✅ Upserted post: ${post.slug}`);
     }
 
     console.log("MacBook Blog Posts seeded successfully!");
@@ -288,4 +290,3 @@ Tùy ngân sách mà chọn đúng dòng MacBook phù hợp.
 }
 
 seedMacbookPosts();
-//seed/seed-macbook-posts.ts

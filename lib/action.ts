@@ -1,6 +1,4 @@
 "use server";
-import { ShoppingCart } from "lucide-react";
-
 import { Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 import { cookies } from "next/headers";
@@ -17,6 +15,8 @@ export interface GetProductParams {
   page?: number;
   pageSize?: number;
 }
+
+// --- ✅ HÀM ĐÃ SỬA ---
 export async function getProducts({
   slug,
   query,
@@ -43,17 +43,41 @@ export async function getProducts({
     ];
   }
 
+  // --- LOGIC MỚI: Lấy cả sản phẩm của danh mục con ---
   if (slug) {
-    where.Category = {
-      slug,
-    };
+    const category = await prisma.category.findUnique({
+      where: { slug },
+      include: {
+        subcategories: true, // Lấy thêm danh mục con
+      },
+    });
+
+    if (category) {
+      // Tạo mảng ID bao gồm: ID danh mục hiện tại + ID các danh mục con
+      const categoryIds = [
+        category.id,
+        ...category.subcategories.map((sub) => sub.id),
+      ];
+
+      // Tìm sản phẩm thuộc bất kỳ ID nào trong mảng trên
+      where.categoryId = {
+        in: categoryIds,
+      };
+    } else {
+      // Nếu có slug mà không tìm thấy danh mục thì trả về rỗng luôn
+      return [];
+    }
   }
+  // ----------------------------------------------------
 
   const orderBy: Record<string, "asc" | "desc" | undefined> = {};
   if (sort === "price-asc") {
     orderBy.price = "asc";
   } else if (sort === "price-desc") {
     orderBy.price = "desc";
+  } else {
+    // Mặc định sắp xếp mới nhất
+    orderBy.createdAt = "desc";
   }
 
   const skip = pageSize ? (page - 1) * pageSize : undefined;
@@ -66,12 +90,13 @@ export async function getProducts({
     take,
   });
 }
+
 export async function getProductCached({
   query,
   slug,
   sort,
   page = 1,
-  pageSize = 3,
+  pageSize = 18, // Tăng mặc định lên để hiển thị nhiều hơn
 }: GetProductParams) {
   const cacheKey = createProductCacheKEY({
     categorySlug: slug,
@@ -90,13 +115,14 @@ export async function getProductCached({
     async () => {
       return await getProducts({ query, slug, sort, page, pageSize });
     },
-    [cacheKey], // cache key phải là mảng
+    [cacheKey],
     {
       tags: [cacheTag],
       revalidate: 3600,
     }
   )();
 }
+
 export async function getProductBySlug(slug: string) {
   const product = await prisma.product.findUnique({
     where: {
@@ -111,6 +137,7 @@ export async function getProductBySlug(slug: string) {
 
   return product;
 }
+
 export type CartWithProducts = Prisma.CartGetPayload<{
   include: {
     items: {
@@ -120,10 +147,12 @@ export type CartWithProducts = Prisma.CartGetPayload<{
     };
   };
 }>;
+
 export type ShoppingCart = CartWithProducts & {
   size: number;
   subtotal: number;
 };
+
 async function findCartFromCookie(): Promise<CartWithProducts | null> {
   const cartId = (await cookies()).get("cartId")?.value;
   if (!cartId) return null;
@@ -150,6 +179,7 @@ async function findCartFromCookie(): Promise<CartWithProducts | null> {
     { tags: [`cart-${cartId}`] }
   )(cartId);
 }
+
 export async function getCart(): Promise<ShoppingCart | null> {
   const cart = await findCartFromCookie();
 
@@ -163,6 +193,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
     ),
   };
 }
+
 async function getOrCreateCart(): Promise<CartWithProducts> {
   let cart = await findCartFromCookie();
 
@@ -189,6 +220,7 @@ async function getOrCreateCart(): Promise<CartWithProducts> {
 
   return cart;
 }
+
 export async function addToCart(ProductId: string, quantity: number = 1) {
   if (quantity < 1) {
     throw new Error("Quantity must be at least 1");
@@ -220,17 +252,17 @@ export async function addToCart(ProductId: string, quantity: number = 1) {
   }
   revalidateTag(`cart-${cart.id}`);
 }
+
 export type CartItemWithProduct = Prisma.CartItemGetPayload<{
   include: {
     product: true;
   };
 }>;
+
 export async function setProductQuantity(productId: string, quantity: number) {
   const cart = await findCartFromCookie();
 
   if (!cart) throw new Error("Cart not found");
-
-  //Todo: MAKE SURE THE PRODUCT INVENTORY IS NOT EXCEEDED
 
   try {
     if (quantity === 0) {
@@ -292,12 +324,12 @@ export async function getCategoriesCountCached(slug: string) {
     }
   )();
 }
+
+// Hàm này có vẻ dùng để gợi ý sản phẩm liên quan theo slug?
 export async function getProductsByCategory(category: string) {
   return await prisma.product.findMany({
     where: {
-      OR: [
-        { slug: { contains: category, mode: "insensitive" } },
-      ],
+      OR: [{ slug: { contains: category, mode: "insensitive" } }],
     },
     take: 6,
   });

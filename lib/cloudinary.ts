@@ -44,3 +44,4 @@ export async function deleteFromCloudinary(url: string): Promise<boolean> {
     return false;
   }
 }
+// lib/cloudinary.ts

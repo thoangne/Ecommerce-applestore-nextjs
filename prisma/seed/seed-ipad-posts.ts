@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 async function seedIpadPosts() {
@@ -246,10 +247,14 @@ Kết luận: iPad đáp ứng được 60% nhu cầu của người dùng lapto
       },
     ];
 
+    // Sử dụng upsert để tránh lỗi trùng lặp khi chạy lại seed
     for (const post of ipadPosts) {
-      await prisma.blogPost.create({
-        data: post,
+      await prisma.blogPost.upsert({
+        where: { slug: post.slug }, // Tìm theo slug
+        update: post, // Nếu có rồi thì cập nhật
+        create: post, // Nếu chưa có thì tạo mới
       });
+      console.log(`✅ Upserted post: ${post.slug}`);
     }
 
     console.log("iPad Blog Posts seeded successfully!");
@@ -261,4 +266,3 @@ Kết luận: iPad đáp ứng được 60% nhu cầu của người dùng lapto
 }
 
 seedIpadPosts();
-// End of file prisma/seed/seed-ipad-posts.ts
