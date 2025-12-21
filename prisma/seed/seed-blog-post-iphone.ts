@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 async function seedIphonePosts() {
@@ -188,19 +189,19 @@ Nếu những tin đồn này thành sự thật, iPhone 17 hứa hẹn đột p
         content: `
 ## Tips tiết kiệm pin iPhone hiệu quả
 
-### 1) Bật Optimized Battery Charging  
+### 1) Bật Optimized Battery Charging 
 Giảm chai pin về lâu dài.
 
-### 2) Tắt Background App Refresh  
+### 2) Tắt Background App Refresh 
 Tiết kiệm 5–10% pin mỗi ngày.
 
 ### 3) Giảm Animation
 iPhone chạy mượt hơn, tiết kiệm pin.
 
-### 4) Đặt chế độ Low Power Mode  
+### 4) Đặt chế độ Low Power Mode 
 Khi pin dưới 20%.
 
-### 5) Kiểm tra ứng dụng tốn pin  
+### 5) Kiểm tra ứng dụng tốn pin 
 Settings → Battery.
 
 Áp dụng những tip này để pin iPhone bền và lâu hơn.
@@ -208,10 +209,14 @@ Settings → Battery.
       },
     ];
 
+    // Sử dụng upsert để update nếu đã tồn tại, create nếu chưa có
     for (const post of iphonePosts) {
-      await prisma.blogPost.create({
-        data: post,
+      await prisma.blogPost.upsert({
+        where: { slug: post.slug },
+        update: post,
+        create: post,
       });
+      console.log(`✅ Upserted post: ${post.slug}`);
     }
 
     console.log("iPhone Blog Posts seeded successfully!");
@@ -223,4 +228,3 @@ Settings → Battery.
 }
 
 seedIphonePosts();
-// End of file prisma/seed/seed-blog-post-iphone.ts

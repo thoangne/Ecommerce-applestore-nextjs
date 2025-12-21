@@ -78,3 +78,4 @@ export default async function CategoryPage(props: CategoryPageProps) {
     </div>
   );
 }
+//search/[slug]/page.tsx

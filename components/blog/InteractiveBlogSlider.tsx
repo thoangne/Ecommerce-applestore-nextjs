@@ -3,14 +3,14 @@ import { auth } from "@/lib/auth";
 import Link from "next/link";
 import LikeButton from "./LikeButton";
 import Image from "next/image";
-import { Clock, UserCircle } from "lucide-react";
+import { Clock, UserCircle, PenSquare } from "lucide-react"; // 1. Thêm icon PenSquare
 
-// 1. Interface (giữ nguyên, đảm bảo 'excerpt' có trong query)
+// 1. Interface (GIỮ NGUYÊN)
 interface EnrichedBlogPost {
   id: string;
   title: string;
   slug: string;
-  excerpt: string | null; // <-- Đảm bảo bạn đã query trường này
+  excerpt: string | null;
   thumbnail: string | null;
   category: { name: string } | null;
   publishedAt: Date | null;
@@ -20,14 +20,13 @@ interface EnrichedBlogPost {
   userHasLiked: boolean;
 }
 
-// 2. Component Card (Tái sử dụng)
-// Chúng ta tạo một component card nội bộ để tái sử dụng
+// 2. Component Card (GIỮ NGUYÊN 100% UI CŨ)
 function BlogCard({
   post,
   variant = "default",
 }: {
   post: EnrichedBlogPost;
-  variant?: "default" | "featured"; // 2 kiểu: nổi bật (to) và mặc định (nhỏ)
+  variant?: "default" | "featured";
 }) {
   const isFeatured = variant === "featured";
 
@@ -36,8 +35,8 @@ function BlogCard({
       <article
         key={post.id}
         className="group relative flex flex-col bg-white dark:bg-gray-900 
-                 rounded-xl shadow-lg hover:shadow-2xl dark:hover:shadow-blue-500/20 
-                 overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1"
+                  rounded-xl shadow-lg hover:shadow-2xl dark:hover:shadow-blue-500/20 
+                  overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1"
       >
         {/* Ảnh bìa */}
         {post.thumbnail && (
@@ -102,7 +101,7 @@ function BlogCard({
               <span>{post.author?.name ?? "Anonymous"}</span>
             </div>
 
-            {/* Nút Like (z-10 để nó bấm được, vì 'stretched-link' của title) */}
+            {/* Nút Like */}
             <div className="relative z-10">
               <LikeButton
                 postId={post.id}
@@ -118,38 +117,34 @@ function BlogCard({
   );
 }
 
-// 3. Component Slider Chính (Layout 1 + 3)
+// 3. Component Slider Chính
 export default async function InteractiveBlogSlider() {
   const session = await auth();
   const currentUserId = session?.user?.id;
 
-  // Query (Thêm 'excerpt' và 'readTime' vào query)
+  // Query (GIỮ NGUYÊN)
   const posts = await prisma.blogPost.findMany({
     where: { published: true },
     select: {
-      // ✅ SỬA LỖI: Chỉ dùng 'select' và di chuyển logic 'include' vào đây
       id: true,
       title: true,
       slug: true,
-      excerpt: true, // <-- Thêm trường này
+      excerpt: true,
       thumbnail: true,
       publishedAt: true,
-      readTime: true, // <-- Thêm trường này
+      readTime: true,
       author: {
-        // Lấy thông tin tác giả
         select: { name: true, avatarUrl: true },
       },
       category: {
-        // Lấy thông tin danh mục
         select: { name: true },
       },
       likes: {
-        // Lấy thông tin like
         select: { userId: true },
       },
     },
     orderBy: { publishedAt: "desc" },
-    take: 4, // Lấy 4 bài (1 nổi bật, 3 bài nhỏ)
+    take: 4,
   });
 
   const enrichedPosts: EnrichedBlogPost[] = posts.map((post) => ({
@@ -164,6 +159,17 @@ export default async function InteractiveBlogSlider() {
     return (
       <div className="text-center py-10 dark:text-white">
         Chưa có bài viết nào.
+        {currentUserId && (
+          <div className="mt-4">
+            <Link
+              href="/blog/create"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all text-sm font-medium"
+            >
+              <PenSquare className="w-4 h-4" />
+              Viết bài đầu tiên
+            </Link>
+          </div>
+        )}
       </div>
     );
   }
@@ -175,17 +181,45 @@ export default async function InteractiveBlogSlider() {
   return (
     <section className="py-12 md:py-16">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Tiêu đề Section */}
-        <div className="mb-8 md:mb-12 text-center md:text-left">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-            Bài viết mới nhất
-          </h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-            Cập nhật tin tức, thủ thuật và đánh giá mới nhất từ chúng tôi.
-          </p>
+        {/* 2. PHẦN HEADER ĐÃ SỬA: 
+            Dùng flex để đưa nút sang phải, nhưng vẫn giữ text-center/text-left cũ cho chữ 
+        */}
+        <div className="mb-8 md:mb-12 flex flex-col md:flex-row items-end justify-between gap-4">
+          <div className="text-center md:text-left w-full md:w-auto">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Bài viết mới nhất
+            </h1>
+            <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+              Cập nhật tin tức, thủ thuật và đánh giá mới nhất từ chúng tôi.
+            </p>
+          </div>
+
+          {/* NÚT VIẾT BÀI MỚI (Chỉ hiện khi đăng nhập) */}
+          {currentUserId && (
+            <Link
+              href="/blog/create"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 whitespace-nowrap"
+            >
+              <PenSquare className="w-4 h-4" />
+              Viết bài mới
+            </Link>
+          )}
         </div>
 
-        {/* Layout Grid 1 + 3 */}
+        {/* Nút cho Mobile */}
+        {currentUserId && (
+          <div className="md:hidden mb-6 flex justify-center">
+            <Link
+              href="/blog/create"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-md transition-all"
+            >
+              <PenSquare className="w-4 h-4" />
+              Viết bài mới
+            </Link>
+          </div>
+        )}
+
+        {/* Layout Grid 1 + 3 (GIỮ NGUYÊN) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cột Trái: Bài viết Nổi bật */}
           <div className="lg:col-span-2">

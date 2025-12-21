@@ -1,74 +1,26 @@
 import { PrismaClient } from "@prisma/client";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const prisma = new PrismaClient();
 
 //
-// ✅ Helpers
-//
-function readJSON(filename: string) {
-  const filePath = path.join(__dirname, filename);
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
-}
-
-//
-// ✅ Generate subcategory slug for DB
-//
-function detectSubSlug(name: string) {
-  const lower = name.toLowerCase();
-
-  if (lower.includes("macbook")) {
-    if (lower.includes("air")) return "mac-macbook-air";
-    return "mac-macbook-pro";
-  }
-
-  if (lower.includes("ipad")) {
-    if (lower.includes("pro")) return "ipad-ipad-pro";
-    if (lower.includes("air")) return "ipad-ipad-air";
-    return "ipad-ipad";
-  }
-
-  if (lower.includes("iphone")) {
-    if (lower.includes("pro max")) return "iphone-iphone-pro-max";
-    if (lower.includes("pro")) return "iphone-iphone-pro";
-    return "iphone-iphone";
-  }
-
-  return "misc";
-}
-
-//
-// ✅ Auto-fix duplicated slug → add -1, -2 …
-//
-async function getUniqueSlug(base: string): Promise<string> {
-  let slug = base;
-  let counter = 1;
-
-  while (true) {
-    const exists = await prisma.product.findUnique({ where: { slug } });
-    if (!exists) return slug;
-    slug = `${base}-${counter}`;
-    counter++;
-  }
-}
-
-//
-// ✅ Clear DB safely
+// ✅ Helper: Xóa DB an toàn (ĐÃ SỬA)
 //
 async function clearDB() {
-  console.log("🧹 Clearing old data...");
+  console.log("🧹 Clearing data...");
 
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
-  await prisma.blogCategory.deleteMany();   // ✅ Optional
+  // ⚠️ QUAN TRỌNG: Tôi đã comment dòng này lại để KHÔNG xóa sản phẩm bạn vừa tạo
+  // await prisma.product.deleteMany();
+
+  // Lưu ý: Nếu bạn xóa Category thì Product sẽ bị lỗi khóa ngoại (Foreign Key).
+  // Nên tốt nhất ở giai đoạn này ta chỉ seed thêm những thứ còn thiếu (BlogCategory).
+
+  // await prisma.category.deleteMany(); // Tạm tắt để không mất danh mục cũ
+
+  await prisma.blogCategory.deleteMany(); // ✅ Có thể xóa và tạo lại danh mục Blog
 }
 
 //
-// ✅ Seed Blog Categories
+// ✅ Seed Blog Categories (Cái này bạn đang thiếu)
 //
 async function seedBlogCategories() {
   console.log("🌱 Seeding Blog Categories...");
@@ -94,12 +46,10 @@ async function seedBlogCategories() {
 }
 
 //
-// ✅ Main
+// ✅ Seed Product Categories Hierarchy (Cấu trúc phân cấp)
 //
-async function main() {
-  await clearDB();
-
-  console.log("🌱 Seeding categories...");
+async function seedCategoryHierarchy() {
+  console.log("🌱 Seeding Category Hierarchy (Mac, iPad, iPhone)...");
 
   const categories = [
     {
@@ -109,8 +59,8 @@ async function main() {
     },
     {
       name: "iPad",
-      slug: "ipad",
-      sub: ["iPad", "iPad Air", "iPad Pro"],
+      slug: "ipad", // Lưu ý: Slug này có thể trùng với file trước, upsert sẽ xử lý
+      sub: ["iPad Gen", "iPad Air", "iPad Pro"],
     },
     {
       name: "iPhone",
@@ -119,72 +69,49 @@ async function main() {
     },
   ];
 
-  const subMap: Record<string, string> = {};
-
   for (const cat of categories) {
-    const parent = await prisma.category.create({
-      data: { name: cat.name, slug: cat.slug },
+    // 1. Tạo hoặc update danh mục Cha
+    const parent = await prisma.category.upsert({
+      where: { slug: cat.slug },
+      update: { name: cat.name },
+      create: { name: cat.name, slug: cat.slug },
     });
 
+    // 2. Tạo danh mục Con và nối vào Cha
     for (const sub of cat.sub) {
       const subSlug = `${cat.slug}-${sub.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
-      const subCat = await prisma.category.create({
-        data: {
+      await prisma.category.upsert({
+        where: { slug: subSlug },
+        update: {
+          name: sub,
+          parentId: parent.id, // Cập nhật mối quan hệ cha-con
+        },
+        create: {
           name: sub,
           slug: subSlug,
           parentId: parent.id,
         },
       });
-
-      subMap[subSlug] = subCat.id;
     }
   }
+  console.log("✅ Category Hierarchy seeded!");
+}
 
-  console.log("✅ Category seeded!");
+//
+// ✅ Main
+//
+async function main() {
+  // 1. Dọn dẹp (Nhưng không xóa Product)
+  await clearDB();
 
-  console.log("📦 Reading products...");
-  const products = readJSON("apple_products.json");
+  // 2. Tạo danh mục phân cấp (Cha - Con)
+  await seedCategoryHierarchy();
 
-  console.log("🌱 Seeding products...");
-
-  for (const p of products) {
-    const subSlug = detectSubSlug(p.name);
-
-    const category = await prisma.category.findUnique({
-      where: { slug: subSlug },
-    });
-
-    if (!category) {
-      console.warn(`⚠️ No subcategory found → skip: ${p.name}`);
-      continue;
-    }
-
-    const fixedSlug = await getUniqueSlug(p.slug);
-
-    await prisma.product.create({
-      data: {
-        name: p.name,
-        slug: fixedSlug,
-        description: p.description,
-        price: Math.floor(p.price),
-        color: p.color,
-        storage: p.storage,
-        specs: p.specs,
-        releasedAt: new Date(p.releasedAt),
-        images: p.images,
-        inventory: p.inventory,
-        categoryId: category.id,
-      },
-    });
-  }
-
-  console.log("✅ Products seeded!");
-
-  // ✅ Seed blog categories
+  // 3. Tạo danh mục Blog
   await seedBlogCategories();
 
-  console.log("🎉 All seeding completed!");
+  console.log("🎉 All additional seeding completed!");
 }
 
 //
